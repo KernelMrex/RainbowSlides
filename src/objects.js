@@ -1,12 +1,12 @@
-var App = {
-    name: "Name of presentation",
+var Presentation = {
+    name: 'Name of presentation',
     slidesList: Slides,
     history: CommandHistory
 };
 
 var Slides = {
     slide: SlidesList,
-    background: 'default'
+    background: 'default' // перечесление
 };
 
 var Slide = {
@@ -34,7 +34,7 @@ var ObjectsList = [];
 
 var ListOfParams = {
     size: 123,
-    position: (123, 123)
+    position: (123, 123) //corteju
 };
 
 var ListOfUniqueParams = {
