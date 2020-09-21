@@ -27,7 +27,7 @@ var textObjectParams = {
     underline: '1px solid #ffffff'
 }
 
-var squareObject = {
+var squareObjectParams = {
     position: [0, 0],
     background: '#ffffff',
     lockedAspectRatio: true,
