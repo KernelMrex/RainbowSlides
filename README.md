@@ -1,1 +1,3 @@
-"# RainbowSlides" 
+# RainbowSlides
+
+## Unviversity pet project
