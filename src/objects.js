@@ -6,15 +6,16 @@ var Presentation = {
 
 var Slides = {
     slide: SlidesList,
-    background: 'default' // перечесление
+    background: 'ffffff' // slide
 };
 
 var Slide = {
-    object: ObjectsList
+    object: ObjectsList,
+    priority: 2
 };
 
-var SlidesObject = {
-    type: "Object's type",
+var Objects = {
+    type: "Object's type", // enumeration
     params: ListOfParams,
     uniqueParams: ListOfUniqueParams
 };
@@ -24,17 +25,17 @@ var CommandHistory = {
 };
 
 var Change = {
-    action: 'sm action',
+    action: 'some action',
     object: objectReference
 };
 
-var SlidesList = []; //Slides
+var SlidesList = []; //linkedList
 
 var ObjectsList = [];
 
 var ListOfParams = {
-    size: 123,
-    position: (123, 123) //corteju
+    size: 123, // function getSize(pointers)
+    position: pointers
 };
 
 var ListOfUniqueParams = {
@@ -42,9 +43,16 @@ var ListOfUniqueParams = {
     src: 'url'
 };
 
-var ChangesStack = [];
+var pointers = { // huinya
+    x: 12,
+    y: 21
+}
+
+var ChangesStack = []; //Changes
 
 var objectReference; 
 
 
 console.log('alright');
+
+//small
