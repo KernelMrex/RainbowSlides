@@ -5,34 +5,51 @@ var app = {
 
 var presentation = {
     name: '',
-    description: 'description here',
     slides: [],
 }
 
 var slide = {
     objects: [],  
     background: '', 
-    description: 'description here', 
 }
 
-var object = {
+var text = {
     name: 'Text 1',
-    type: 'text',
-    params: {},
-}
-
-var textObjectParams = {
-    position: [0, 0],
+    position: {
+        x: 0,
+        y: 0
+    },
+    size: {
+        width: 1000,    
+    },
     background: '#ffffff',
     underline: '1px solid #ffffff'
 }
 
-var squareObjectParams = {
-    position: [0, 0],
+var square = {
+    name: 'Square 1',
+    position: {
+        x: 0,
+        y: 0
+    },
+    size: {
+        height: 400,
+        width: 1000,    
+    },
     background: '#ffffff',
     lockedAspectRatio: true,
-    height: 400,
-    width: 1000,
+}
+
+var circle = {
+    name: 'Circle 1',
+    position: {
+        x: 0,
+        y: 0
+    },
+    size: {
+        radius: 20,
+    },
+    background: '#ffffff',
 }
 
 var action = {
