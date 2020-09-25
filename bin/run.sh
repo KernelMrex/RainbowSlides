@@ -1,0 +1,1 @@
+docker run -it -d --rm --mount type=bind,src="$(pwd)"/src,dst=/src kernelmrex/rainbow-slides
