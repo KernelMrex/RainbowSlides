@@ -1,11 +1,11 @@
 var app = {
     presentation: presentation,
-    history: [],
+    history: [], //stack
 }
 
 var presentation = {
     name: '',
-    slides: [],
+    slides: [], //linked list
 }
 
 var slide = {
