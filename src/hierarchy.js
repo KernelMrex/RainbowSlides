@@ -40,6 +40,34 @@ var square = {
     lockedAspectRatio: true,
 }
 
+var image = {
+    name: 'Image 1',
+    position: {
+        x: 0,
+        y: 0
+    },
+    size: {
+        height: 400,
+        width: 1000,    
+    },
+    scr: 'url',
+    lockedAspectRatio: true,
+}
+
+var file = {
+    name: 'File 1',
+    position: {
+        x: 0,
+        y: 0
+    },
+    size: {
+        height: 400,
+        width: 1000,    
+    },
+    scr: 'url',
+    lockedAspectRatio: true,
+}
+
 var circle = {
     name: 'Circle 1',
     position: {
@@ -50,6 +78,7 @@ var circle = {
         radius: 20,
     },
     background: '#ffffff',
+    lockedAspectRatio: true,
 }
 
 var action = {
