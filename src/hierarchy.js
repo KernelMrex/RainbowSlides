@@ -53,6 +53,6 @@ var circle = {
 }
 
 var action = {
-    currencObject: null,
-    previousObject: null,
+    current: null,
+    previous: null,
 }
