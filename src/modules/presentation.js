@@ -8,7 +8,12 @@ function deletePresentation(presentation)
     
 }
 
-function openPresentation(url)
+function openPresentationFromCloud(url)
+{
+    
+}
+
+function openPresentationFromSource(file)
 {
     
 }
@@ -22,7 +27,7 @@ function savePresentationToCloud(presentation)
 {
     
 }
-
+//параметр - то чего нет у объекта
 function exportPresentationToPDF(presentation)
 {
     

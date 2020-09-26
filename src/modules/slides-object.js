@@ -1,69 +1,69 @@
-function addObjectToSlide(slide)
+function addObjectToSlide(slide, object)
 {
     
 }
 
-function deleteObjectToSlide(slide)
+function deleteObjectFromSlide(slide, object)
 {
     
 }
 
-function addImageWithURL(url)
+function addImageWithURL(slide, url)
 {
     
 }
 
-function addImageFromLocal(url)
+function addImageFromLocal(slide, url)
 {
     
 }
 
-function addImageFromByffer(url)
+function addImageFromByffer(slide, url)
 {
     
 }
 
-function addFileWithURL(url)
+function addFileWithURL(slide, url)
 {
     
 }
 
-function addFileFromLocal(url)
+function addFileFromLocal(slide, url)
 {
     
 }
 
-function changeObjectsPosition(object)
+function changeObjectsPosition(slide, object)
 {
     
 }
 
-function changeObjectsSize(object)
+function changeObjectsSize(slide, object)
 {
     
 }
 
-function changeObjectsSizeProportionally(object)
+function changeObjectsSizeProportionally(slide, object)
 {
     
 }
 
-function changeObjectsBackground(object)
+function changeObjectsBackground(slide, object)
 {
     
 }
 
-function changeObjectsName(object)
+function changeObjectsName(slide, object)
 {
     
 }
 
-function changeObjectsName(object)
+function changeFontOfText(slide, object)
 {
     
-}   
+}
 
-function changeFontOfText(object)
+function deleteObjectFromSelection(selection)
 {
-    
-}   
+
+}

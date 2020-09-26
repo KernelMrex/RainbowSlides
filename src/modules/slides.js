@@ -3,17 +3,17 @@ function addSlide(slidesList)
     
 }
 
-function deleteSlide(slidesList)
+function deleteSlide(slidesList, slide)
 {
     
 }
 
-function changeOrderOfSlide(slidesList)
+function changeOrderOfSlide(slidesList, slide, place)
 {
     
 }
 
-function selectSlide(slidesList)
+function selectSlide(selected, slide)
 {
     
 }
@@ -21,4 +21,9 @@ function selectSlide(slidesList)
 function changeSlidesBackground(slide)
 {
     
+}
+
+function deleteSlideFromSelection(selection)
+{
+
 }

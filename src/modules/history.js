@@ -1,8 +1,3 @@
-function clearHistory(history)
-{
-    
-}
-
 function addChangeToHistory(history)
 {
     
