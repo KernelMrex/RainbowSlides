@@ -85,6 +85,7 @@ var animation = {
 
 var circle = {
     id: 'sadaw213sadawd',
+    type: 'circle', 
     name: 'Circle 1',
     position: {
         x: 0,
