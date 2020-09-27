@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/KernelMrex/RainbowSlides/issues"
   },
-  "homepage": "https://github.com/KernelMrex/RainbowSlides#readme"
+  "homepage": "https://github.com/KernelMrex/RainbowSlides#readme",
+  "devDependencies": {
+    "typescript": "^4.0.3"
+  }
 }
