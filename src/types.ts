@@ -1,3 +1,32 @@
+type App = {
+    presentation: Presentation,
+    history: {
+        undoStack: Array<Action>
+        redoStack: Array<Action>
+    }
+};
+
+type Presentation = {
+    name: string,
+    slides: Array<Slide>,
+    selection: {
+        slide: Slide | null,
+        object: SlidesObject | null
+    }
+};
+
+type Slide = {
+    id: string,
+    objects: Array<SlidesObject>,
+    background: string
+};
+
+type Action = {
+    previous: Presentation
+};
+
+type SlidesObject = Circle | Square | TextBlock | AnimationBlock | Image;
+
 type ShapedObject = {
     id: string,
     type: ObjectsType,
