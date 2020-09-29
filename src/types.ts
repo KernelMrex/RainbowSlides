@@ -1,9 +1,11 @@
 type App = {
     presentation: Presentation,
-    history: {
-        undoStack: Array<Action>
-        redoStack: Array<Action>
-    }
+    history: ActionHistory
+};
+
+type ActionHistory = {
+    undoStack: Array<Presentation>
+    redoStack: Array<Presentation>
 };
 
 type Presentation = {
@@ -21,17 +23,13 @@ type Slide = {
     background: string
 };
 
-type Action = {
-    previous: Presentation
-};
-
 type SlidesObject = Circle | Square | TextBlock | AnimationBlock | Image;
 
 type ShapedObject = {
     id: string,
     type: ObjectsType,
     name: string,
-    position: Pointers,
+    position: Anchors,
     background: string
 };
 
@@ -40,21 +38,25 @@ type Circle = ShapedObject & {
 };
 
 type Square = ShapedObject & {
-    size: Size,
+    height: number,
+    width: number
 };
 
 type TextBlock = ShapedObject & {
-    size: Size,
+    height: number,
+    width: number,
     decor: Decor
 };
 
 type AnimationBlock = ShapedObject & {
-    size: Size,
+    height: number,
+    width: number,
     src: string
 };
 
 type Image = ShapedObject & {
-    size: Size,
+    height: number,
+    width: number,
     src: string
 };
 
@@ -66,12 +68,7 @@ type Decor = {
     fontSize: number
 };
 
-type Size = {
-    height: number,
-    width: number
-}
-
-type Pointers = {
+type Anchors = {
     x: number,
     y: number
 };
