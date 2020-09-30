@@ -3,7 +3,7 @@ function addSlide(slidesList)
     
 }
 
-function deleteSlide(slidesList, slide)
+function deleteSlide(slidesList, selected)
 {
     
 }
