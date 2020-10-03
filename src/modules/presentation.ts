@@ -1,4 +1,4 @@
-function createPresentation(name: string): App
+function createApp(name: string): App
 {
     return{
         presentation: {
@@ -20,7 +20,7 @@ function deletePresentation(app: App): App
 {
     return {
         ...app,
-        presentation: {
+        presentation: { //function
             name: '',
             slides: [],
             selection: {
