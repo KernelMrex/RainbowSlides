@@ -13,23 +13,23 @@ type Presentation = {
     slides: Array<Slide>,
     selection: {
         slide: Slide | null,
-        object: SlidesObject | null
+        object: SlideObject | null
     }
 };
 
 type Slide = {
     id: string,
-    objects: Array<SlidesObject>,
+    objects: Array<SlideObject>,
     background: string
 };
 
-type SlidesObject = Circle | Square | TextBlock | AnimationBlock | Image;
+type SlideObject = Circle | Square | TextBlock | AnimationBlock | Image;
 
 type ShapedObject = {
     id: string,
-    type: ObjectsType,
+    type: ObjectType,
     name: string,
-    position: Anchors,
+    position: Anchor,
     background: string
 };
 
@@ -60,7 +60,7 @@ type Image = ShapedObject & {
     src: string
 };
 
-type ObjectsType = "square" | "text" | "circle" | "animation" | "image";
+type ObjectType = "square" | "text" | "circle" | "animation" | "image";
 
 type Decor = {
     font: string,
@@ -68,7 +68,7 @@ type Decor = {
     fontSize: number
 };
 
-type Anchors = {
+type Anchor = {
     x: number,
     y: number
 };
