@@ -1,17 +1,16 @@
-function addChangeToHistory(app: App)
+function addChangeToHistory(presentation: Presentation, history: ActionHistory)
 {
-    app.history.undoStack.push(app.presentation);
+    history.undoStack.push(presentation);
 }
 
-function undoChange(app: App)
+function undoChange(presentation: Presentation, history: ActionHistory): Presentation | undefined
 {
-    const presentation: Presentation | undefined = app.history.undoStack.pop();
-    app.history.redoStack.push(app.presentation);
+    history.redoStack.push(presentation);
 
-    return presentation;
+    return history.undoStack.pop();
 }
 
-function redoChange(app: App)
+function redoChange(history: ActionHistory)
 {
-    return app.history.redoStack.pop()
+    return history.redoStack.pop()
 }
