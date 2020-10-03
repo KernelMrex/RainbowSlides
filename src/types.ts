@@ -1,8 +1,3 @@
-type App = {
-    presentation: Presentation,
-    history: ActionHistory
-};
-
 type ActionHistory = {
     undoStack: Array<Presentation>
     redoStack: Array<Presentation>
@@ -12,7 +7,7 @@ type Presentation = {
     name: string,
     slides: Array<Slide>,
     selection: {
-        slide: string,
+        slide: string | null,
         object: Array<SlidesObject> | null
     }
 };

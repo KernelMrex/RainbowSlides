@@ -1,20 +1,6 @@
-function createApp(name: string): App
+function deletePresentation(): Presentation
 {
-    return{
-        presentation: createPresentation(name),
-        history: {
-            undoStack: [],
-            redoStack: []
-        }
-    }
-}
-
-function deletePresentation(app: App): App
-{
-    return {
-        ...app,
-        presentation: createPresentation(),
-    }
+    return createPresentation()
 }
 
 function createPresentation(name = "simple name"): Presentation
