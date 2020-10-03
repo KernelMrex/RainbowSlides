@@ -1,14 +1,7 @@
 function createApp(name: string): App
 {
     return{
-        presentation: {
-            name: name,
-            slides: [],
-            selection: {
-                slide: null,
-                object: null
-            }
-        },
+        presentation: createPresentation(name),
         history: {
             undoStack: [],
             redoStack: []
@@ -20,14 +13,27 @@ function deletePresentation(app: App): App
 {
     return {
         ...app,
-        presentation: { //function
-            name: '',
-            slides: [],
-            selection: {
-                slide: null,
-                object: null
-            }
+        presentation: createPresentation(),
+    }
+}
+
+function createPresentation(name = "simple name"): Presentation
+{
+    return {
+        name: name,
+        slides: [],
+        selection: {
+            slide: null,
+            object: null
         }
+    }
+}
+
+function changePresentationsName(presentation: Presentation, name: string): Presentation
+{
+    return {
+        ...presentation,
+        name: name
     }
 }
 
