@@ -1,12 +1,12 @@
 function addObjectToSlide(app: App, slide: Slide, object: SlideObject): App
 {
     const slideIndex = app.presentation.slides.indexOf(slide);
-    const newSlides = [ ...app.presentation.slides ];
+    const newSlides = [...app.presentation.slides];
 
     newSlides[slideIndex] = {
         ...slide,
-        objects: [ ...slide.objects, object ]
-    }
+        objects: [...slide.objects, object]
+    };
 
     return Object.freeze({
         ...app,
@@ -20,12 +20,12 @@ function addObjectToSlide(app: App, slide: Slide, object: SlideObject): App
 function deleteObjectFromSlide(app: App, slide: Slide, object: SlideObject): App
 {
     const slideIndex = app.presentation.slides.indexOf(slide);
-    const newSlides = [ ...app.presentation.slides ];
+    const newSlides = [...app.presentation.slides];
 
     newSlides[slideIndex] = {
         ...slide,
-        objects: [ ...slide.objects ].splice(slide.objects.indexOf(object), 1)
-    }
+        objects: [...slide.objects].splice(slide.objects.indexOf(object), 1)
+    };
 
     return Object.freeze({
         ...app,
