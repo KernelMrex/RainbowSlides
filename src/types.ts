@@ -12,15 +12,15 @@ type Presentation = {
     name: string,
     slides: Array<Slide>,
     selection: {
-        slide: Slide | null, //id slide
-        object: SlidesObject | null // array of objects
+        slide: Slide | null,
+        object: SlidesObject | null
     }
 };
 
 type Slide = {
     id: string,
     objects: Array<SlidesObject>,
-    background: string //new type background
+    background: string 
 };
 
 type SlidesObject = Circle | Square | TextBlock | AnimationBlock | Image;
@@ -62,8 +62,8 @@ type Image = ShapedObject & {
 
 type ObjectsType = "square" | "text" | "circle" | "animation" | "image";
 
-type Decor = { //
-    font: string, //
+type Decor = { 
+    font: string, 
     color: string,
     fontSize: number
 };
