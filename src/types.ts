@@ -8,67 +8,66 @@ type Presentation = {
     slides: Array<Slide>,
     selection: {
         slide: string,
-        object: Array<SlidesObject> | null
+        object: Array<SlideObject> | null
     }
 };
 
 type Slide = {
     id: string,
-    objects: Array<SlidesObject>,
-    background: Background
+    objects: Array<SlideObject>,
+    background: Picture | Color
 };
 
-type Background = {
-    type: "picture" | "color",
-    background: string
-}
+type Picture = {
+    source: string,
+};
 
-type SlidesObject = Circle | Square | TextBlock | AnimationBlock | Image;
+type Color = {
+    red: number,
+    green: number,
+    blue: number,
+    opacity: number,
+};
 
-type ShapedObject = {
+type SlideObject = CircleBlock | RectangleBlock | TextBlock | MediaBlock | ImageBlock;
+
+type RectangleBlock = {
     id: string,
-    type: ObjectsType,
+    type: ObjectType,
     name: string,
-    position: Anchors,
-    background: string
+    position: Anchor,
+    height: number,
+    width: number,
 };
 
-type Circle = ShapedObject & {
+type CircleBlock = RectangleBlock & {
     radius: number,
 };
 
-type Square = ShapedObject & {
-    height: number,
-    width: number
+type TextBlock = RectangleBlock & {
+    font: Font,
+    color: Color,
 };
 
-type TextBlock = ShapedObject & {
-    height: number,
-    width: number,
-    decor: Decoration
+type Font = {
+    family: string,
+    size: number,
+    weight: number,
+    style: 'italic' | 'bold' | 'none',
 };
 
-type AnimationBlock = ShapedObject & {
-    height: number,
-    width: number,
-    src: string
+type MediaBlock = RectangleBlock & {
+    type: 'video' | 'gif',
+    source: string,
 };
 
-type Image = ShapedObject & {
-    height: number,
-    width: number,
-    src: string
+type ImageBlock = RectangleBlock & {
+    source: string
 };
 
-type ObjectsType = "square" | "text" | "circle" | "animation" | "image";
+type ObjectType = 'square' | 'text' | 'circle' | 'media' | 'image';
 
-type Decoration = {
-    fontFamily: string,
-    color: string,
-    fontSize: number
-};
-
-type Anchors = {
+type Anchor = {
     x: number,
     y: number
 };
