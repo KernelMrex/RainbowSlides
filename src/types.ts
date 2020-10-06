@@ -1,6 +1,6 @@
 type ActionHistory = {
-    undoStack: Array<Presentation>
-    redoStack: Array<Presentation>
+    undo: Array<Presentation>
+    redo: Array<Presentation>
 };
 
 type Presentation = {
@@ -8,7 +8,7 @@ type Presentation = {
     slides: Array<Slide>,
     selection: {
         slide: string,
-        object: Array<SlideObject> | null
+        object: Array<string> | null
     }
 };
 
@@ -23,10 +23,7 @@ type Picture = {
 };
 
 type Color = {
-    red: number,
-    green: number,
-    blue: number,
-    opacity: number,
+    hex: string
 };
 
 type SlideObject = CircleBlock | RectangleBlock | TextBlock | MediaBlock | ImageBlock;
