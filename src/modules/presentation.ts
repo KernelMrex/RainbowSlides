@@ -32,4 +32,3 @@ function getPresentationFromJSON(presentationInJSON: string): Presentation
 {
     return JSON.parse(presentationInJSON);
 }
-
