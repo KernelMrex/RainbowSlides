@@ -7,7 +7,7 @@ type Presentation = {
     name: string,
     slides: Array<Slide>,
     selection: {
-        slide: string,
+        slide: string | null,
         object: Array<string> | null
     }
 };
