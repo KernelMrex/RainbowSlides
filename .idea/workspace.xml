@@ -19,10 +19,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="7f41375b-d159-4dec-952f-aaa5f2acf6ae" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modules/history.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/history.ts" afterDir="false" />
     </list>
+=======
+    <list default="true" id="7f41375b-d159-4dec-952f-aaa5f2acf6ae" name="Default Changelist" comment="" />
+>>>>>>> remotes/origin/RS-8
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,6 +60,7 @@
       <updated>1601051142607</updated>
       <workItem from="1601051143747" duration="810000" />
       <workItem from="1601739544906" duration="2071000" />
+      <workItem from="1601827348331" duration="595000" />
     </task>
     <servers />
   </component>

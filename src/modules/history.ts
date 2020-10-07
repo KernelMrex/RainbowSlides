@@ -1,16 +1,16 @@
 function addChangeToHistory(presentation: Presentation, history: ActionHistory)
 {
-    history.undoStack.push(presentation);
+    history.undo.push(presentation);
 }
 
 function undoChange(presentation: Presentation, history: ActionHistory): Presentation | undefined
 {
-    history.redoStack.push(presentation);
+    history.redo.push(presentation);
 
-    return history.undoStack.pop();
+    return history.undo.pop();
 }
 
 function redoChange(history: ActionHistory)
 {
-    return history.redoStack.pop()
+    return history.redo.pop()
 }
