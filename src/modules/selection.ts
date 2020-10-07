@@ -20,9 +20,9 @@ function deleteSlideFromSelection(presentation: Presentation): Presentation
     }
 }
 
-function selectObject(presentation: Presentation, object: SlidesObject): Presentation
+function selectObject(presentation: Presentation, object: string): Presentation
 {
-    let objects: Array<SlidesObject>;
+    let objects: Array<string>;
     if (presentation.selection.object !== null) {
         objects = [...presentation.selection.object];
     } else {
@@ -39,10 +39,10 @@ function selectObject(presentation: Presentation, object: SlidesObject): Present
     }
 }
 
-function deleteObjectFromSelection(presentation: Presentation, object: SlidesObject): Presentation
+function deleteObjectFromSelection(presentation: Presentation, object: string): Presentation
 {
     if (presentation.selection.object !== null) {
-        let objects: Array<SlidesObject> = presentation.selection.object?.splice(presentation.selection.object?.indexOf(object), 1);
+        let objects: Array<string> = presentation.selection.object.splice(presentation.selection.object.indexOf(object), 1);
         return {
             ...presentation,
             selection: {
