@@ -36,8 +36,6 @@ function changeObjectName(presentation: Presentation, newName: string): Presenta
         return presentation
     }
 
-    console.log('qwerty', objects)
-
     return utils.updateSlide(presentation, utils.updateObject(slide, {
         ...objects[0],
         name: newName,
