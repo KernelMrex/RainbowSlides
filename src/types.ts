@@ -1,74 +1,70 @@
-type App = {
-    presentation: Presentation,
-    history: ActionHistory
-};
-
 type ActionHistory = {
-    undoStack: Array<Presentation>
-    redoStack: Array<Presentation>
+    undo: Array<Presentation>
+    redo: Array<Presentation>
 };
 
 type Presentation = {
     name: string,
     slides: Array<Slide>,
     selection: {
-        slide: Slide | null,
-        object: SlidesObject | null
+        slide: string | null,
+        object: Array<string> | null
     }
 };
 
 type Slide = {
     id: string,
-    objects: Array<SlidesObject>,
-    background: string
+    objects: Array<SlideObject>,
+    background: Picture | Color
 };
 
-type SlidesObject = Circle | Square | TextBlock | AnimationBlock | Image;
+type Picture = {
+    source: string,
+};
 
-type ShapedObject = {
+type Color = {
+    hex: string
+};
+
+type SlideObject = CircleBlock | RectangleBlock | TextBlock | MediaBlock | ImageBlock;
+
+type RectangleBlock = {
     id: string,
-    type: ObjectsType,
+    type: ObjectType,
     name: string,
-    position: Anchors,
-    background: string
+    position: Anchor,
+    height: number,
+    width: number,
 };
 
-type Circle = ShapedObject & {
+type CircleBlock = RectangleBlock & {
     radius: number,
 };
 
-type Square = ShapedObject & {
-    height: number,
-    width: number
+type TextBlock = RectangleBlock & {
+    font: Font,
+    color: Color,
 };
 
-type TextBlock = ShapedObject & {
-    height: number,
-    width: number,
-    decor: Decor
+type Font = {
+    family: string,
+    size: number,
+    weight: number,
+    style: 'italic' | 'bold' | 'none',
 };
 
-type AnimationBlock = ShapedObject & {
-    height: number,
-    width: number,
-    src: string
+type MediaBlock = RectangleBlock & {
+    type: 'video' | 'gif',
+    source: string,
 };
 
-type Image = ShapedObject & {
-    height: number,
-    width: number,
-    src: string
+type ImageBlock = RectangleBlock & {
+    source: string
 };
 
-type ObjectsType = "square" | "text" | "circle" | "animation" | "image";
+type ObjectType = 'square' | 'text' | 'circle' | 'media' | 'image';
 
-type Decor = {
-    font: string,
-    color: string,
-    fontSize: number
-};
-
-type Anchors = {
+type Anchor = {
     x: number,
     y: number
 };
