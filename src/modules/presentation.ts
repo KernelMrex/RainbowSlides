@@ -32,3 +32,5 @@ function getPresentationFromJSON(presentationInJSON: string): Presentation
 {
     return JSON.parse(presentationInJSON);
 }
+
+export {deletePresentation, changePresentationsName, createPresentation, getJSONOfPresentation, getPresentationFromJSON};
