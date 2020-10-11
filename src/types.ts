@@ -8,7 +8,7 @@ type Presentation = {
     slides: Array<Slide>,
     selection: {
         slide: string | null,
-        object: Array<string> | null
+        object: Array<string>
     }
 };
 
