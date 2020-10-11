@@ -54,3 +54,5 @@ function deleteObjectFromSelection(presentation: Presentation, object: string): 
 
     return presentation
 }
+
+export {selectSlide, selectObject, deleteObjectFromSelection, deleteSlideFromSelection};
