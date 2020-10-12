@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/KernelMrex/RainbowSlides#readme",
   "devDependencies": {
+    "@babel/preset-typescript": "^7.10.4",
     "@types/jest": "^26.0.14",
     "jest": "^26.5.2",
     "ts-jest": "^26.4.1",
