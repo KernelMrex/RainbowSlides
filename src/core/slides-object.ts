@@ -1,6 +1,6 @@
 export function addObjectToSlide(presentation: Presentation, slideID: string, object: SlideObject): Presentation
 {
-    const slide = presentation.slides.find((slide) => slide.id === slideID)
+    const slide = presentation.slides.find((slide: Slide) => slide.id === slideID)
     if (slide === undefined)
     {
         return presentation;
@@ -14,7 +14,7 @@ export function addObjectToSlide(presentation: Presentation, slideID: string, ob
 
 export function removeObjectFromSlide(presentation: Presentation, slideID: string, objectID: string): Presentation
 {
-    const slide = presentation.slides.find((slide) => slide.id === slideID)
+    const slide = presentation.slides.find((slide: Slide) => slide.id === slideID)
     if (slide === undefined)
     {
         return presentation;
@@ -22,7 +22,7 @@ export function removeObjectFromSlide(presentation: Presentation, slideID: strin
 
     return updateSlide(presentation, {
         ...slide,
-        objects: [...slide.objects].filter((object) => object.id !== objectID)
+        objects: [...slide.objects].filter((object: SlideObject) => object.id !== objectID)
     })
 }
 
@@ -66,7 +66,7 @@ function updateObject(slide: Slide, newObject: SlideObject): Slide
 {
     return {
         ...slide,
-        objects: [...slide.objects].map((object) => object.id === newObject.id ? newObject : object)
+        objects: [...slide.objects].map((object: SlideObject) => object.id === newObject.id ? newObject : object)
     }
 }
 
@@ -91,9 +91,9 @@ function getSelectedObjects(presentation: Presentation): Array<SlideObject>
         return []
     }
 
-    return selectedSlide.objects.filter((object) =>
+    return selectedSlide.objects.filter((object: SlideObject) =>
         selectedSlide.objects
-            .map((object) => object.id)
+            .map((object: SlideObject) => object.id)
             .includes(object.id)
     )
 }
