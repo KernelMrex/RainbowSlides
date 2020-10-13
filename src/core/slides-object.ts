@@ -29,7 +29,7 @@ export function removeObjectFromSlide(presentation: Presentation, slideID: strin
 export function changeObjectName(presentation: Presentation, newName: string): Presentation
 {
     const [slide, objects] = getSelected(presentation)
-    if (slide === null || objects === null || objects.length > 1)
+    if (slide === null || objects === null || objects.length !== 1)
     {
         return presentation
     }
@@ -43,7 +43,7 @@ export function changeObjectName(presentation: Presentation, newName: string): P
 export function changeObjectPosition(presentation: Presentation, newPosition: Anchor): Presentation
 {
     const [slide, objects] = getSelected(presentation)
-    if (slide === null || objects === null || objects.length > 1)
+    if (slide === null || objects === null || objects.length !== 1)
     {
         return presentation
     }
@@ -91,10 +91,8 @@ function getSelectedObjects(presentation: Presentation): Array<SlideObject>
         return []
     }
 
-    return selectedSlide.objects.filter((object: SlideObject) =>
-        selectedSlide.objects
-            .map((object: SlideObject) => object.id)
-            .includes(object.id)
+    return selectedSlide.objects.filter(
+        (object: SlideObject) => presentation.selection.objects.includes(object.id)
     )
 }
 

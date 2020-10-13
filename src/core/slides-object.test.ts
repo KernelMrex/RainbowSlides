@@ -1,4 +1,4 @@
-import { addObjectToSlide, removeObjectFromSlide } from './slides-object';
+import { addObjectToSlide, removeObjectFromSlide, changeObjectName, changeObjectPosition } from './slides-object';
 
 const mockPresentation: Presentation = {
     name: 'Mock presentation',
@@ -86,4 +86,135 @@ test('Remove object from not existing slide', () => {
     expect(newPresentationInstance).toBe(presentation)
     expect(presentation.slides[0].objects).toContain(object)
     expect(newPresentationInstance.slides[0].objects).toContain(object)
+})
+
+test('Change object name on selected slide', () => {
+    const object = { ...mockRectangle }
+    const presentation: Presentation = {
+        ...mockPresentation,
+        slides: [
+            {
+                ...mockSlide,
+                objects: [ object ]
+            }
+        ],
+        selection: {
+            slide: 'mock-slide',
+            objects: [ 'mock-rectangle' ]
+        }
+    }
+
+    const newPresentationInstance = changeObjectName(presentation, 'Changed name')
+
+    expect(newPresentationInstance).not.toBe(presentation)
+    expect(newPresentationInstance.slides[0].objects[0].name).toBe('Changed name')
+})
+
+test('Change object name on selected slide with multiply objects', () => {
+    const firstRectangle = { ...mockRectangle, id: 'mock-rectangle-1' }
+    const secondRectangle = { ...mockRectangle, id: 'mock-rectangle-2' }
+    const presentation: Presentation = {
+        ...mockPresentation,
+        slides: [
+            {
+                ...mockSlide,
+                objects: [ firstRectangle, secondRectangle ]
+            }
+        ],
+        selection: {
+            slide: 'mock-slide',
+            objects: [ 'mock-rectangle-2' ]
+        }
+    }
+
+    const newPresentationInstance = changeObjectName(presentation, 'Changed name')
+
+    expect(newPresentationInstance).not.toBe(presentation)
+    expect(newPresentationInstance.slides[0].objects[1].name).toBe('Changed name')
+})
+
+test('Change object name on not existing selected slide', () => {
+    const object = { ...mockRectangle }
+    const presentation: Presentation = {
+        ...mockPresentation,
+        slides: [
+            {
+                ...mockSlide,
+                objects: [ object ]
+            }
+        ],
+        selection: {
+            slide: 'not-existing-slide',
+            objects: [ 'mock-rectangle' ]
+        }
+    }
+    const newPresentationInstance = changeObjectName(presentation, 'Changed name')
+
+    expect(newPresentationInstance).toBe(presentation)
+    expect(newPresentationInstance.slides[0].objects[0].name).not.toBe('Changed name')
+})
+
+test('Change object position on selected slide', () => {
+    const object = { ...mockRectangle }
+    const presentation: Presentation = {
+        ...mockPresentation,
+        slides: [
+            {
+                ...mockSlide,
+                objects: [ object ]
+            }
+        ],
+        selection: {
+            slide: 'mock-slide',
+            objects: [ 'mock-rectangle' ]
+        }
+    }
+    const newPresentationInstance = changeObjectPosition(presentation, { x: 50, y: 60 })
+
+    expect(newPresentationInstance).not.toBe(presentation)
+    expect(newPresentationInstance.slides[0].objects[0].position).toStrictEqual({ x: 50, y: 60 })
+})
+
+test('Change object position on selected slide with multiply objects', () => {
+    const firstRectangle = { ...mockRectangle, id: 'mock-rectangle-1' }
+    const secondRectangle = { ...mockRectangle, id: 'mock-rectangle-2' }
+    const presentation: Presentation = {
+        ...mockPresentation,
+        slides: [
+            {
+                ...mockSlide,
+                objects: [ firstRectangle, secondRectangle ]
+            }
+        ],
+        selection: {
+            slide: 'mock-slide',
+            objects: [ 'mock-rectangle-2' ]
+        }
+    }
+
+    const newPresentationInstance = changeObjectPosition(presentation, { x: 50, y: 60 })
+
+    expect(newPresentationInstance).not.toBe(presentation)
+    expect(newPresentationInstance.slides[0].objects[1].position).toStrictEqual({ x: 50, y: 60 })
+})
+
+test('Change object position on not existing selected slide', () => {
+    const object = { ...mockRectangle }
+    const presentation: Presentation = {
+        ...mockPresentation,
+        slides: [
+            {
+                ...mockSlide,
+                objects: [ object ]
+            }
+        ],
+        selection: {
+            slide: 'not-existing-slide',
+            objects: [ 'mock-rectangle' ]
+        }
+    }
+    const newPresentationInstance = changeObjectPosition(presentation, { x: 50, y: 60 })
+
+    expect(newPresentationInstance).toBe(presentation)
+    expect(newPresentationInstance.slides[0].objects[0].position).not.toBe({ x: 50, y: 60 })
 })
