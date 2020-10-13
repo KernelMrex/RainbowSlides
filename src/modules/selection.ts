@@ -20,16 +20,20 @@ function deleteSlideFromSelection(presentation: Presentation): Presentation
     }
 }
 
-function selectObject(presentation: Presentation, object: string): Presentation
+function selectObject(presentation: Presentation, objectId: string): Presentation
 {
     let objects: Array<string>;
+    let currentSlide: Slide = presentation.slides.filter(slide => slide.id == presentation.selection.slide)[0];
+
     if (presentation.selection.object !== []) {
         objects = [...presentation.selection.object];
     } else {
         objects = [];
     }
 
-    objects.push(object);
+    if (objectId == currentSlide.objects.filter(object => object.id == objectId)[0].id) {
+        objects.push(objectId);
+    }
     return {
         ...presentation,
         selection: {
