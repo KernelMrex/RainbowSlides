@@ -3,7 +3,7 @@ export function addObjectToSlide(presentation: Presentation, slideID: string, ob
     const slide = presentation.slides.find((slide: Slide) => slide.id === slideID)
     if (slide === undefined)
     {
-        return presentation;
+        return presentation
     }
 
     return updateSlide(presentation, {
@@ -17,7 +17,7 @@ export function removeObjectFromSlide(presentation: Presentation, slideID: strin
     const slide = presentation.slides.find((slide: Slide) => slide.id === slideID)
     if (slide === undefined)
     {
-        return presentation;
+        return presentation
     }
 
     return updateSlide(presentation, {
