@@ -86,7 +86,7 @@ function getSelectedSlide(presentation: Presentation): Slide | null
 function getSelectedObjects(presentation: Presentation): Array<SlideObject>
 {
     const selectedSlide = getSelectedSlide(presentation)
-    if (selectedSlide === null || presentation.selection.object === null)
+    if (selectedSlide === null || presentation.selection.objects === null)
     {
         return []
     }
