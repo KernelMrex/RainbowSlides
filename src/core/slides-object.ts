@@ -28,29 +28,86 @@ export function removeObjectFromSlide(presentation: Presentation, slideID: strin
 
 export function changeObjectName(presentation: Presentation, newName: string): Presentation
 {
-    const [slide, objects] = getSelected(presentation)
-    if (slide === null || objects === null || objects.length !== 1)
+    const [slide, [selectedObject]] = getSelected(presentation)
+    if (slide === null || selectedObject === undefined)
     {
         return presentation
     }
 
     return updateSlide(presentation, updateObject(slide, {
-        ...objects[0],
+        ...selectedObject,
         name: newName,
     }))
 }
 
 export function changeObjectPosition(presentation: Presentation, newPosition: Anchor): Presentation
 {
-    const [slide, objects] = getSelected(presentation)
-    if (slide === null || objects === null || objects.length !== 1)
+    const [slide, [selectedObject]] = getSelected(presentation)
+    if (slide === null || selectedObject === undefined)
     {
         return presentation
     }
 
     return updateSlide(presentation, updateObject(slide, {
-        ...objects[0],
+        ...selectedObject,
         position: newPosition,
+    }))
+}
+
+export function changeTextFont(presentation: Presentation, newFont: Font): Presentation
+{
+    const [slide, [selectedObject]] = getSelected(presentation)
+    if (slide === null || selectedObject === undefined || selectedObject.type !== 'text')
+    {
+        return presentation
+    }
+
+    return updateSlide(presentation, updateObject(slide, {
+        ...selectedObject,
+        font: newFont,
+    }))
+}
+
+export function changeTextContent(presentation: Presentation, newContent: string): Presentation
+{
+    const [slide, [selectedObject]] = getSelected(presentation)
+    if (slide === null || selectedObject === undefined || selectedObject.type !== 'text')
+    {
+        return presentation
+    }
+
+    return updateSlide(presentation, updateObject(slide, {
+        ...selectedObject,
+        content: newContent
+    }))
+}
+
+export function changeMediaSource(presentation: Presentation, newSource: string): Presentation
+{
+    const [slide, [selectedObject]] = getSelected(presentation)
+    if (slide === null || selectedObject === undefined || !['media', 'image'].includes(selectedObject.type))
+    {
+        return presentation
+    }
+
+    return updateSlide(presentation, updateObject(slide, {
+        ...selectedObject,
+        source: newSource,
+    }))
+}
+
+export function changeObjectSize(presentation: Presentation, newWidth: number|null, newHeight: number|null): Presentation
+{
+    const [slide, [selectedObject]] = getSelected(presentation)
+    if (slide === null || selectedObject === undefined)
+    {
+        return presentation
+    }
+
+    return updateSlide(presentation, updateObject(slide, {
+        ...selectedObject,
+        width: newWidth === null ? selectedObject.width : newWidth,
+        height: newHeight === null ? selectedObject.height : newHeight,
     }))
 }
 

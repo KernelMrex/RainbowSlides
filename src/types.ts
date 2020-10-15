@@ -42,6 +42,7 @@ type CircleBlock = RectangleBlock & {
 }
 
 type TextBlock = RectangleBlock & {
+    content: string
     font: Font
     color: Color
 }
@@ -54,7 +55,7 @@ type Font = {
 }
 
 type MediaBlock = RectangleBlock & {
-    type: 'video' | 'gif'
+    mediaType: 'video' | 'gif'
     source: string
 }
 
