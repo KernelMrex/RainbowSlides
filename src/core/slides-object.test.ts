@@ -5,7 +5,8 @@ import {
     changeObjectPosition,
     changeTextFont,
     changeMediaSource,
-    changeObjectSize, changeTextContent
+    changeObjectSize,
+    changeTextContent
 } from './slides-object';
 
 const mockPresentation: Presentation = {
