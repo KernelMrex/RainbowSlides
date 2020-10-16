@@ -96,7 +96,7 @@ export function changeMediaSource(presentation: Presentation, newSource: string)
     }))
 }
 
-export function changeObjectSize(presentation: Presentation, newWidth: number|null, newHeight: number|null): Presentation
+export function changeObjectSize(presentation: Presentation, newWidth: number | null, newHeight: number | null): Presentation
 {
     const [slide, [selectedObject]] = getSelected(presentation)
     if (slide === null || selectedObject === undefined)
