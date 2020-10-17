@@ -1,3 +1,5 @@
+import { Anchor, Font, Presentation, Slide, SlideObject } from '../types';
+
 export function addObjectToSlide(presentation: Presentation, slideID: string, object: SlideObject): Presentation
 {
     const slide = presentation.slides.find((slide: Slide) => slide.id === slideID)
