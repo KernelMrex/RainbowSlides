@@ -1,0 +1,16 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+.b-app__footer
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.b-footer__content_wrapper
+{
+    background: #d4d4d4;
+}

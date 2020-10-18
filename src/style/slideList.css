@@ -1,0 +1,15 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+.b-slides__wrapper
+{
+    position: absolute;
+    display: flex;
+    width: 252px;
+    height: 94%;
+    border: 1px;
+    border-style: none solid none none;
+}

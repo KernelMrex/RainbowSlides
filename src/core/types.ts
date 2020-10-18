@@ -1,9 +1,9 @@
-type ActionHistory = {
+export type ActionHistory = {
     undo: Array<Presentation>
     redo: Array<Presentation>
 }
 
-type Presentation = {
+export type Presentation = {
     name: string
     slides: Array<Slide>
     selection: {
@@ -12,23 +12,23 @@ type Presentation = {
     }
 }
 
-type Slide = {
+export type Slide = {
     id: string
     objects: Array<SlideObject>
     background: Picture | Color
 }
 
-type Picture = {
+export type Picture = {
     source: string
 }
 
-type Color = {
+export type Color = {
     hex: string
 }
 
-type SlideObject = CircleBlock | RectangleBlock | TextBlock | MediaBlock | ImageBlock
+export type SlideObject = CircleBlock | RectangleBlock | TextBlock | MediaBlock | ImageBlock
 
-type RectangleBlock = {
+export type RectangleBlock = {
     id: string
     type: ObjectType
     name: string
@@ -37,34 +37,35 @@ type RectangleBlock = {
     width: number
 }
 
-type CircleBlock = RectangleBlock & {
+export type CircleBlock = RectangleBlock & {
     radius: number
 }
 
-type TextBlock = RectangleBlock & {
+export type TextBlock = RectangleBlock & {
+    content: string
     font: Font
     color: Color
 }
 
-type Font = {
+export type Font = {
     family: string
     size: number
     weight: number
     style: 'italic' | 'bold' | 'none'
 }
 
-type MediaBlock = RectangleBlock & {
-    type: 'video' | 'gif'
+export type MediaBlock = RectangleBlock & {
+    mediaType: 'video' | 'gif'
     source: string
 }
 
-type ImageBlock = RectangleBlock & {
+export type ImageBlock = RectangleBlock & {
     source: string
 }
 
-type ObjectType = 'rectangle' | 'text' | 'circle' | 'media' | 'image'
+export type ObjectType = 'rectangle' | 'text' | 'circle' | 'media' | 'image'
 
-type Anchor = {
+export type Anchor = {
     x: number
     y: number
 }
