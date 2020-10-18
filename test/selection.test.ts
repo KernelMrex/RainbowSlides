@@ -74,6 +74,24 @@ let presentationWithSelectedSlide: Presentation = {
     }
 };
 
+let presentationWithSelectedSlide1: Presentation = {
+    name: "name2",
+    slides: [slide1, slide2],
+    selection: {
+        slide: slide1.id,
+        object: [picture.id, simpleCircle.id]
+    }
+};
+
+let presentationWithSelectedSlide2: Presentation = {
+    name: "name2",
+    slides: [slide1, slide2],
+    selection: {
+        slide: slide1.id,
+        object: [simpleCircle.id]
+    }
+};
+
 describe('test module "Selection"', () => {
     test('select slide without previous', () => {
         let newPresentation: Presentation = selectSlide(presentationWithoutSelectedSlide, slide1);
@@ -138,19 +156,13 @@ describe('test module "Selection"', () => {
         })
     });
 
-    test('delete object with already selected object', () => {
-        let selectedSlideId: string | null = presentationWithSelectedSlide.selection.slide;
-        let selectedSlide: Slide = presentationWithSelectedSlide.slides.filter(slide => slide.id === selectedSlideId)[0];
-        let newSelectedObjectId: string = selectedSlide.objects.filter(object => object.id === simpleCircle.id)[0].id;
-        
-        let newSelectedObjects: Array<string> = presentationWithSelectedSlide.selection.object.filter(object => object !== newSelectedObjectId)
-        let newPresentation: Presentation = deleteObjectFromSelection(presentationWithSelectedSlide, newSelectedObjectId);
-        expect(newPresentation).toEqual({
-            ...presentationWithSelectedSlide,
-            selection: {
-                ...presentationWithSelectedSlide.selection,
-                object: newSelectedObjects
-            }
-        })
+    test('delete first object with already selected object', () => {
+        let newPresentation: Presentation = deleteObjectFromSelection(presentationWithSelectedSlide1, simpleCircle.id);
+        expect(newPresentation).toEqual(presentationWithSelectedSlide);
+    });
+
+    test('delete second object with already selected object', () => {
+        let newPresentation: Presentation = deleteObjectFromSelection(presentationWithSelectedSlide1, picture.id);
+        expect(newPresentation).toEqual(presentationWithSelectedSlide2);
     });
 });
