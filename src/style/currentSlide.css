@@ -1,0 +1,15 @@
+.b-slide__wrapper
+{
+    width: 86%;
+    height: 100%;
+    margin-left: 15%;
+    margin-top: 1.2%;
+}
+
+.b-slide__content
+{
+    width: 1360px;
+    height: 768px;
+    margin: 20px auto;
+    border: 1px solid;
+}

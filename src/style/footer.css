@@ -6,11 +6,18 @@
 
 .b-app__footer
 {
+    position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: end;
 }
 
 .b-footer__content_wrapper
 {
     background: #d4d4d4;
+    padding: 10px 20px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
 }

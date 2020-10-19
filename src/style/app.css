@@ -10,28 +10,6 @@
     flex-direction: column;
 }
 
-.b-app__name_wrapper
-{
-    display: flex;
-    justify-content: flex-start;
-    padding: 10px 0 10px 20px;
-    border: 1px #b8b8b8;
-    border-style: none none solid none;
-}
-
-.b-app__name
-{
-    display: flex;
-    justify-content: end;
-    border: dashed;
-}
-
-.b-app__name_content
-{
-    padding: 5px 10px;
-    font: 400 20px/13px "Comic Sans MS";
-}
-
 .b-app__container
 {
     display: flex;

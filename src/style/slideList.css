@@ -8,8 +8,16 @@
 {
     position: absolute;
     display: flex;
-    width: 252px;
-    height: 94%;
+    width: 14%;
+    height: 93%;
     border: 1px;
     border-style: none solid none none;
+}
+
+.b-slides__content
+{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
 }
