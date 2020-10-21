@@ -14,7 +14,7 @@ export default function SlideList(props: SlideList)
         <div className="b-slides__wrapper">
             <div className="b-slides__content">
                 {/*{props.slideList.map((slide, index) => (*/}
-                    <MiniSlide key={1} slide={null} />
+                    <MiniSlide key={12} slide={null} />
                 {/*))}*/}
             </div>
         </div>
