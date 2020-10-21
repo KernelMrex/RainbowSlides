@@ -49,11 +49,11 @@ function selectObject(presentation: Presentation, objectId: string): Presentatio
     }
 }
 
-function deleteObjectFromSelection(presentation: Presentation, object: string): Presentation
+function deleteObjectFromSelection(presentation: Presentation, objectId: string): Presentation
 {
     if (presentation.selection.object !== []) {
         let objects: Array<string> = [...presentation.selection.object];
-        objects.splice(presentation.selection.object.indexOf(object), 1);
+        objects.splice(presentation.selection.object.indexOf(objectId), 1);
         return {
             ...presentation,
             selection: {

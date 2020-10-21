@@ -156,12 +156,12 @@ describe('test module "Selection"', () => {
         })
     });
 
-    test('delete first object with already selected object', () => {
+    test('delete last object with already selected object', () => {
         let newPresentation: Presentation = deleteObjectFromSelection(presentationWithSelectedSlide1, simpleCircle.id);
         expect(newPresentation).toEqual(presentationWithSelectedSlide);
     });
 
-    test('delete second object with already selected object', () => {
+    test('delete first object with already selected object', () => {
         let newPresentation: Presentation = deleteObjectFromSelection(presentationWithSelectedSlide1, picture.id);
         expect(newPresentation).toEqual(presentationWithSelectedSlide2);
     });
