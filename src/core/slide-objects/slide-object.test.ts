@@ -9,7 +9,13 @@ import {
     changeTextContent
 } from './slide-objects';
 
-import { MediaBlock, Presentation, RectangleBlock, Slide, TextBlock } from '../types';
+import {
+    MediaBlock,
+    Presentation,
+    RectangleBlock,
+    Slide,
+    TextBlock
+} from '../types';
 
 const mockPresentation: Presentation = {
     name: 'Mock presentation',
@@ -109,6 +115,7 @@ test('Remove object from slide', () => {
     const newPresentationInstance = removeObjectFromSlide(presentation, 'mock-slide', 'mock-rectangle')
     expect(presentation.slides[0].objects).toContain(object)
     expect(newPresentationInstance.slides[0].objects).not.toContain(object)
+    expect(newPresentationInstance.selection.objects).not.toContain('mock-rectangle')
 })
 
 test('Remove object from not existing slide', () => {

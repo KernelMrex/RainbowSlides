@@ -1,9 +1,9 @@
-import { Anchor, Font, Presentation, Slide, SlideObject } from '../types';
+import { Anchor, Font, Presentation, Slide, SlideObject } from '../types'
 
 export function addObjectToSlide(presentation: Presentation, slideID: string, object: SlideObject): Presentation
 {
     const slide = presentation.slides.find((slide: Slide) => slide.id === slideID)
-    if (slide === undefined)
+    if (!slide)
     {
         return presentation
     }
@@ -17,21 +17,28 @@ export function addObjectToSlide(presentation: Presentation, slideID: string, ob
 export function removeObjectFromSlide(presentation: Presentation, slideID: string, objectID: string): Presentation
 {
     const slide = presentation.slides.find((slide: Slide) => slide.id === slideID)
-    if (slide === undefined)
+    if (!slide)
     {
         return presentation
     }
 
-    return updateSlide(presentation, {
-        ...slide,
-        objects: [...slide.objects].filter((object: SlideObject) => object.id !== objectID)
-    })
+
+    return {
+        ...updateSlide(presentation, {
+            ...slide,
+            objects: [...slide.objects].filter((object: SlideObject) => object.id !== objectID),
+        }),
+        selection: {
+            ...presentation.selection,
+            objects: [...presentation.selection.objects].filter((selectedObjectID: string) => selectedObjectID !== objectID)
+        }
+    }
 }
 
 export function changeObjectName(presentation: Presentation, newName: string): Presentation
 {
     const [slide, [selectedObject]] = getSelected(presentation)
-    if (slide === null || selectedObject === undefined)
+    if (!slide || !selectedObject)
     {
         return presentation
     }
@@ -45,7 +52,7 @@ export function changeObjectName(presentation: Presentation, newName: string): P
 export function changeObjectPosition(presentation: Presentation, newPosition: Anchor): Presentation
 {
     const [slide, [selectedObject]] = getSelected(presentation)
-    if (slide === null || selectedObject === undefined)
+    if (!slide || !selectedObject)
     {
         return presentation
     }
@@ -59,7 +66,7 @@ export function changeObjectPosition(presentation: Presentation, newPosition: An
 export function changeTextFont(presentation: Presentation, newFont: Font): Presentation
 {
     const [slide, [selectedObject]] = getSelected(presentation)
-    if (slide === null || selectedObject === undefined || selectedObject.type !== 'text')
+    if (!slide || !selectedObject || selectedObject.type !== 'text')
     {
         return presentation
     }
@@ -73,7 +80,7 @@ export function changeTextFont(presentation: Presentation, newFont: Font): Prese
 export function changeTextContent(presentation: Presentation, newContent: string): Presentation
 {
     const [slide, [selectedObject]] = getSelected(presentation)
-    if (slide === null || selectedObject === undefined || selectedObject.type !== 'text')
+    if (!slide || !selectedObject || selectedObject.type !== 'text')
     {
         return presentation
     }
@@ -87,7 +94,7 @@ export function changeTextContent(presentation: Presentation, newContent: string
 export function changeMediaSource(presentation: Presentation, newSource: string): Presentation
 {
     const [slide, [selectedObject]] = getSelected(presentation)
-    if (slide === null || selectedObject === undefined || !['media', 'image'].includes(selectedObject.type))
+    if (!slide || !selectedObject || !['media', 'image'].includes(selectedObject.type))
     {
         return presentation
     }
@@ -101,15 +108,15 @@ export function changeMediaSource(presentation: Presentation, newSource: string)
 export function changeObjectSize(presentation: Presentation, newWidth: number | null, newHeight: number | null): Presentation
 {
     const [slide, [selectedObject]] = getSelected(presentation)
-    if (slide === null || selectedObject === undefined)
+    if (!slide || !selectedObject)
     {
         return presentation
     }
 
     return updateSlide(presentation, updateObject(slide, {
         ...selectedObject,
-        width: newWidth === null ? selectedObject.width : newWidth,
-        height: newHeight === null ? selectedObject.height : newHeight,
+        width: !newWidth ? selectedObject.width : newWidth,
+        height: !newHeight ? selectedObject.height : newHeight,
     }))
 }
 
@@ -132,20 +139,20 @@ function updateObject(slide: Slide, newObject: SlideObject): Slide
 function getSelectedSlide(presentation: Presentation): Slide | null
 {
     const selectedSlideID = presentation.selection.slide
-    if (selectedSlideID === undefined)
+    if (!selectedSlideID)
     {
         return null
     }
 
     const slide = presentation.slides.find((slide: Slide) => slide.id === selectedSlideID)
 
-    return slide !== undefined ? slide : null
+    return slide ? slide : null
 }
 
 function getSelectedObjects(presentation: Presentation): Array<SlideObject>
 {
     const selectedSlide = getSelectedSlide(presentation)
-    if (selectedSlide === null || presentation.selection.objects === null)
+    if (!selectedSlide || !presentation.selection.objects)
     {
         return []
     }
