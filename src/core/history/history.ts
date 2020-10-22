@@ -1,3 +1,5 @@
+import { Presentation, ActionHistory } from '../types'
+
 function addChangeToHistory(presentation: Presentation, history: ActionHistory)
 {
     history.undo.push(presentation);
