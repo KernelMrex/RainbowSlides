@@ -1,9 +1,11 @@
-function deletePresentation(): Presentation
+import { Presentation } from '../types'
+
+function recreatePresentation(): Presentation
 {
     return createPresentation()
 }
 
-function createPresentation(name = "simple name"): Presentation
+function createPresentation(name: string = 'simple name'): Presentation
 {
     return {
         name: name,
@@ -30,7 +32,13 @@ function getJSONOfPresentation(presentation: Presentation): string
 
 function getPresentationFromJSON(presentationInJSON: string): Presentation
 {
-    return JSON.parse(presentationInJSON);
+    return JSON.parse(presentationInJSON)
 }
 
-export {deletePresentation, changePresentationsName, createPresentation, getJSONOfPresentation, getPresentationFromJSON};
+export {
+    recreatePresentation,
+    changePresentationsName,
+    createPresentation,
+    getJSONOfPresentation,
+    getPresentationFromJSON
+}
