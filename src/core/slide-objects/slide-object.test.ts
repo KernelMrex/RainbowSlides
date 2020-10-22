@@ -7,7 +7,8 @@ import {
     changeMediaSource,
     changeObjectSize,
     changeTextContent
-} from './slides-object';
+} from './slide-objects';
+
 import { MediaBlock, Presentation, RectangleBlock, Slide, TextBlock } from '../types';
 
 const mockPresentation: Presentation = {
