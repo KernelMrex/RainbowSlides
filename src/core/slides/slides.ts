@@ -1,3 +1,6 @@
+import { Presentation, Slide, SlideObject, Picture, Color } from '../types'
+import {deleteSlideFromSelection} from '../selection/selection';
+
 function addSlide(presentation: Presentation): Presentation {
     return {
         ...presentation,
@@ -6,7 +9,7 @@ function addSlide(presentation: Presentation): Presentation {
 }
 
 function getDefaultSlide(): Slide {
-    let slideObjects: Array<SlideObject> = [];
+    const slideObjects: Array<SlideObject> = [];
     return {
         id: getNewId(),
         objects: slideObjects,
@@ -17,14 +20,16 @@ function getDefaultSlide(): Slide {
 }
 
 function deleteSlide(presentation: Presentation): Presentation {
-    let currentSlideId: string | null = presentation.selection.slide;
+    const currentSlideId: string | null = presentation.selection.slide;
     if (currentSlideId !== null) {
-        let currentSlide: Slide = presentation.slides.filter(slide => slide.id == currentSlideId)[0];
+        let newPresentation: Presentation = {...presentation};
+        newPresentation = deleteSlideFromSelection(newPresentation);
+        const currentSlide: Slide = presentation.slides.filter(slide => slide.id == currentSlideId)[0];
         let newSlidesList: Array<Slide> = [...presentation.slides];
         newSlidesList.splice(presentation.slides.indexOf(currentSlide), 1);
 
         return {
-            ...presentation,
+            ...newPresentation,
             slides: newSlidesList
         }
     }
@@ -38,7 +43,7 @@ function getNewId(): string {
 
 function changeOrderOfSlide(presentation: Presentation, place: number): Presentation {
     if (presentation.selection.slide !== null && presentation.slides.length >= place) {
-        let currentSlide: Slide = presentation.slides.filter(slide => slide.id == presentation.selection.slide)[0];
+        const currentSlide: Slide = presentation.slides.filter(slide => slide.id == presentation.selection.slide)[0];
         let newSlidesList: Array<Slide> = [...presentation.slides];
         newSlidesList.splice(presentation.slides.indexOf(currentSlide), 1);
         newSlidesList.splice(place, 0, currentSlide);
@@ -53,13 +58,13 @@ function changeOrderOfSlide(presentation: Presentation, place: number): Presenta
 
 function changesSlidesBackground(presentation: Presentation, background: Picture | Color): Presentation {
     if (presentation.selection.slide !== null) {
-        let currentSlide: Slide = presentation.slides.filter(slide => slide.id == presentation.selection.slide)[0]
-        let newSlide: Slide = {
+        const currentSlide: Slide = presentation.slides.filter(slide => slide.id == presentation.selection.slide)[0]
+        const newSlide: Slide = {
             ...currentSlide,
             background: background
         };
 
-        let slides: Array<Slide> = createNewArraySlidesWithNewSlide(presentation, newSlide);
+        const slides: Array<Slide> = createNewArraySlidesWithNewSlide(presentation, newSlide);
         return {
             ...presentation,
             slides: slides,
@@ -71,8 +76,8 @@ function changesSlidesBackground(presentation: Presentation, background: Picture
 
 function createNewArraySlidesWithNewSlide(presentation: Presentation, newSlide: Slide): Array<Slide> {
     if (presentation.selection.slide !== null) {
-        let currentSlide: Slide = presentation.slides.filter(slide => slide.id == presentation.selection.slide)[0];
-        let currentSlideKey: number = presentation.slides.indexOf(currentSlide);
+        const currentSlide: Slide = presentation.slides.filter(slide => slide.id == presentation.selection.slide)[0];
+        const currentSlideKey: number = presentation.slides.indexOf(currentSlide);
         let newArraySlide: Array<Slide> = [...presentation.slides];
         newArraySlide.splice(currentSlideKey, 1, newSlide);
         return newArraySlide;
