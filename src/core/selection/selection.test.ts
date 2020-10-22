@@ -3,7 +3,7 @@ import {
     selectSlide,
     deleteSlideFromSelection,
     deleteObjectFromSelection
-} from "../src/modules/selection";
+} from "./selection";
 
 let picture: ImageBlock = {
     id: 'f123',
@@ -52,7 +52,7 @@ let presentationWithoutSelectedSlide: Presentation = {
     slides: [slide1],
     selection: {
         slide: null,
-        object: []
+        objects: []
     }
 };
 
@@ -61,7 +61,7 @@ let presentationWithoutSelectedObject: Presentation = {
     slides: [slide1],
     selection: {
         slide: slide1.id,
-        object: []
+        objects: []
     }
 };
 
@@ -70,7 +70,7 @@ let presentationWithSelectedSlide: Presentation = {
     slides: [slide1, slide2],
     selection: {
         slide: slide1.id,
-        object: [picture.id]
+        objects: [picture.id]
     }
 };
 
@@ -79,7 +79,7 @@ let presentationWithSelectedSlide1: Presentation = {
     slides: [slide1, slide2],
     selection: {
         slide: slide1.id,
-        object: [picture.id, simpleCircle.id]
+        objects: [picture.id, simpleCircle.id]
     }
 };
 
@@ -88,7 +88,7 @@ let presentationWithSelectedSlide2: Presentation = {
     slides: [slide1, slide2],
     selection: {
         slide: slide1.id,
-        object: [simpleCircle.id]
+        objects: [simpleCircle.id]
     }
 };
 
@@ -99,7 +99,7 @@ describe('test module "Selection"', () => {
             ...presentationWithoutSelectedSlide,
             selection: {
                 slide: slide1.id,
-                object: []
+                objects: []
             }
         })
     });
@@ -110,7 +110,7 @@ describe('test module "Selection"', () => {
             ...presentationWithSelectedSlide,
             selection: {
                 slide: slide2.id,
-                object: []
+                objects: []
             }
         })
     });
@@ -121,7 +121,7 @@ describe('test module "Selection"', () => {
             ...presentationWithSelectedSlide,
             selection: {
                 slide: null,
-                object: []
+                objects: []
             }
         })
     });
@@ -136,7 +136,7 @@ describe('test module "Selection"', () => {
             ...presentationWithoutSelectedObject,
             selection: {
                 ...presentationWithoutSelectedObject.selection,
-                object: [newSelectedObjectId]
+                objects: [newSelectedObjectId]
             }
         })
     });
@@ -151,7 +151,7 @@ describe('test module "Selection"', () => {
             ...presentationWithSelectedSlide,
             selection: {
                 ...presentationWithSelectedSlide.selection,
-                object: [...presentationWithSelectedSlide.selection.object, newSelectedObjectId]
+                objects: [...presentationWithSelectedSlide.selection.objects, newSelectedObjectId]
             }
         })
     });

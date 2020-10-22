@@ -4,7 +4,7 @@ function selectSlide(presentation: Presentation, slide: Slide): Presentation
         ...presentation,
         selection: {
             slide: slide.id,
-            object: []
+            objects: []
         }
     }
 }
@@ -15,7 +15,7 @@ function deleteSlideFromSelection(presentation: Presentation): Presentation
         ...presentation,
         selection: {
             slide: null,
-            object: []
+            objects: []
         }
     }
 }
@@ -27,9 +27,9 @@ function selectObject(presentation: Presentation, objectId: string): Presentatio
         let objects: Array<string>;
         let currentSlide: Slide = presentation.slides.filter(slide => slide.id === presentation.selection.slide)[0];
 
-        if (presentation.selection.object !== [])
+        if (presentation.selection.objects !== [])
         {
-            objects = [...presentation.selection.object];
+            objects = [...presentation.selection.objects];
         } else
         {
             objects = [];
@@ -44,7 +44,7 @@ function selectObject(presentation: Presentation, objectId: string): Presentatio
             ...presentation,
             selection: {
                 ...presentation.selection,
-                object: objects
+                objects: objects
             }
         }
     } else
@@ -55,15 +55,15 @@ function selectObject(presentation: Presentation, objectId: string): Presentatio
 
 function deleteObjectFromSelection(presentation: Presentation, objectId: string): Presentation
 {
-    if (presentation.selection.object !== [])
+    if (presentation.selection.objects !== [])
     {
-        let objects: Array<string> = [...presentation.selection.object];
-        objects.splice(presentation.selection.object.indexOf(objectId), 1);
+        let objects: Array<string> = [...presentation.selection.objects];
+        objects.splice(presentation.selection.objects.indexOf(objectId), 1);
         return {
             ...presentation,
             selection: {
                 ...presentation.selection,
-                object: objects
+                objects: objects
             }
         }
     }
