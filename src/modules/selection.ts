@@ -25,15 +25,18 @@ function selectObject(presentation: Presentation, objectId: string): Presentatio
     if (presentation.selection.slide !== null)
     {
         let objects: Array<string>;
-        let currentSlide: Slide = presentation.slides.filter(slide => slide.id == presentation.selection.slide)[0];
+        let currentSlide: Slide = presentation.slides.filter(slide => slide.id === presentation.selection.slide)[0];
 
-        if (presentation.selection.object !== []) {
+        if (presentation.selection.object !== [])
+        {
             objects = [...presentation.selection.object];
-        } else {
+        } else
+        {
             objects = [];
         }
 
-        if (objectId == currentSlide.objects.filter(object => object.id == objectId)[0].id) {
+        if (objectId == currentSlide.objects.filter(object => object.id === objectId)[0].id)
+        {
             objects.push(objectId);
         }
 
@@ -44,14 +47,16 @@ function selectObject(presentation: Presentation, objectId: string): Presentatio
                 object: objects
             }
         }
-    } else {
+    } else
+    {
         return presentation;
     }
 }
 
 function deleteObjectFromSelection(presentation: Presentation, objectId: string): Presentation
 {
-    if (presentation.selection.object !== []) {
+    if (presentation.selection.object !== [])
+    {
         let objects: Array<string> = [...presentation.selection.object];
         objects.splice(presentation.selection.object.indexOf(objectId), 1);
         return {
