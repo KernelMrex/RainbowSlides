@@ -16,3 +16,9 @@ function redoChange(history: ActionHistory)
 {
     return history.redo.pop()
 }
+
+export {
+    addChangeToHistory,
+    undoChange,
+    redoChange
+}
