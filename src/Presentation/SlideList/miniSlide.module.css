@@ -1,4 +1,4 @@
-.b-mini-slide__wrapper
+.wrapper
 {
     width: 80%;
     height: 15%;
@@ -7,7 +7,7 @@
     margin: 10px auto;
 }
 
-.b-mini-slide__element
+.element
 {
     padding: 18px 0 0 15px;
 }

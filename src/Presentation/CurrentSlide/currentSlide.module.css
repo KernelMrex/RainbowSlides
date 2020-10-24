@@ -1,4 +1,4 @@
-.b-slide__wrapper
+.wrapper
 {
     width: 86%;
     height: 100%;
@@ -6,7 +6,7 @@
     margin-top: 1.2%;
 }
 
-.b-slide__content
+.content
 {
     width: 1360px;
     height: 768px;

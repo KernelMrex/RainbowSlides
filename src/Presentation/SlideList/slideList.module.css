@@ -4,7 +4,7 @@
     padding: 0;
 }
 
-.b-slides__wrapper
+.wrapper
 {
     position: absolute;
     display: flex;
@@ -14,9 +14,14 @@
     border-style: none solid none none;
 }
 
-.b-slides__content
+.content
 {
     display: flex;
     width: 100%;
     flex-direction: column;
+}
+
+.error_text
+{
+
 }

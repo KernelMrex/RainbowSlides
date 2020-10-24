@@ -4,14 +4,8 @@
     padding: 0;
 }
 
-.b-app
+.app
 {
     display: flex;
     flex-direction: column;
-}
-
-.b-app__container
-{
-    display: flex;
-    flex-direction: row;
 }

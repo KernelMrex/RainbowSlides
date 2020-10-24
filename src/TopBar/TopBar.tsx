@@ -1,20 +1,20 @@
 import React from 'react';
-import '../style/topBar.css'
+import * as type from '../core/types';
+import style from './topBar.module.css';
+import Name from './Name/Name';
+import TopBarButtons from './TopBarButtons/TopBarButtons';
 
-interface Name
+interface Presentation
 {
-    name: string
+    presentation: type.Presentation
 }
 
-export default function TopBar(props: Name)
+export default function TopBar(props: Presentation)
 {
     return (
-        <div className="b-topbar__wrapper">
-            <div className="b-topbar__name_wrapper">
-                <div className="b-topbar__name">
-                    <span className="b-topbar__name_content">{props.name}</span>
-                </div>
-            </div>
+        <div className={style.wrapper}>
+            <Name name={props.presentation.name}/>
+            <TopBarButtons/>
         </div>
     )
 }

@@ -1,0 +1,11 @@
+.buttons_wrapper
+{
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0 10px 20px;
+}
+
+.button_export, .button_import, .button_preview
+{
+    border: 1px;
+}

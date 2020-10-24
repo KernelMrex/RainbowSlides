@@ -1,12 +1,12 @@
 import React from 'react';
-import '../style/footer.css'
+import style from './footer.module.css'
 
 export default function Footer()
 {
     return (
-        <footer className="b-app__footer">
-            <div className="b-footer__content_wrapper">
-                <span className="b-footer__content">@ RainbowSlides is better that no rainbow google slides</span>
+        <footer className={style.footer}>
+            <div className={style.content_wrapper}>
+                <span>@ RainbowSlides is better that no rainbow google slides</span>
             </div>
         </footer>
     )

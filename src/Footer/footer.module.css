@@ -1,10 +1,4 @@
-*
-{
-    margin: 0;
-    padding: 0;
-}
-
-.b-app__footer
+.footer
 {
     position: relative;
     display: flex;
@@ -12,7 +6,7 @@
     justify-content: end;
 }
 
-.b-footer__content_wrapper
+.content_wrapper
 {
     background: #d4d4d4;
     padding: 10px 20px;
