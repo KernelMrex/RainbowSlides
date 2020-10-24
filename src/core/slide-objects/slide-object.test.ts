@@ -7,7 +7,7 @@ import {
     changeMediaSource,
     changeObjectSize,
     changeTextContent
-} from './slide-objects'
+} from './slide-object'
 
 import { MediaBlock, Presentation, RectangleBlock, Slide, TextBlock } from '../types'
 
@@ -65,669 +65,670 @@ const mockMediaBlock: MediaBlock = {
     source: 'test-source',
 }
 
-
-test('Add object to slide', () => {
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            { ...mockSlide }
-        ]
-    }
-    const object = { ...mockRectangle }
-    const newPresentationInstance = addObjectToSlide(presentation, 'mock-slide', object)
-    expect(newPresentationInstance).not.toBe(presentation)
-    expect(presentation.slides[0].objects).not.toContain(object)
-    expect(newPresentationInstance.slides[0].objects).toContain(object)
-})
-
-test('Add object to not existing slide', () => {
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            { ...mockSlide }
-        ]
-    }
-    const object = { ...mockRectangle }
-    const newPresentationInstance = addObjectToSlide(presentation, 'no-existing-slide', object)
-    expect(newPresentationInstance).toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects).not.toContain(object)
-})
-
-
-test('Remove object from slide', () => {
-    const object = { ...mockRectangle }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
-            }
-        ]
-    }
-
-    const newPresentationInstance = removeObjectFromSlide(presentation, 'mock-slide', 'mock-rectangle')
-    expect(presentation.slides[0].objects).toContain(object)
-    expect(newPresentationInstance.slides[0].objects).not.toContain(object)
-    expect(newPresentationInstance.selection.objects).not.toContain('mock-rectangle')
-})
-
-test('Remove object from not existing slide', () => {
-    const object = { ...mockRectangle }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
-            }
-        ]
-    }
-
-    const newPresentationInstance = removeObjectFromSlide(presentation, 'not-existing-slide', 'mock-rectangle')
-    expect(newPresentationInstance).toBe(presentation)
-    expect(presentation.slides[0].objects).toContain(object)
-    expect(newPresentationInstance.slides[0].objects).toContain(object)
-})
-
-
-test('Change object name on selected slide', () => {
-    const object = { ...mockRectangle }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
-            }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'mock-rectangle' ]
+describe('test module "Slide Object"', () => {
+    test('Add object to slide', () => {
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                { ...mockSlide }
+            ]
         }
-    }
-
-    const newPresentationInstance = changeObjectName(presentation, 'Changed name')
-
-    expect(newPresentationInstance).not.toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].name).toBe('Changed name')
-})
-
-test('Change object name on not existing selected slide', () => {
-    const object = { ...mockRectangle }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
-            }
-        ],
-        selection: {
-            slide: 'not-existing-slide',
-            objects: [ 'mock-rectangle' ]
-        }
-    }
-    const newPresentationInstance = changeObjectName(presentation, 'Changed name')
-
-    expect(newPresentationInstance).toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].name).not.toBe('Changed name')
-})
-
-test('Change not existing object name on selected slide', () => {
-    const object = { ...mockRectangle }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
-            }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'not-existing-object' ]
-        }
-    }
-
-    const newPresentationInstance = changeObjectName(presentation, 'Changed name')
-
-    expect(newPresentationInstance).toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].name).toBe(presentation.slides[0].objects[0].name)
-})
-
-
-test('Change object position on selected slide', () => {
-    const object = { ...mockRectangle }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
-            }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'mock-rectangle' ]
-        }
-    }
-    const newPresentationInstance = changeObjectPosition(presentation, { x: 50, y: 60 })
-
-    expect(newPresentationInstance).not.toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].position).toStrictEqual({ x: 50, y: 60 })
-})
-
-test('Change object position on not existing selected slide', () => {
-    const object = { ...mockRectangle }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
-            }
-        ],
-        selection: {
-            slide: 'not-existing-slide',
-            objects: [ 'mock-rectangle' ]
-        }
-    }
-    const newPresentationInstance = changeObjectPosition(presentation, { x: 50, y: 60 })
-
-    expect(newPresentationInstance).toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].position).not.toBe({ x: 50, y: 60 })
-})
-
-test('Change object position on selected slide', () => {
-    const object = { ...mockRectangle }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
-            }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'not-existing-object' ]
-        }
-    }
-    const newPresentationInstance = changeObjectPosition(presentation, { x: 50, y: 60 })
-
-    expect(newPresentationInstance).toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].position).not.toStrictEqual({ x: 50, y: 60 })
-})
-
-
-test('Change text-object font on selected slide', () => {
-    const object = { ...mockTextBlock }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
-            }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'mock-text' ]
-        }
-    }
-
-    const newPresentationInstance = changeTextFont(presentation, {
-        family: 'changed-font-family',
-        size: 50,
-        style: 'italic',
-        weight: 300
+        const object = { ...mockRectangle }
+        const newPresentationInstance = addObjectToSlide(presentation, 'mock-slide', object)
+        expect(newPresentationInstance).not.toBe(presentation)
+        expect(presentation.slides[0].objects).not.toContain(object)
+        expect(newPresentationInstance.slides[0].objects).toContain(object)
     })
 
-    if (!('font' in newPresentationInstance.slides[0].objects[0]))
-    {
-        fail('property "font" does not found')
-    }
-
-    expect(newPresentationInstance).not.toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].font).toStrictEqual({
-        family: 'changed-font-family',
-        size: 50,
-        style: 'italic',
-        weight: 300
-    })
-})
-
-test('Change text-object font on not existing slide', () => {
-    const object = { ...mockTextBlock }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
-            }
-        ],
-        selection: {
-            slide: 'not-existing-slide',
-            objects: [ 'mock-text' ]
+    test('Add object to not existing slide', () => {
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                { ...mockSlide }
+            ]
         }
-    }
-
-    const newPresentationInstance = changeTextFont(presentation, {
-        family: 'changed-font-family',
-        size: 50,
-        style: 'italic',
-        weight: 300
+        const object = { ...mockRectangle }
+        const newPresentationInstance = addObjectToSlide(presentation, 'no-existing-slide', object)
+        expect(newPresentationInstance).toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects).not.toContain(object)
     })
 
-    if (!('font' in newPresentationInstance.slides[0].objects[0]))
-    {
-        fail('property "font" does not found')
-    }
 
-    expect(newPresentationInstance).toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].font).not.toStrictEqual({
-        family: 'changed-font-family',
-        size: 50,
-        style: 'italic',
-        weight: 300
-    })
-})
-
-test('Change not existing text-object font on slide', () => {
-    const object = { ...mockTextBlock }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
-            }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'not-existing-object' ]
+    test('Remove object from slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ]
         }
-    }
 
-    const newPresentationInstance = changeTextFont(presentation, {
-        family: 'changed-font-family',
-        size: 50,
-        style: 'italic',
-        weight: 300
+        const newPresentationInstance = removeObjectFromSlide(presentation, 'mock-slide', 'mock-rectangle')
+        expect(presentation.slides[0].objects).toContain(object)
+        expect(newPresentationInstance.slides[0].objects).not.toContain(object)
+        expect(newPresentationInstance.selection.objects).not.toContain('mock-rectangle')
     })
 
-    if (!('font' in newPresentationInstance.slides[0].objects[0]))
-    {
-        fail('property "font" does not found')
-    }
-
-    expect(newPresentationInstance).toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].font).not.toStrictEqual({
-        family: 'changed-font-family',
-        size: 50,
-        style: 'italic',
-        weight: 300
-    })
-})
-
-test('Change not text-object font on slide', () => {
-    const object = { ...mockRectangle }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
-            }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'mock-rectangle' ]
+    test('Remove object from not existing slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ]
         }
-    }
 
-    const newPresentationInstance = changeTextFont(presentation, {
-        family: 'changed-font-family',
-        size: 50,
-        style: 'italic',
-        weight: 300
+        const newPresentationInstance = removeObjectFromSlide(presentation, 'not-existing-slide', 'mock-rectangle')
+        expect(newPresentationInstance).toBe(presentation)
+        expect(presentation.slides[0].objects).toContain(object)
+        expect(newPresentationInstance.slides[0].objects).toContain(object)
     })
 
-    expect(newPresentationInstance).toBe(presentation)
-    if ('font' in newPresentationInstance.slides[0].objects[0])
-    {
-        fail('property "font" must be not found')
-    }
-})
 
-
-test('Change text-object content on selected slide', () => {
-    const object = { ...mockTextBlock }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
+    test('Change object name on selected slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'mock-rectangle' ]
             }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'mock-text' ]
         }
-    }
 
-    const newPresentationInstance = changeTextContent(presentation, 'Changed text')
+        const newPresentationInstance = changeObjectName(presentation, 'Changed name')
 
-    if (!('content' in newPresentationInstance.slides[0].objects[0]))
-    {
-        fail('property "content" does not found')
-    }
+        expect(newPresentationInstance).not.toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].name).toBe('Changed name')
+    })
 
-    expect(newPresentationInstance).not.toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].content).toBe('Changed text')
-})
-
-test('Change text-object content on not existing slide', () => {
-    const object = { ...mockTextBlock }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
+    test('Change object name on not existing selected slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'not-existing-slide',
+                objects: [ 'mock-rectangle' ]
             }
-        ],
-        selection: {
-            slide: 'not-existing-slide',
-            objects: [ 'mock-text' ]
         }
-    }
+        const newPresentationInstance = changeObjectName(presentation, 'Changed name')
 
-    const newPresentationInstance = changeTextContent(presentation, 'Changed text')
+        expect(newPresentationInstance).toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].name).not.toBe('Changed name')
+    })
 
-    if (!('content' in newPresentationInstance.slides[0].objects[0]))
-    {
-        fail('property "content" does not found')
-    }
-
-    expect(newPresentationInstance).toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].content).not.toBe('Changed text')
-})
-
-test('Change not existing text-object content on selected slide', () => {
-    const object = { ...mockTextBlock }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
+    test('Change not existing object name on selected slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'not-existing-object' ]
             }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'not-existing-object' ]
         }
-    }
 
-    const newPresentationInstance = changeTextContent(presentation, 'Changed text')
+        const newPresentationInstance = changeObjectName(presentation, 'Changed name')
 
-    if (!('content' in newPresentationInstance.slides[0].objects[0]))
-    {
-        fail('property "content" does not found')
-    }
+        expect(newPresentationInstance).toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].name).toBe(presentation.slides[0].objects[0].name)
+    })
 
-    expect(newPresentationInstance).toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].content).not.toBe('Changed text')
-})
 
-test('Change not text-object content on selected slide', () => {
-    const object = { ...mockRectangle }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
+    test('Change object position on selected slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'mock-rectangle' ]
             }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'mock-rectangle' ]
         }
-    }
+        const newPresentationInstance = changeObjectPosition(presentation, { x: 50, y: 60 })
 
-    const newPresentationInstance = changeTextContent(presentation, 'Changed text')
+        expect(newPresentationInstance).not.toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].position).toStrictEqual({ x: 50, y: 60 })
+    })
 
-    expect(newPresentationInstance).toBe(presentation)
-    if ('content' in newPresentationInstance.slides[0].objects[0])
-    {
-        fail('property "content" must not be found')
-    }
-})
-
-
-test('Change media-object source on selected slide', () => {
-    const object = { ...mockMediaBlock }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
+    test('Change object position on not existing selected slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'not-existing-slide',
+                objects: [ 'mock-rectangle' ]
             }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'mock-media' ]
         }
-    }
+        const newPresentationInstance = changeObjectPosition(presentation, { x: 50, y: 60 })
 
-    const newPresentationInstance = changeMediaSource(presentation, 'changed source')
+        expect(newPresentationInstance).toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].position).not.toBe({ x: 50, y: 60 })
+    })
 
-    if (!('source' in newPresentationInstance.slides[0].objects[0]))
-    {
-        fail('property "font" does not found')
-    }
-
-    expect(newPresentationInstance).not.toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].source).toBe('changed source')
-})
-
-test('Change media-object source on not existing slide', () => {
-    const object = { ...mockMediaBlock }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
+    test('Change object position on selected slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'not-existing-object' ]
             }
-        ],
-        selection: {
-            slide: 'not-existing-slide',
-            objects: [ 'mock-media' ]
         }
-    }
+        const newPresentationInstance = changeObjectPosition(presentation, { x: 50, y: 60 })
 
-    const newPresentationInstance = changeMediaSource(presentation, 'changed source')
+        expect(newPresentationInstance).toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].position).not.toStrictEqual({ x: 50, y: 60 })
+    })
 
-    if (!('source' in newPresentationInstance.slides[0].objects[0]))
-    {
-        fail('property "font" does not found')
-    }
 
-    expect(newPresentationInstance).toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].source).not.toBe('changed source')
-})
-
-test('Change not existing media-object source on selected slide', () => {
-    const object = { ...mockMediaBlock }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
+    test('Change text-object font on selected slide', () => {
+        const object = { ...mockTextBlock }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'mock-text' ]
             }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'not-existing-media-object' ]
         }
-    }
 
-    const newPresentationInstance = changeMediaSource(presentation, 'changed source')
+        const newPresentationInstance = changeTextFont(presentation, {
+            family: 'changed-font-family',
+            size: 50,
+            style: 'italic',
+            weight: 300
+        })
 
-    if (!('source' in newPresentationInstance.slides[0].objects[0]))
-    {
-        fail('property "font" does not found')
-    }
+        if (!('font' in newPresentationInstance.slides[0].objects[0]))
+        {
+            fail('property "font" does not found')
+        }
 
-    expect(newPresentationInstance).toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].source).not.toBe('changed source')
-})
+        expect(newPresentationInstance).not.toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].font).toStrictEqual({
+            family: 'changed-font-family',
+            size: 50,
+            style: 'italic',
+            weight: 300
+        })
+    })
 
-test('Change not media-object source on selected slide', () => {
-    const object = { ...mockRectangle }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
+    test('Change text-object font on not existing slide', () => {
+        const object = { ...mockTextBlock }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'not-existing-slide',
+                objects: [ 'mock-text' ]
             }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'mock-rectangle' ]
         }
-    }
 
-    const newPresentationInstance = changeMediaSource(presentation, 'changed source')
+        const newPresentationInstance = changeTextFont(presentation, {
+            family: 'changed-font-family',
+            size: 50,
+            style: 'italic',
+            weight: 300
+        })
 
-    expect(newPresentationInstance).toBe(presentation)
-    if ('source' in newPresentationInstance.slides[0].objects[0])
-    {
-        fail('property "source" must be not found')
-    }
-})
+        if (!('font' in newPresentationInstance.slides[0].objects[0]))
+        {
+            fail('property "font" does not found')
+        }
 
+        expect(newPresentationInstance).toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].font).not.toStrictEqual({
+            family: 'changed-font-family',
+            size: 50,
+            style: 'italic',
+            weight: 300
+        })
+    })
 
-test('Change object size(height, width) on selected slide', () => {
-    const object = { ...mockRectangle }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
+    test('Change not existing text-object font on slide', () => {
+        const object = { ...mockTextBlock }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'not-existing-object' ]
             }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'mock-rectangle' ]
         }
-    }
 
-    const newPresentationInstance = changeObjectSize(presentation, 100, 200)
+        const newPresentationInstance = changeTextFont(presentation, {
+            family: 'changed-font-family',
+            size: 50,
+            style: 'italic',
+            weight: 300
+        })
 
-    expect(newPresentationInstance).not.toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].width).toBe(100)
-    expect(newPresentationInstance.slides[0].objects[0].height).toBe(200)
-})
+        if (!('font' in newPresentationInstance.slides[0].objects[0]))
+        {
+            fail('property "font" does not found')
+        }
 
-test('Change object size(height) on selected slide', () => {
-    const object = { ...mockRectangle }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
+        expect(newPresentationInstance).toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].font).not.toStrictEqual({
+            family: 'changed-font-family',
+            size: 50,
+            style: 'italic',
+            weight: 300
+        })
+    })
+
+    test('Change not text-object font on slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'mock-rectangle' ]
             }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'mock-rectangle' ]
         }
-    }
 
-    const newPresentationInstance = changeObjectSize(presentation, null, 200)
+        const newPresentationInstance = changeTextFont(presentation, {
+            family: 'changed-font-family',
+            size: 50,
+            style: 'italic',
+            weight: 300
+        })
 
-    expect(newPresentationInstance).not.toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].width).toBe(object.width)
-    expect(newPresentationInstance.slides[0].objects[0].height).toBe(200)
-})
+        expect(newPresentationInstance).toBe(presentation)
+        if ('font' in newPresentationInstance.slides[0].objects[0])
+        {
+            fail('property "font" must be not found')
+        }
+    })
 
-test('Change object size(height) on selected slide', () => {
-    const object = { ...mockRectangle }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
+
+    test('Change text-object content on selected slide', () => {
+        const object = { ...mockTextBlock }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'mock-text' ]
             }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'mock-rectangle' ]
         }
-    }
 
-    const newPresentationInstance = changeObjectSize(presentation, 100, null)
+        const newPresentationInstance = changeTextContent(presentation, 'Changed text')
 
-    expect(newPresentationInstance).not.toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].width).toBe(100)
-    expect(newPresentationInstance.slides[0].objects[0].height).toBe(object.height)
-})
+        if (!('content' in newPresentationInstance.slides[0].objects[0]))
+        {
+            fail('property "content" does not found')
+        }
 
-test('Change object size on not existing slide', () => {
-    const object = { ...mockRectangle }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
+        expect(newPresentationInstance).not.toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].content).toBe('Changed text')
+    })
+
+    test('Change text-object content on not existing slide', () => {
+        const object = { ...mockTextBlock }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'not-existing-slide',
+                objects: [ 'mock-text' ]
             }
-        ],
-        selection: {
-            slide: 'not-existing-slide',
-            objects: [ 'mock-rectangle' ]
         }
-    }
 
-    const newPresentationInstance = changeObjectSize(presentation, 100, 200)
+        const newPresentationInstance = changeTextContent(presentation, 'Changed text')
 
-    expect(newPresentationInstance).toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].width).not.toBe(100)
-    expect(newPresentationInstance.slides[0].objects[0].height).not.toBe(200)
-})
+        if (!('content' in newPresentationInstance.slides[0].objects[0]))
+        {
+            fail('property "content" does not found')
+        }
 
-test('Change not existing object size on selected slide', () => {
-    const object = { ...mockRectangle }
-    const presentation: Presentation = {
-        ...mockPresentation,
-        slides: [
-            {
-                ...mockSlide,
-                objects: [ object ]
+        expect(newPresentationInstance).toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].content).not.toBe('Changed text')
+    })
+
+    test('Change not existing text-object content on selected slide', () => {
+        const object = { ...mockTextBlock }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'not-existing-object' ]
             }
-        ],
-        selection: {
-            slide: 'mock-slide',
-            objects: [ 'not-existing-object' ]
         }
-    }
 
-    const newPresentationInstance = changeObjectSize(presentation, 100, 200)
+        const newPresentationInstance = changeTextContent(presentation, 'Changed text')
 
-    expect(newPresentationInstance).toBe(presentation)
-    expect(newPresentationInstance.slides[0].objects[0].width).not.toBe(100)
-    expect(newPresentationInstance.slides[0].objects[0].height).not.toBe(200)
+        if (!('content' in newPresentationInstance.slides[0].objects[0]))
+        {
+            fail('property "content" does not found')
+        }
+
+        expect(newPresentationInstance).toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].content).not.toBe('Changed text')
+    })
+
+    test('Change not text-object content on selected slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'mock-rectangle' ]
+            }
+        }
+
+        const newPresentationInstance = changeTextContent(presentation, 'Changed text')
+
+        expect(newPresentationInstance).toBe(presentation)
+        if ('content' in newPresentationInstance.slides[0].objects[0])
+        {
+            fail('property "content" must not be found')
+        }
+    })
+
+
+    test('Change media-object source on selected slide', () => {
+        const object = { ...mockMediaBlock }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'mock-media' ]
+            }
+        }
+
+        const newPresentationInstance = changeMediaSource(presentation, 'changed source')
+
+        if (!('source' in newPresentationInstance.slides[0].objects[0]))
+        {
+            fail('property "font" does not found')
+        }
+
+        expect(newPresentationInstance).not.toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].source).toBe('changed source')
+    })
+
+    test('Change media-object source on not existing slide', () => {
+        const object = { ...mockMediaBlock }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'not-existing-slide',
+                objects: [ 'mock-media' ]
+            }
+        }
+
+        const newPresentationInstance = changeMediaSource(presentation, 'changed source')
+
+        if (!('source' in newPresentationInstance.slides[0].objects[0]))
+        {
+            fail('property "font" does not found')
+        }
+
+        expect(newPresentationInstance).toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].source).not.toBe('changed source')
+    })
+
+    test('Change not existing media-object source on selected slide', () => {
+        const object = { ...mockMediaBlock }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'not-existing-media-object' ]
+            }
+        }
+
+        const newPresentationInstance = changeMediaSource(presentation, 'changed source')
+
+        if (!('source' in newPresentationInstance.slides[0].objects[0]))
+        {
+            fail('property "font" does not found')
+        }
+
+        expect(newPresentationInstance).toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].source).not.toBe('changed source')
+    })
+
+    test('Change not media-object source on selected slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'mock-rectangle' ]
+            }
+        }
+
+        const newPresentationInstance = changeMediaSource(presentation, 'changed source')
+
+        expect(newPresentationInstance).toBe(presentation)
+        if ('source' in newPresentationInstance.slides[0].objects[0])
+        {
+            fail('property "source" must be not found')
+        }
+    })
+
+
+    test('Change object size(height, width) on selected slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'mock-rectangle' ]
+            }
+        }
+
+        const newPresentationInstance = changeObjectSize(presentation, 100, 200)
+
+        expect(newPresentationInstance).not.toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].width).toBe(100)
+        expect(newPresentationInstance.slides[0].objects[0].height).toBe(200)
+    })
+
+    test('Change object size(height) on selected slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'mock-rectangle' ]
+            }
+        }
+
+        const newPresentationInstance = changeObjectSize(presentation, null, 200)
+
+        expect(newPresentationInstance).not.toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].width).toBe(object.width)
+        expect(newPresentationInstance.slides[0].objects[0].height).toBe(200)
+    })
+
+    test('Change object size(height) on selected slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'mock-rectangle' ]
+            }
+        }
+
+        const newPresentationInstance = changeObjectSize(presentation, 100, null)
+
+        expect(newPresentationInstance).not.toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].width).toBe(100)
+        expect(newPresentationInstance.slides[0].objects[0].height).toBe(object.height)
+    })
+
+    test('Change object size on not existing slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'not-existing-slide',
+                objects: [ 'mock-rectangle' ]
+            }
+        }
+
+        const newPresentationInstance = changeObjectSize(presentation, 100, 200)
+
+        expect(newPresentationInstance).toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].width).not.toBe(100)
+        expect(newPresentationInstance.slides[0].objects[0].height).not.toBe(200)
+    })
+
+    test('Change not existing object size on selected slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'not-existing-object' ]
+            }
+        }
+
+        const newPresentationInstance = changeObjectSize(presentation, 100, 200)
+
+        expect(newPresentationInstance).toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].width).not.toBe(100)
+        expect(newPresentationInstance.slides[0].objects[0].height).not.toBe(200)
+    })
 })

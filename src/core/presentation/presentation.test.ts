@@ -1,7 +1,6 @@
 import {
     changePresentationsName,
     createPresentation,
-    recreatePresentation,
     getJSONOfPresentation,
     getPresentationFromJSON
 } from './presentation'
@@ -30,18 +29,6 @@ describe('test module "Presentation"', () => {
         const newPresentation: Presentation = createPresentation('How to grow up')
         expect(newPresentation).toEqual({
             name: 'How to grow up',
-            slides: [],
-            selection: {
-                slide: null,
-                objects: []
-            }
-        })
-    })
-
-    test('delete old presentation', () => {
-        const newPresentation = recreatePresentation()
-        expect(newPresentation).toEqual({
-            name: 'simple name',
             slides: [],
             selection: {
                 slide: null,

@@ -2,13 +2,12 @@ import {
     addSlide,
     changeOrderOfSlide,
     changesSlidesBackground,
-    createNewArraySlidesWithNewSlide,
     deleteSlide,
     getDefaultSlide,
     getNewId
 } from './slides'
 
-import { CircleBlock, ImageBlock, Presentation, Slide, Color } from '../types'
+import { Presentation, Slide, Color } from '../types'
 
 const slide1: Slide = {
     id: 'f123',
@@ -36,7 +35,7 @@ const slide3: Slide = {
 
 const presentationWithTwoSlidesNonSelected: Presentation = {
     name: 'simple name',
-    slides: [slide1, slide2],
+    slides: [ slide1, slide2 ],
     selection: {
         slide: null,
         objects: []
@@ -45,7 +44,7 @@ const presentationWithTwoSlidesNonSelected: Presentation = {
 
 const presentationWithTwoSlidesSelected: Presentation = {
     name: 'simple name',
-    slides: [slide1, slide2],
+    slides: [ slide1, slide2 ],
     selection: {
         slide: slide2.id,
         objects: []
@@ -54,25 +53,16 @@ const presentationWithTwoSlidesSelected: Presentation = {
 
 const presentationWithTwoSlidesNonSelectedReverse: Presentation = {
     name: 'simple name',
-    slides: [slide2, slide1],
+    slides: [ slide2, slide1 ],
     selection: {
         slide: slide2.id,
         objects: []
     }
 }
 
-const presentationWithThreeSlidesNonSelected: Presentation = {
-    name: 'simple name',
-    slides: [slide1, slide3, slide2],
-    selection: {
-        slide: null,
-        objects: []
-    }
-}
-
 const presentationWithThreeSlidesSelected: Presentation = {
     name: 'simple name',
-    slides: [slide1, slide3, slide2],
+    slides: [ slide1, slide3, slide2 ],
     selection: {
         slide: slide3.id,
         objects: []
@@ -81,7 +71,7 @@ const presentationWithThreeSlidesSelected: Presentation = {
 
 const presentationWithThreeSlidesNonSelectedReverseFirst: Presentation = {
     name: 'simple name',
-    slides: [slide3, slide1, slide2],
+    slides: [ slide3, slide1, slide2 ],
     selection: {
         slide: slide3.id,
         objects: []
@@ -90,7 +80,7 @@ const presentationWithThreeSlidesNonSelectedReverseFirst: Presentation = {
 
 const presentationWithThreeSlidesNonSelectedReverseLast: Presentation = {
     name: 'simple name',
-    slides: [slide1, slide2, slide3],
+    slides: [ slide1, slide2, slide3 ],
     selection: {
         slide: slide3.id,
         objects: []
@@ -99,7 +89,7 @@ const presentationWithThreeSlidesNonSelectedReverseLast: Presentation = {
 
 const presentationWithSlides: Presentation = {
     name: 'simple name',
-    slides: [slide1],
+    slides: [ slide1 ],
     selection: {
         slide: slide1.id,
         objects: []
@@ -108,7 +98,7 @@ const presentationWithSlides: Presentation = {
 
 const presentationWithoutSelectedSlides: Presentation = {
     name: 'simple name',
-    slides: [slide1],
+    slides: [ slide1 ],
     selection: {
         slide: null,
         objects: []
@@ -120,11 +110,11 @@ describe('tests for module Slides', () => {
         const newPresentation: Presentation = addSlide(presentationWithSlides);
 
         expect(newPresentation.slides.length).toBe(presentationWithSlides.slides.length + 1);
-        expect(newPresentation.slides[1].background).toEqual({hex: '#ffffff'});
+        expect(newPresentation.slides[1].background).toEqual({ hex: '#ffffff' });
     });
 
     test('create default slide', () => {
-        expect(getDefaultSlide().background).toEqual({hex: '#ffffff'});
+        expect(getDefaultSlide().background).toEqual({ hex: '#ffffff' });
     });
 
     test('create new id', () => {
@@ -158,15 +148,15 @@ describe('tests for module Slides', () => {
     });
 
 
-    test('change bckgr of slide', () => {
-        const color: Color = {hex: '#000000'};
+    test('change background of slide', () => {
+        const color: Color = { hex: '#000000' };
         const newPresentation: Presentation = changesSlidesBackground(presentationWithSlides, color);
 
-        expect(newPresentation.slides[0].background).toEqual({hex: '#000000'});
+        expect(newPresentation.slides[0].background).toEqual({ hex: '#000000' });
     });
 
-    test('change bckgr of slide !error', () => {
-        const color: Color = {hex: '#000000'};
+    test('change background of slide !error', () => {
+        const color: Color = { hex: '#000000' };
         const newPresentation: Presentation = changesSlidesBackground(presentationWithoutSelectedSlides, color);
 
         expect(newPresentation).toEqual(presentationWithoutSelectedSlides);
@@ -193,7 +183,7 @@ describe('tests for module Slides', () => {
         expect(newPresentation).toEqual(presentationWithTwoSlidesSelected);
     });
 
-    test('change order selected slide non alone at the wrond place', () => {
+    test('change order selected slide non alone at the wrong place', () => {
         const newPresentation: Presentation = changeOrderOfSlide(presentationWithTwoSlidesSelected, 3);
         expect(newPresentation).toEqual(presentationWithTwoSlidesSelected);
     });

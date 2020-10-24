@@ -1,10 +1,5 @@
 import { Presentation } from '../types'
 
-function recreatePresentation(): Presentation
-{
-    return createPresentation()
-}
-
 function createPresentation(name: string = 'simple name'): Presentation
 {
     return {
@@ -36,7 +31,6 @@ function getPresentationFromJSON(presentationInJSON: string): Presentation
 }
 
 export {
-    recreatePresentation,
     changePresentationsName,
     createPresentation,
     getJSONOfPresentation,
