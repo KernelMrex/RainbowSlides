@@ -38,7 +38,7 @@ function selectObject(presentation: Presentation, objectId: string): Presentatio
             objects = []
         }
 
-        if (objectId == currentSlide.objects.filter(object => object.id === objectId)[0].id)
+        if (objectId === currentSlide.objects.filter(object => object.id === objectId)[0].id)
         {
             objects.push(objectId)
         }
