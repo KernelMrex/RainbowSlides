@@ -1,6 +1,6 @@
 import React from 'react';
 import * as type from '../../core/types';
-import style from './slideList.module.css';
+import style from './SlideList.module.css';
 import MiniSlide from './MiniSlide';
 
 interface SlideList

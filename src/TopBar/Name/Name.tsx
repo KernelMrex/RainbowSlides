@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './name.module.css'
+import style from './Name.module.css'
 
 interface Name {
     name: string

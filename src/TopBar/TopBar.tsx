@@ -1,6 +1,6 @@
 import React from 'react';
 import * as type from '../core/types';
-import style from './topBar.module.css';
+import style from './TopBar.module.css';
 import Name from './Name/Name';
 import TopBarButtons from './TopBarButtons/TopBarButtons';
 

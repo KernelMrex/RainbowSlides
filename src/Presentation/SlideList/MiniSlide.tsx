@@ -1,6 +1,6 @@
 import React from 'react';
 import * as type from '../../core/types';
-import style from './miniSlide.module.css'
+import style from './MiniSlide.module.css'
 
 interface Slide
 {

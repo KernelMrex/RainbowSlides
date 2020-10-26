@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './topBarButtons.module.css';
+import style from './TopBarButtons.module.css';
 
 export default function TopBarButtons()
 {

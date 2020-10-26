@@ -1,6 +1,6 @@
 import React from 'react';
 import * as type from './core/types';
-import style from './app.module.css'
+import style from './App.module.css'
 import Footer from './Footer/Footer'
 import TopBar from './TopBar/TopBar'
 import Presentation from './Presentation/Presentation'

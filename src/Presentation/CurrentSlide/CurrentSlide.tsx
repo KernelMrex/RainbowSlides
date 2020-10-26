@@ -1,6 +1,6 @@
 import React from 'react';
 import * as type from '../../core/types';
-import style from './currentSlide.module.css'
+import style from './CurrentSlide.module.css'
 
 interface Slide {
     currentSlide: type.Slide | null

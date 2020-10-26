@@ -1,6 +1,6 @@
 import React from 'react';
 import * as type from '../core/types';
-import style from './presentation.module.css';
+import style from './Presentation.module.css';
 import CurrentSlide from './CurrentSlide/CurrentSlide';
 import SlideList from './SlideList/SlideList'
 
