@@ -4,4 +4,5 @@
     flex-direction: row;
     border: 1px #b8b8b8;
     border-style: none none solid none;
+    justify-content: space-between;
 }
