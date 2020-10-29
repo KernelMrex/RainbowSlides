@@ -16,13 +16,25 @@ const picture: type.ImageBlock = {
     source: 'url'
 }
 
-const simpleCircle: type.CircleBlock = {
+const simpleRectangle: type.RectangleBlock = {
     id: 'f124',
-    type: 'circle',
-    name: 'Circle',
+    type: 'rectangle',
+    name: 'rectangle',
     position: {
-        x: 12,
-        y: 23
+        x: 200,
+        y: 200
+    },
+    height: 213,
+    width: 321,
+}
+
+const simpleCircle: type.CircleBlock = {
+    id: 'f125',
+    type: 'circle',
+    name: 'circle',
+    position: {
+        x: 200,
+        y: 200
     },
     height: 213,
     width: 321,
@@ -31,7 +43,7 @@ const simpleCircle: type.CircleBlock = {
 
 const slide1: type.Slide = {
     id: 'f321',
-    objects: [ picture, simpleCircle ],
+    objects: [ picture, simpleRectangle, simpleCircle ],
     background: {
         source: 'url'
     }
@@ -50,7 +62,7 @@ const presentation: type.Presentation = {
     slides: [slide1, slide2],
 //    slides: [],
     selection: {
-        slide: null,
+        slide: slide1.id,
         objects: []
     }
 }

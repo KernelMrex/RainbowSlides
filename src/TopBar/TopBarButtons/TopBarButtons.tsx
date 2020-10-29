@@ -1,18 +1,27 @@
 import React from 'react';
 import style from './TopBarButtons.module.css';
+import ExportButton from './ExportButton/ExportButton';
+import ImportButton from './ImportButton/ImportButton';
+import PreviewButton from './PreviewButton/PreviewButton';
+import * as type from '../../core/types';
 
-export default function TopBarButtons()
+interface Presentation
+{
+    presentation: type.Presentation
+}
+
+export default function TopBarButtons(props: Presentation)
 {
     return (
         <div className={style.buttons_wrapper}>
             <div className={style.button_export}>
-                <button className={style.content}>export</button>
+                <ExportButton class={style.content} presentation={props.presentation}/>
             </div>
             <div className={style.button_import}>
-                <button className={style.content}>import</button>
+                <ImportButton class={style.content} presentation={props.presentation}/>
             </div>
             <div className={style.button_preview}>
-                <button className={style.content}>preview</button>
+                <PreviewButton class={style.content} presentation={props.presentation}/>
             </div>
         </div>
     )

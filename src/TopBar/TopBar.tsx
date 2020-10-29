@@ -14,7 +14,7 @@ export default function TopBar(props: Presentation)
     return (
         <div className={style.wrapper}>
             <Name name={props.presentation.name}/>
-            <TopBarButtons/>
+            <TopBarButtons presentation={props.presentation}/>
         </div>
     )
 }

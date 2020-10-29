@@ -10,15 +10,20 @@ interface SlideList
 
 export default function SlideList(props: SlideList)
 {
+    let slideList;
+    if (props.slideList.length !== 0)
+    {
+        slideList = props.slideList.map((slide) => (
+            <MiniSlide key={slide.id} slide={slide}/>
+        ));
+    }
     return (
         <div className={style.wrapper}>
             <div className={style.content}>
-                {props.slideList.length === 0 &&
-                    <div className={style.error_text}>There are no slides</div>
+                {(props.slideList.length === 0)
+                    ? <div className={style.error_text}>There are no slides</div>
+                    : slideList
                 }
-                {props.slideList.map((slide, index) => (
-                    <MiniSlide key={Number(slide.id)} slide={slide} />
-                ))}
             </div>
         </div>
     )
