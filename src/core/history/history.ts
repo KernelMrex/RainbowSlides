@@ -1,24 +1,33 @@
 import { Presentation, ActionHistory } from '../types'
 
-function addChangeToHistory(presentation: Presentation, history: ActionHistory)
+const history: ActionHistory = {
+    redo: [],
+    undo: []
+}
+
+export function add(presentation: Presentation): void
 {
     history.undo.push(presentation)
 }
 
-function undoChange(presentation: Presentation, history: ActionHistory): Presentation | undefined
+export function undo(): Presentation | undefined
 {
-    history.redo.push(presentation)
+    const change: Presentation | undefined = history.undo.pop()
 
-    return history.undo.pop()
+    if (change !== undefined)
+    {
+        history.redo.push(change)
+    }
+
+    return change
 }
 
-function redoChange(history: ActionHistory)
+export function redo(): Presentation | undefined
 {
     return history.redo.pop()
 }
 
-export {
-    addChangeToHistory,
-    undoChange,
-    redoChange
+export function clearHistory(): void
+{
+    [history.redo, history.undo].forEach(() => [])
 }

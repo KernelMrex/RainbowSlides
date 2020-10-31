@@ -1,11 +1,11 @@
 import { Presentation, Slide, SlideObject, Picture, Color } from '../types'
 import { deleteSlideFromSelection } from '../selection/selection';
 
-function addSlide(presentation: Presentation): Presentation
+function addSlide(presentation: Presentation, slide: Slide = getDefaultSlide()): Presentation
 {
     return {
         ...presentation,
-        slides: [ ...presentation.slides, getDefaultSlide() ]
+        slides: [ ...presentation.slides, slide ]
     }
 }
 

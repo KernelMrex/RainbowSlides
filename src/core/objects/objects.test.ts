@@ -7,7 +7,7 @@ import {
     changeMediaSource,
     changeObjectSize,
     changeTextContent
-} from './slide-object'
+} from './objects'
 
 import { MediaBlock, Presentation, RectangleBlock, Slide, TextBlock } from '../types'
 

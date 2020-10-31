@@ -1,5 +1,5 @@
 import {
-    changePresentationsName,
+    changePresentationName,
     createPresentation,
     getJSONOfPresentation,
     getPresentationFromJSON
@@ -48,7 +48,7 @@ describe('test module "Presentation"', () => {
     })
 
     test('change name of presentation on right name', () => {
-        const newNamedPresentation: Presentation = changePresentationsName(newPresentation, 'test')
+        const newNamedPresentation: Presentation = changePresentationName(newPresentation, 'test')
         expect(newNamedPresentation).toEqual({
             ...newPresentation,
             name: 'test'

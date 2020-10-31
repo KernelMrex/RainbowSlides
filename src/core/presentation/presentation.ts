@@ -12,7 +12,7 @@ function createPresentation(name: string = 'simple name'): Presentation
     }
 }
 
-function changePresentationsName(presentation: Presentation, name: string): Presentation
+function changePresentationName(presentation: Presentation, name: string): Presentation
 {
     return {
         ...presentation,
@@ -31,7 +31,7 @@ function getPresentationFromJSON(presentationInJSON: string): Presentation
 }
 
 export {
-    changePresentationsName,
+    changePresentationName,
     createPresentation,
     getJSONOfPresentation,
     getPresentationFromJSON
