@@ -12,7 +12,7 @@ export default function MiniSlide(props: Slide)
 {
     return (
         <div className={style.wrapper} onClick={(e) => console.log(props.key)}>
-            <span className={style.element}>{props.key}.</span>
+            <span className={style.element}></span>
         </div>
     )
 }

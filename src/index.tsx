@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as type from './core/types';
+import src from './src'
 
 const picture: type.ImageBlock = {
     id: 'f123',
@@ -13,7 +14,10 @@ const picture: type.ImageBlock = {
     },
     height: 213,
     width: 321,
-    source: 'url'
+    source: src,
+    background: {
+        hex: '#ffffff'
+    }
 }
 
 const simpleRectangle: type.RectangleBlock = {
@@ -26,6 +30,9 @@ const simpleRectangle: type.RectangleBlock = {
     },
     height: 213,
     width: 321,
+    background: {
+        hex: '#fa71d3'
+    }
 }
 
 const simpleCircle: type.CircleBlock = {
@@ -33,17 +40,34 @@ const simpleCircle: type.CircleBlock = {
     type: 'circle',
     name: 'circle',
     position: {
-        x: 200,
-        y: 200
+        x: 150,
+        y: 100
     },
-    height: 213,
-    width: 321,
-    radius: 12
+    height: 300,
+    width: 200,
+    background: {
+        hex: '#f2331b'
+    }
+}
+
+const simpleTriangle: type.TriangleBlock = {
+    id: 'f125',
+    type: 'triangle',
+    name: 'circle',
+    position: {
+        x: 650,
+        y: 450
+    },
+    height: 200,
+    width: 200,
+    background: {
+        hex: '#046d06'
+    }
 }
 
 const slide1: type.Slide = {
     id: 'f321',
-    objects: [ picture, simpleRectangle, simpleCircle ],
+    objects: [ picture, simpleRectangle, simpleCircle, simpleTriangle ],
     background: {
         source: 'url'
     }

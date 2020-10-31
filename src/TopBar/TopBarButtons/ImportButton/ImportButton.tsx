@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as type from '../../../core/types';
 import style from './ImportButton.module.css';
+import PopupImport from './PopupImport/PopupImport';
 import {getPresentationFromJSON} from '../../../core/presentation/presentation';
-
 
 interface Presentation
 {
@@ -12,27 +12,13 @@ interface Presentation
 
 export default function ImportButton(props: Presentation)
 {
+    const [popup, showPopup] = useState(false);
     return (
         <div>
-            <input className={props.class} type='file' onChange={(e) => rerenderAppWithNewPresentation(e)}/>
+            <a className={props.class} onClick={(e) => showPopup(true)}>Import</a>
+            {popup &&
+                <PopupImport presentation={props.presentation} closePopup={showPopup(false)}/>
+            }
         </div>
     )
-}
-
-function rerenderAppWithNewPresentation(event: any)
-{
-    let file = event.target.files[0];
-
-    let fileReader = new FileReader();
-    fileReader.onload = () =>
-    {
-        let JSONString = fileReader.result;
-        if (typeof JSONString === 'string')
-        {
-            let newPresentation: type.Presentation = getPresentationFromJSON(JSONString);
-            console.log(newPresentation)
-        }
-    }
-
-    fileReader.readAsText(file);
 }

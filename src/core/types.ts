@@ -26,7 +26,7 @@ export type Color = {
     hex: string
 }
 
-export type SlideObject = CircleBlock | RectangleBlock | TextBlock | MediaBlock | ImageBlock
+export type SlideObject = CircleBlock | RectangleBlock | TriangleBlock | TextBlock | MediaBlock | ImageBlock
 
 export type RectangleBlock = {
     id: string
@@ -35,11 +35,12 @@ export type RectangleBlock = {
     position: Anchor
     height: number
     width: number
+    background: Color
 }
 
-export type CircleBlock = RectangleBlock & {
-    radius: number
-}
+export type CircleBlock = RectangleBlock
+
+export type TriangleBlock = RectangleBlock
 
 export type TextBlock = RectangleBlock & {
     content: string
@@ -63,7 +64,7 @@ export type ImageBlock = RectangleBlock & {
     source: string
 }
 
-export type ObjectType = 'rectangle' | 'text' | 'circle' | 'media' | 'image'
+export type ObjectType = 'rectangle' | 'text' | 'triangle' | 'circle' | 'media' | 'image'
 
 export type Anchor = {
     x: number
