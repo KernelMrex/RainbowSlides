@@ -7,9 +7,7 @@ let stateHistory: StateHistory<Presentation> = history.newHistory<Presentation>(
 
 export function dispatch(func: CallableFunction, payload: any[] = []): void
 {
-    const newState = func(state, ...payload)
-    history.add(stateHistory, newState)
-    state = newState
+    history.add(stateHistory, maybeUpdateState(func(state, ...payload)))
 }
 
 export function getState(): Presentation
@@ -19,20 +17,24 @@ export function getState(): Presentation
 
 export function undoAction(): void
 {
-    stateHistory = history.undo<Presentation>(stateHistory)
-    const newState = history.getUndoTail<Presentation>(stateHistory)
-    if (newState !== undefined)
-    {
-        state = newState
-    }
+    maybeUpdateState(history.getUndoTail<Presentation>(updateStateHistory(history.undo<Presentation>(stateHistory))))
 }
 
 export function redoAction(): void
 {
-    stateHistory = history.redo<Presentation>(stateHistory)
-    const newState = history.getUndoTail<Presentation>(stateHistory)
+    maybeUpdateState(history.getUndoTail<Presentation>(updateStateHistory(history.redo<Presentation>(stateHistory))))
+}
+
+function updateStateHistory(newInstance: StateHistory<Presentation>): StateHistory<Presentation>
+{
+    return stateHistory = newInstance
+}
+
+function maybeUpdateState(newState: Presentation | undefined): Presentation | undefined
+{
     if (newState !== undefined)
     {
         state = newState
     }
+    return newState
 }
