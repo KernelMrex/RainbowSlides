@@ -7,7 +7,7 @@ export function addObject(slideID: string, object: SlideObject): void
     dispatch(core.addObjectToSlide, [ slideID, object ])
 }
 
-export function removeObject(slideID: string, objectID: string): void
+export function removeObjectFromSlide(slideID: string, objectID: string): void
 {
     dispatch(core.removeObjectFromSlide, [ slideID, objectID ])
 }

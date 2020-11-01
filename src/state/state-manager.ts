@@ -1,28 +1,38 @@
-import { Presentation } from '../core/types';
-import * as history from '../core/history/history';
+import { StateHistory, Presentation } from '../core/types';
 import { createPresentation } from '../core/presentation/presentation';
+import * as history from '../core/history/history';
 
-let state: Presentation | undefined
+let state: Presentation = createPresentation()
+let stateHistory: StateHistory<Presentation> = history.newHistory<Presentation>()
 
-export function dispatch(func: CallableFunction, payload: any = []): Presentation
+export function dispatch(func: CallableFunction, payload: any[] = []): void
 {
-    if (state === undefined)
+    const newState = func(state, ...payload)
+    history.add(stateHistory, newState)
+    state = newState
+}
+
+export function getState(): Presentation
+{
+    return { ...state }
+}
+
+export function undoAction(): void
+{
+    stateHistory = history.undo<Presentation>(stateHistory)
+    const newState = history.getUndoTail<Presentation>(stateHistory)
+    if (newState !== undefined)
     {
-        state = createPresentation()
+        state = newState
     }
-
-    const newState: Presentation = func(state, ...payload)
-    history.add(newState)
-    return { ...(state = newState) }
 }
 
-export function clear(): void
+export function redoAction(): void
 {
-    history.clearHistory()
-    state = undefined
-}
-
-export function getState(): Presentation | undefined
-{
-    return state ? { ...state } : undefined;
+    stateHistory = history.redo<Presentation>(stateHistory)
+    const newState = history.getUndoTail<Presentation>(stateHistory)
+    if (newState !== undefined)
+    {
+        state = newState
+    }
 }
