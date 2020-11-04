@@ -28,9 +28,8 @@ export type Color = {
 
 export type SlideObject = CircleBlock | RectangleBlock | TriangleBlock | TextBlock | MediaBlock | ImageBlock
 
-export type RectangleBlock = {
+export type CommonBlock = {
     id: string
-    type: ObjectType
     name: string
     position: Anchor
     height: number
@@ -38,11 +37,20 @@ export type RectangleBlock = {
     background: Color
 }
 
-export type CircleBlock = RectangleBlock
+export type RectangleBlock = CommonBlock & {
+    type: 'rectangle'
+}
 
-export type TriangleBlock = RectangleBlock
+export type CircleBlock = CommonBlock & {
+    type: 'circle'
+}
 
-export type TextBlock = RectangleBlock & {
+export type TriangleBlock = CommonBlock & {
+    type: 'triangle'
+}
+
+export type TextBlock = CommonBlock & {
+    type: 'text'
     content: string
     font: Font
     color: Color
@@ -55,13 +63,15 @@ export type Font = {
     style: 'italic' | 'bold' | 'none'
 }
 
-export type MediaBlock = RectangleBlock & {
+export type MediaBlock = CommonBlock & {
+    type: 'media'
     mediaType: 'video' | 'gif'
     source: string
 }
 
-export type ImageBlock = RectangleBlock & {
+export type ImageBlock = CommonBlock & {
     source: string
+    type: 'image'
 }
 
 export type ObjectType = 'rectangle' | 'text' | 'triangle' | 'circle' | 'media' | 'image'

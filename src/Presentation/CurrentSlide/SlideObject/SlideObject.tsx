@@ -8,34 +8,34 @@ import Image from './Objects/Image';
 
 interface SlideObjects
 {
-    key: string,
-    object: type.CircleBlock | type.RectangleBlock | type.TriangleBlock | type.ImageBlock
+    object: type.SlideObject
 }
 
 export default function SlideObject(props: SlideObjects)
 {
-    let object;
-    switch (props.object.type) {
+    let object = props.object;
+    let render;
+    switch (object.type) {
         case 'rectangle':
-            object = <Rectangle class={style.wrapper} object={props.object}/>
+            render = <Rectangle class={style.wrapper} object={object}/>
             break;
 
         case 'circle':
-            object = <Circle class={style.wrapper} object={props.object}/>
+            render = <Circle class={style.wrapper} object={object}/>
             break;
 
         case 'triangle':
-            object = <Triangle class={style.wrapper} object={props.object}/>
+            render = <Triangle class={style.wrapper} object={object}/>
             break;
 
-        // case 'image':
-        //     object = <Image class={style.wrapper} object={props.object}/>
-        //     break;
+        case 'image':
+            render = <Image class={style.wrapper} object={object}/>
+            break;
 
         default:
-            object = <></>
+            render = <></>
     }
     return (
-        object
+        render
     )
 }

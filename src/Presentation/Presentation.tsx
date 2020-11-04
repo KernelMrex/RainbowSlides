@@ -22,7 +22,7 @@ export default function Presentation(props: Presentation)
 
     return (
         <div className={style.container}>
-            <SlideList slideList={props.presentation.slides}/>
+            <SlideList presentation={props.presentation}/>
             <CurrentSlide currentSlide={currentSlide}/>
         </div>
     )

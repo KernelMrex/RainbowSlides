@@ -4,14 +4,14 @@ import style from './MiniSlide.module.css'
 
 interface Slide
 {
-    key: string,
-    slide: type.Slide
+    slide: type.Slide,
+    //changeSlide: void
 }
 
 export default function MiniSlide(props: Slide)
 {
     return (
-        <div className={style.wrapper} onClick={(e) => console.log(props.key)}>
+        <div className={style.wrapper} >
             <span className={style.element}></span>
         </div>
     )

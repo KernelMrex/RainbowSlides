@@ -51,7 +51,7 @@ const simpleCircle: type.CircleBlock = {
 }
 
 const simpleTriangle: type.TriangleBlock = {
-    id: 'f125',
+    id: 'f126',
     type: 'triangle',
     name: 'circle',
     position: {
