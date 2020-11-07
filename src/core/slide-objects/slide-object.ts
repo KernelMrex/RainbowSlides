@@ -95,7 +95,7 @@ export function changeTextContent(presentation: Presentation, newContent: string
 export function changeMediaSource(presentation: Presentation, newSource: string): Presentation
 {
     const [ slide, [ selectedObject ] ] = getSelected(presentation)
-    if (!slide || !selectedObject || ![ 'media', 'image' ].includes(selectedObject.type))
+    if (!slide || !selectedObject || (selectedObject.type !== 'media' && selectedObject.type !== 'image'))
     {
         return presentation
     }
