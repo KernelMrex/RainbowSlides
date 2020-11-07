@@ -102,7 +102,6 @@ export function changeMediaSource(presentation: Presentation, newSource: string)
 
     return updateSlide(presentation, updateObject(slide, {
         ...selectedObject,
-        //@ts-ignore
         source: newSource,
     }))
 }
