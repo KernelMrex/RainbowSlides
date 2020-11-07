@@ -1,23 +1,24 @@
 import React from 'react';
 import * as type from '../../../../core/types';
+import style from './Objects.module.css';
 
 interface SlideObjects
 {
-    class: string
     object: type.CircleBlock
+    coef: number
 }
 
 export default function Circle(props: SlideObjects)
 {
     return (
-        <svg className={props.class} width={props.object.width + props.object.position.x}
-             height={props.object.height + props.object.position.y}>
+        <svg className={style.wrapper} width={(props.object.width + props.object.position.x) / props.coef}
+             height={(props.object.height + props.object.position.y) / props.coef}>
             <ellipse
                 fill={props.object.background.hex}
-                cx={Math.abs(props.object.position.x + props.object.width / 2)}
-                cy={Math.abs(props.object.position.y + props.object.height / 2)}
-                rx={Math.min(props.object.width / 2)}
-                ry={Math.min(props.object.height / 2)}>
+                cx={(props.object.position.x + props.object.width / 2) / props.coef}
+                cy={(props.object.position.y + props.object.height / 2) / props.coef}
+                rx={(props.object.width / 2) / props.coef}
+                ry={(props.object.height / 2) / props.coef}>
             </ellipse>
         </svg>
     );

@@ -10,17 +10,17 @@ interface Presentation
 
 export default function ExportButton(props: Presentation)
 {
+    function exportPresentation(presentation: type.Presentation)
+    {
+        const jsonOfPresentation: string = getJSONOfPresentation(presentation);
+        const buildExportData = (exportData: string) => 'data:text/json;charset=utf-8,' + encodeURIComponent(exportData);
+        return buildExportData(jsonOfPresentation)
+    }
+
     const [fileHref, setFileHref] = useState('');
     return (
         <a className={props.class} href={fileHref}
            onMouseEnter={() => setFileHref(exportPresentation(props.presentation))}
            download={'presentation.json'}>export</a>
     )
-}
-
-function exportPresentation(presentation: type.Presentation)
-{
-    const jsonOfPresentation: string = getJSONOfPresentation(presentation);
-    const buildExportData = (exportData: string) => 'data:text/json;charset=utf-8,' + encodeURIComponent(exportData);
-    return buildExportData(jsonOfPresentation)
 }

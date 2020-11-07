@@ -4,16 +4,82 @@ import App from './App';
 import * as type from './core/types';
 import src from './src'
 
+const textFor1: type.TextBlock = {
+    id: 'f134',
+    type: 'text',
+    name: 'test1',
+    position: {
+        x: 870,
+        y: 2
+    },
+    height: 700,
+    width: 400,
+    color: {
+        hex: '#ecf2d7'
+    },
+    content: 'Смотрите, кто тут у нас спрятался. ' +
+        'А, это же пример текста. Круто!',
+    font: {
+        family: 'Comic Sans MS',
+        size: 30,
+        weight: 500,
+        style: 'none'
+    },
+    background: {
+        hex: '#00004f'
+    }
+}
+
+const textFor2: type.TextBlock = {
+    id: 'f135',
+    type: 'text',
+    name: 'test1',
+    position: {
+        x: 70,
+        y: 2
+    },
+    height: 700,
+    width: 1200,
+    color: {
+        hex: '#000000'
+    },
+    content: 'ААА, выпустите их этого маленького прямоугольника. Контрл зет, контрл зеет!!!! Почему не работает?!!',
+    font: {
+        family: 'Comic Sans MS',
+        size: 60,
+        weight: 500,
+        style: 'none'
+    },
+    background: {
+        hex: 'none'
+    }
+}
+
 const picture: type.ImageBlock = {
     id: 'f123',
     type: 'image',
     name: 'Toronto',
     position: {
-        x: 12,
+        x: 500,
         y: 23
     },
-    height: 213,
-    width: 321,
+    height: 500,
+    width: 360,
+    source: src,
+    background: {
+        hex: '#ffffff'
+    }
+}
+const picture2: type.ImageBlock = {
+    id: 'f128',
+    type: 'image',
+    name: 'Toronto2',
+    position: {
+        x: 200,
+        y: 230
+    },
+    height: 500,
+    width: 360,
     source: src,
     background: {
         hex: '#ffffff'
@@ -67,17 +133,17 @@ const simpleTriangle: type.TriangleBlock = {
 
 const slide1: type.Slide = {
     id: 'f321',
-    objects: [ picture, simpleRectangle, simpleCircle, simpleTriangle ],
+    objects: [ picture, simpleRectangle, simpleCircle, simpleTriangle, textFor1 ],
     background: {
-        source: 'url'
+        hex: '#d2508b'
     }
 }
 
 const slide2: type.Slide = {
     id: 'f421',
-    objects: [ picture ],
+    objects: [ picture2, textFor2 ],
     background: {
-        hex: '#ffffff'
+        hex: '#a2ee9a'
     }
 }
 

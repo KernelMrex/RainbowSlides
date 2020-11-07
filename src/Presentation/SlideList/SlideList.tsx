@@ -10,9 +10,6 @@ interface Presentation
 
 export default function SlideList(props: Presentation)
 {
-    // const slide: type.Slide | undefined = props.presentation.slides.find((slide) => slide.id === props.presentation.selection.slide);
-    // const [currentSlide, changeSlide] = useState(slide);
-
     let slideList;
     if (props.presentation.slides.length !== 0)
     {

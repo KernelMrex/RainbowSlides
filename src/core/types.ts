@@ -74,8 +74,6 @@ export type ImageBlock = CommonBlock & {
     type: 'image'
 }
 
-export type ObjectType = 'rectangle' | 'text' | 'triangle' | 'circle' | 'media' | 'image'
-
 export type Anchor = {
     x: number
     y: number
