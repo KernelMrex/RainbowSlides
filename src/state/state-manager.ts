@@ -1,40 +1,26 @@
 import { StateHistory, Presentation } from '../core/types';
 import { createPresentation } from '../core/presentation/presentation';
 import * as history from '../core/history/history';
+import { UpdateStateAction } from './update-state-actions';
 
-let state: Presentation = createPresentation()
-let stateHistory: StateHistory<Presentation> = history.newHistory<Presentation>()
+type StateType = Presentation
+const initialState: StateType = createPresentation();
 
-export function dispatch(func: CallableFunction, payload: any[] = []): void
+let state: StateType = initialState;
+let stateHistory: StateHistory<StateType> = history.newHistory<StateType>()
+
+export function dispatch(func: UpdateStateAction, payload: any[] = []): void
 {
-    history.add(stateHistory, maybeUpdateState(func(state, ...payload)))
+    const action: UpdateStateAction = func.provideCurrentState ? func.bind(null, state, ...payload) : func.bind(null, ...payload);
+    const newState = action()
+
+    if (action.isBeingSaved)
+    {
+        history.add<StateType>(stateHistory, newState)
+    }
 }
 
 export function getState(): Presentation
 {
     return { ...state }
-}
-
-export function undoAction(): void
-{
-    maybeUpdateState(history.getUndoTail<Presentation>(updateStateHistory(history.undo<Presentation>(stateHistory))))
-}
-
-export function redoAction(): void
-{
-    maybeUpdateState(history.getUndoTail<Presentation>(updateStateHistory(history.redo<Presentation>(stateHistory))))
-}
-
-function updateStateHistory(newInstance: StateHistory<Presentation>): StateHistory<Presentation>
-{
-    return stateHistory = newInstance
-}
-
-function maybeUpdateState(newState: Presentation | undefined): Presentation | undefined
-{
-    if (newState !== undefined)
-    {
-        state = newState
-    }
-    return newState
 }
