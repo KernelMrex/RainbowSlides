@@ -8,6 +8,7 @@ import * as type from '../../core/types';
 interface Presentation
 {
     presentation: type.Presentation
+    modal: Function
 }
 
 export default function TopBarButtons(props: Presentation)
@@ -18,7 +19,7 @@ export default function TopBarButtons(props: Presentation)
                 <ExportButton class={style.content} presentation={props.presentation}/>
             </div>
             <div className={style.button_import}>
-                <ImportButton class={style.content} presentation={props.presentation}/>
+                <ImportButton class={style.content} presentation={props.presentation} modal={props.modal}/>
             </div>
             <div className={style.button_preview}>
                 <PreviewButton class={style.content} presentation={props.presentation}/>

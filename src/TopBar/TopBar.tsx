@@ -7,6 +7,7 @@ import TopBarButtons from './TopBarButtons/TopBarButtons';
 interface Presentation
 {
     presentation: type.Presentation
+    modal: Function
 }
 
 export default function TopBar(props: Presentation)
@@ -14,7 +15,7 @@ export default function TopBar(props: Presentation)
     return (
         <div className={style.wrapper}>
             <Name name={props.presentation.name}/>
-            <TopBarButtons presentation={props.presentation}/>
+            <TopBarButtons presentation={props.presentation} modal={props.modal}/>
         </div>
     )
 }

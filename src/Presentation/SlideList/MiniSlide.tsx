@@ -29,7 +29,8 @@ export default function MiniSlide(props: Slide)
     )
 }
 
-function isColor(pet: type.Color | type.Picture): pet is type.Color {
+function isColor(pet: type.Color | type.Picture): pet is type.Color
+{
     return (pet as type.Color).hex !== undefined;
 }
 
