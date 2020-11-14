@@ -19,6 +19,8 @@
     display: flex;
     width: 100%;
     flex-direction: column;
+    overflow-y: scroll;
+    height: 96.5%;
 }
 
 .error_text

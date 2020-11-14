@@ -7,6 +7,7 @@ import SlideList from './SlideList/SlideList'
 interface Presentation
 {
     presentation: type.Presentation
+    setNewPresentation: Function
 }
 
 export default function Presentation(props: Presentation)
@@ -22,7 +23,7 @@ export default function Presentation(props: Presentation)
 
     return (
         <div className={style.container}>
-            <SlideList presentation={props.presentation}/>
+            <SlideList presentation={props.presentation} setNewPresentation={props.setNewPresentation}/>
             <CurrentSlide currentSlide={currentSlide}/>
         </div>
     )

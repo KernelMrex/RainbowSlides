@@ -149,8 +149,8 @@ const slide2: type.Slide = {
 
 const presentation: type.Presentation = {
     name: 'my first presentation',
+//    slides: [slide1, slide2, slide1, slide1, slide1, slide1],
     slides: [slide1, slide2],
-//    slides: [],
     selection: {
         slide: slide1.id,
         objects: []

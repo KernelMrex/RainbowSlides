@@ -2,10 +2,12 @@ import React, {useState} from 'react';
 import * as type from '../../core/types';
 import style from './SlideList.module.css';
 import MiniSlide from './MiniSlide';
+import { selectSlide } from '../../core/selection/selection'
 
 interface Presentation
 {
     presentation: type.Presentation
+    setNewPresentation: Function
 }
 
 export default function SlideList(props: Presentation)
@@ -14,8 +16,9 @@ export default function SlideList(props: Presentation)
     if (props.presentation.slides.length !== 0)
     {
         slideList = props.presentation.slides.map((slide) => (
-            <div style={{background: (props.presentation.selection.slide === slide.id) ? '#00000024' : 'transparent'}}>
-                <MiniSlide key={slide.id} slide={slide}/>
+            <div key={slide.id} style={{background: (props.presentation.selection.slide === slide.id) ? '#00000024' : 'transparent'}}
+                onClick={(e) => props.presentation.selection.slide !== slide.id ? props.setNewPresentation(selectSlide(props.presentation, slide)) : ''}>
+                <MiniSlide slide={slide}/>
             </div>
         ));
     }

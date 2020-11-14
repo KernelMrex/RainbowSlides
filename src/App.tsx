@@ -66,14 +66,14 @@ export default function App(props: Presentation)
 
     const {presentation, changePresentation, downloadPresentation} = useChangePresentation();
     const {isShowing, toggle} = useModal();
-    return (
-        <div className={style.appWrapper}>
-            <Popup isShowind={isShowing} hide={toggle} setNewPresentation={downloadPresentation}/>
-            <div className={style.app}>
-                <TopBar presentation={presentation} modal={toggle}/>
-                <Presentation presentation={presentation}/>
-                <Footer/>
+        return (
+            <div className={style.appWrapper}>
+                <Popup isShowind={isShowing} hide={toggle} setNewPresentation={downloadPresentation}/>
+                <div className={style.app}>
+                    <TopBar presentation={presentation} modal={toggle}/>
+                    <Presentation presentation={presentation} setNewPresentation={changePresentation}/>
+                    <Footer/>
+                </div>
             </div>
-        </div>
     )
 };
