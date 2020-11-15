@@ -15,14 +15,24 @@ interface Presentation
 
 export default function App(props: Presentation)
 {
-    const {presentation, changePresentation, downloadPresentation, changeSelectedPresentation} = useChangePresentation(props.presentation);
+    const {
+        presentation,
+        changePresentation,
+        downloadPresentation,
+        changeSelectedPresentation,
+        removeAllSelectedObjects
+    } = useChangePresentation(props.presentation);
     const {isShowing, toggle} = useModal();
         return (
             <div className={style.appWrapper}>
                 <Popup isShowind={isShowing} hide={toggle} setNewPresentation={downloadPresentation}/>
                 <div className={style.app}>
                     <TopBar presentation={presentation} modal={toggle}/>
-                    <Presentation presentation={presentation} setNewPresentation={changePresentation} changeSelectedPresentation={changeSelectedPresentation}/>
+                    <Presentation
+                        presentation={presentation}
+                        setNewPresentation={changePresentation}
+                        changeSelectedPresentation={changeSelectedPresentation}
+                        removeAllSelectedObjects={removeAllSelectedObjects}/>
                     <Footer/>
                 </div>
             </div>

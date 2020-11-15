@@ -8,6 +8,7 @@ interface SlideObjects
     coef: number
     selectObject: Function
     isSelected: boolean
+    isLock: boolean
 }
 
 export default function Text(props: SlideObjects)
@@ -27,7 +28,7 @@ export default function Text(props: SlideObjects)
     };
 
     return (
-        <div className={style.wrapper} style={objectStyle} onClick={(e) => props.selectObject(props.object, e)}>
+        <div className={style.wrapper} style={objectStyle} onClick={(e) => !props.isLock ? props.selectObject(props.object, e) : e.preventDefault()}>
             <p>{props.object.content}</p>
         </div>
     );

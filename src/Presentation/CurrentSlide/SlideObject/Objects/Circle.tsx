@@ -8,6 +8,7 @@ interface SlideObjects
     coef: number
     selectObject: Function
     isSelected: boolean
+    isLock: boolean
 }
 
 export default function Circle(props: SlideObjects)
@@ -18,7 +19,7 @@ export default function Circle(props: SlideObjects)
              style={{top: '' + props.object.position.y / props.coef + 'px',
                  left: '' + props.object.position.x / props.coef + 'px',
                  border: props.isSelected ? '3px dashed #d3cde4' : ''}}
-             onClick={(e) => props.selectObject(props.object, e)}>
+             onClick={(e) => !props.isLock ? props.selectObject(props.object, e) : e.preventDefault()}>
             <ellipse
                 fill={props.object.background.hex}
                 cx={(props.object.width / 2) / props.coef}

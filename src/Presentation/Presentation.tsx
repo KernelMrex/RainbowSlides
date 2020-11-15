@@ -9,6 +9,7 @@ interface Presentation
     presentation: type.Presentation
     setNewPresentation: Function
     changeSelectedPresentation: Function
+    removeAllSelectedObjects: Function
 }
 
 export default function Presentation(props: Presentation)
@@ -24,8 +25,15 @@ export default function Presentation(props: Presentation)
 
     return (
         <div className={style.container}>
-            <SlideList presentation={props.presentation} setNewPresentation={props.setNewPresentation} changeSelectedPresentation={props.changeSelectedPresentation}/>
-            <CurrentSlide currentSlide={currentSlide} presentation={props.presentation} changeSelectedPresentation={props.changeSelectedPresentation}/>
+            <SlideList
+                presentation={props.presentation}
+                setNewPresentation={props.setNewPresentation}
+                changeSelectedPresentation={props.changeSelectedPresentation}/>
+            <CurrentSlide
+                currentSlide={currentSlide}
+                presentation={props.presentation}
+                changeSelectedPresentation={props.changeSelectedPresentation}
+                removeAllSelectedObjects={props.removeAllSelectedObjects}/>
         </div>
     )
 }

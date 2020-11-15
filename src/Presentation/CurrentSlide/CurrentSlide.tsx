@@ -9,6 +9,7 @@ interface Slide
     currentSlide: type.Slide | null
     presentation: type.Presentation
     changeSelectedPresentation: Function
+    removeAllSelectedObjects: Function
 }
 
 export default function CurrentSlide(props: Slide)
@@ -25,14 +26,15 @@ export default function CurrentSlide(props: Slide)
                 coef={1}
                 presentation={props.presentation}
                 changeSelectedPresentation={props.changeSelectedPresentation}
-                isSelected={selectedObjects.find((objectID) => objectID === slideObjects.id) !== undefined ? true : false}/>
+                isSelected={selectedObjects.find((objectID) => objectID === slideObjects.id) !== undefined ? true : false}
+                isLock={false}/>
         );
 
         background = defineBackground(props.currentSlide.background);
     }
 
     return (
-        <div className={style.wrapper}>
+        <div className={style.wrapper} onClick={(e) => props.removeAllSelectedObjects(e)}>
             <div className={style.content} style={{background: background}}>
                 {(props.currentSlide !== null) && (props.currentSlide.objects !== []) &&
                 mapList

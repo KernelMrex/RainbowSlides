@@ -14,6 +14,7 @@ interface SlideObjects
     presentation: type.Presentation
     changeSelectedPresentation: Function
     isSelected: boolean
+    isLock: boolean
 }
 
 export default function SlideObject(props: SlideObjects)
@@ -23,23 +24,23 @@ export default function SlideObject(props: SlideObjects)
     switch (object.type)
     {
         case 'rectangle':
-            render = <Rectangle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation}/>
+            render = <Rectangle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock}/>
             break;
 
         case 'circle':
-            render = <Circle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation}/>
+            render = <Circle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock}/>
             break;
 
         case 'triangle':
-            render = <Triangle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation}/>
+            render = <Triangle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock}/>
             break;
 
         case 'image':
-            render = <Image object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation}/>
+            render = <Image object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock}/>
             break;
 
         case 'text':
-            render = <Text object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation}/>
+            render = <Text object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock}/>
             break;
 
         default:

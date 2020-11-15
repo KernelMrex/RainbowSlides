@@ -9,6 +9,7 @@ interface SlideObjects
     coef: number
     selectObject: Function
     isSelected: boolean
+    isLock: boolean
 }
 
 export default function Image(props: SlideObjects)
@@ -22,7 +23,7 @@ export default function Image(props: SlideObjects)
     };
 
     return (
-        <div className={style.wrapper} style={objectStyle} onClick={(e) => props.selectObject(props.object, e)}>
+        <div className={style.wrapper} style={objectStyle} onClick={(e) => !props.isLock ? props.selectObject(props.object, e) : e.preventDefault()}>
             <img src={props.object.source} className={style.media}/>
         </div>
     );

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import * as type from '../core/types';
 import {createPresentation, getPresentationFromJSON} from '../core/presentation/presentation';
-import { deleteObjectFromSelection, deleteAllObjectsFromSelection, selectObject } from '../core/selection/selection';
+import {deleteObjectFromSelection, deleteAllObjectsFromSelection, selectObject, getSelectedObjects} from '../core/selection/selection';
 
 export const useModal = () =>
 {
@@ -27,15 +27,28 @@ export const useChangePresentation = (presentationState: type.Presentation) =>
         setNewPresentation(newPresentation);
     }
 
-    function changeSelectedPresentation(object: type.SlideObject, event: any)
+    function changeSelectedPresentation(selectedObject: type.SlideObject, event: any)
     {
-        console.log(event.target);
         if (event.shiftKey)
         {
-            setNewPresentation(selectObject(presentation, object.id));
+            if (getSelectedObjects(presentation).find((object) => object.id === selectedObject.id) !== undefined)
+            {
+                setNewPresentation(deleteObjectFromSelection(presentation, selectedObject.id))
+            } else
+            {
+                setNewPresentation(selectObject(presentation, selectedObject.id));
+            }
         } else
         {
-            setNewPresentation(selectObject(deleteAllObjectsFromSelection(presentation), object.id));
+            setNewPresentation(selectObject(deleteAllObjectsFromSelection(presentation), selectedObject.id));
+        }
+    }
+
+    function removeAllSelectedObjects(event: any)
+    {
+        if (event.target.tagName === 'DIV')
+        {
+            setNewPresentation(deleteAllObjectsFromSelection(presentation));
         }
     }
 
@@ -62,6 +75,7 @@ export const useChangePresentation = (presentationState: type.Presentation) =>
         presentation,
         changePresentation,
         downloadPresentation,
-        changeSelectedPresentation
+        changeSelectedPresentation,
+        removeAllSelectedObjects
     }
 };

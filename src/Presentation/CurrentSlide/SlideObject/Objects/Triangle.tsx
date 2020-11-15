@@ -8,6 +8,7 @@ interface SlideObjects
     coef: number
     selectObject: Function
     isSelected: boolean
+    isLock: boolean
 }
 
 export default function Triangle(props: SlideObjects)
@@ -21,7 +22,7 @@ export default function Triangle(props: SlideObjects)
         <svg className={style.wrapper} width={width} height={height}
              style={{top: '' + y + 'px', left: '' + x + 'px',
                  border: props.isSelected ? '3px dashed #d3cde4' : ''}}
-             onClick={(e) => props.selectObject(props.object, e)}>
+             onClick={(e) => !props.isLock ? props.selectObject(props.object, e) : e.preventDefault()}>
             <polygon
                 fill={props.object.background.hex}
                 points={points}>

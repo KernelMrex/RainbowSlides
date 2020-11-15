@@ -23,7 +23,8 @@ export default function MiniSlide(props: Slide)
                 coef={5.6}
                 presentation={props.presentation}
                 changeSelectedPresentation={props.changeSelectedPresentation}
-                isSelected={false}/>
+                isSelected={false}
+                isLock={true}/>
         );
 
         background = defineBackground(props.slide.background);
