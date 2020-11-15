@@ -1,12 +1,12 @@
-export interface UpdateStateAction extends Function
+export interface Action extends Function
 {
     provideCurrentState: boolean,
     isBeingSaved: boolean,
 }
 
-export function createUpdateStateAction(fn: Function, isBeingSaved: boolean = false, provideCurrentState: boolean = false): UpdateStateAction
+export function createAction(fn: Function, isBeingSaved: boolean = false, provideCurrentState: boolean = false): Action
 {
-    const historyFn: UpdateStateAction = fn as UpdateStateAction
+    const historyFn: Action = fn as Action
     historyFn.isBeingSaved = isBeingSaved
     historyFn.provideCurrentState = provideCurrentState
     return historyFn

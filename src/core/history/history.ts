@@ -1,7 +1,8 @@
 import { StateHistory } from '../types'
-import { immutablePop, immutablePush } from '../../utils/immutable/array';
+import { immutablePop, immutablePush } from '../../common/immutable/array';
 
-export function newHistory<StateType>(): StateHistory<StateType> {
+export function newHistory<StateType>(): StateHistory<StateType>
+{
     return {
         undo: [],
         redo: []

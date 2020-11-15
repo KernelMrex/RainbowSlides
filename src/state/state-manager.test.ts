@@ -1,6 +1,16 @@
-import { dispatch, getState } from './state-manager';
-import { addSlide } from '../core/slides/slides';
-import { Slide } from '../core/types';
+import { dispatch, getState, setState } from './state-manager';
+import { Presentation, RectangleBlock, Slide } from '../core/types';
+import { addObjectToSlide, AddObjectToSlidePayload } from '../core/objects/objects';
+import { createAction } from './update-state-actions';
+
+const mockPresentation: Presentation = {
+    name: 'mock-presentation',
+    selection: {
+        objects: [],
+        slide: null
+    },
+    slides: []
+}
 
 const mockSlide: Slide = {
     id: 'mock-slide',
@@ -10,17 +20,40 @@ const mockSlide: Slide = {
     objects: []
 }
 
-describe('test state-manager', () => {
-    test('Update state without arguments and inserting in history', () => {
-        dispatch(addSlide)
-        expect(getState()?.slides.length).toBe(1)
-        dispatch(addSlide)
-        expect(getState()?.slides.length).toBe(2)
-    })
+const mockRectangle: RectangleBlock = {
+    type: 'rectangle',
+    height: 50,
+    id: 'mock-rectangle',
+    name: 'Mock Rectangle 1',
+    position: { x: 100, y: 200 },
+    width: 100
+}
 
-    test('Update state with arguments and inserting in history', () => {
-        const newSlide: Slide = { ...mockSlide }
-        dispatch(addSlide, [ newSlide ])
-        expect(getState()?.slides).toContain(newSlide)
+describe('test state-manager', () => {
+    test('Update state with state provided and inserting in history', () => {
+        setState({
+            ...mockPresentation,
+            slides: [
+                mockSlide
+            ]
+        })
+
+        dispatch<AddObjectToSlidePayload>(
+            createAction(addObjectToSlide, true, true),
+            {
+                slideID: 'mock-slide',
+                object: mockRectangle,
+            }
+        )
+
+        expect(getState().slides.length).toBe(1)
+        expect(getState().slides).toStrictEqual([
+            {
+                ...mockSlide,
+                objects: [
+                    mockRectangle
+                ]
+            }
+        ])
     })
 })

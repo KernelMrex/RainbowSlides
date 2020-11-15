@@ -1,9 +1,14 @@
 import { Anchor, Font, Presentation, Slide, SlideObject } from '../types'
 import { getSelected } from '../selection/selection'
 
-export function addObjectToSlide(presentation: Presentation, slideID: string, object: SlideObject): Presentation
+export type AddObjectToSlidePayload = {
+    slideID: string
+    object: SlideObject
+}
+
+export function addObjectToSlide(presentation: Presentation, payload: AddObjectToSlidePayload): Presentation
 {
-    const slide = presentation.slides.find((slide: Slide) => slide.id === slideID)
+    const slide = presentation.slides.find((slide: Slide) => slide.id === payload.slideID)
     if (!slide)
     {
         return presentation
@@ -11,32 +16,40 @@ export function addObjectToSlide(presentation: Presentation, slideID: string, ob
 
     return updateSlide(presentation, {
         ...slide,
-        objects: [ ...slide.objects, object ]
+        objects: [ ...slide.objects, payload.object ]
     })
 }
 
-export function removeObjectFromSlide(presentation: Presentation, slideID: string, objectID: string): Presentation
+export type RemoveObjectFromSlidePayload = {
+    slideID: string,
+    objectID: string
+}
+
+export function removeObjectFromSlide(presentation: Presentation, payload: RemoveObjectFromSlidePayload): Presentation
 {
-    const slide = presentation.slides.find((slide: Slide) => slide.id === slideID)
+    const slide = presentation.slides.find((slide: Slide) => slide.id === payload.slideID)
     if (!slide)
     {
         return presentation
     }
 
-
     return {
         ...updateSlide(presentation, {
             ...slide,
-            objects: [ ...slide.objects ].filter((object: SlideObject) => object.id !== objectID),
+            objects: [ ...slide.objects ].filter((object: SlideObject) => object.id !== payload.objectID),
         }),
         selection: {
             ...presentation.selection,
-            objects: [ ...presentation.selection.objects ].filter((selectedObjectID: string) => selectedObjectID !== objectID)
+            objects: [ ...presentation.selection.objects ].filter((selectedObjectID: string) => selectedObjectID !== payload.objectID)
         }
     }
 }
 
-export function changeObjectName(presentation: Presentation, newName: string): Presentation
+export type ChangeObjectNamePayload = {
+    newName: string
+}
+
+export function changeObjectName(presentation: Presentation, payload: ChangeObjectNamePayload): Presentation
 {
     const [ slide, [ selectedObject ] ] = getSelected(presentation)
     if (!slide || !selectedObject)
@@ -46,11 +59,15 @@ export function changeObjectName(presentation: Presentation, newName: string): P
 
     return updateSlide(presentation, updateObject(slide, {
         ...selectedObject,
-        name: newName,
+        name: payload.newName,
     }))
 }
 
-export function changeObjectPosition(presentation: Presentation, newPosition: Anchor): Presentation
+export type ChangeObjectPositionPayload = {
+    newPosition: Anchor
+}
+
+export function changeObjectPosition(presentation: Presentation, payload: ChangeObjectPositionPayload): Presentation
 {
     const [ slide, [ selectedObject ] ] = getSelected(presentation)
     if (!slide || !selectedObject)
@@ -60,11 +77,15 @@ export function changeObjectPosition(presentation: Presentation, newPosition: An
 
     return updateSlide(presentation, updateObject(slide, {
         ...selectedObject,
-        position: newPosition,
+        position: payload.newPosition,
     }))
 }
 
-export function changeTextFont(presentation: Presentation, newFont: Font): Presentation
+export type ChangeTextFontPayload = {
+    newFont: Font
+}
+
+export function changeTextFont(presentation: Presentation, payload: ChangeTextFontPayload): Presentation
 {
     const [ slide, [ selectedObject ] ] = getSelected(presentation)
     if (!slide || !selectedObject || selectedObject.type !== 'text')
@@ -74,11 +95,15 @@ export function changeTextFont(presentation: Presentation, newFont: Font): Prese
 
     return updateSlide(presentation, updateObject(slide, {
         ...selectedObject,
-        font: newFont,
+        font: payload.newFont,
     }))
 }
 
-export function changeTextContent(presentation: Presentation, newContent: string): Presentation
+export type ChangeTextContent = {
+    newContent: string
+}
+
+export function changeTextContent(presentation: Presentation, payload: ChangeTextContent): Presentation
 {
     const [ slide, [ selectedObject ] ] = getSelected(presentation)
     if (!slide || !selectedObject || selectedObject.type !== 'text')
@@ -88,11 +113,15 @@ export function changeTextContent(presentation: Presentation, newContent: string
 
     return updateSlide(presentation, updateObject(slide, {
         ...selectedObject,
-        content: newContent
+        content: payload.newContent
     }))
 }
 
-export function changeMediaSource(presentation: Presentation, newSource: string): Presentation
+export type ChangeMediaSourcePayload = {
+    newSource: string
+}
+
+export function changeMediaSource(presentation: Presentation, payload: ChangeMediaSourcePayload): Presentation
 {
     const [ slide, [ selectedObject ] ] = getSelected(presentation)
     if (!slide || !selectedObject || ![ 'media', 'image' ].includes(selectedObject.type))
@@ -102,11 +131,16 @@ export function changeMediaSource(presentation: Presentation, newSource: string)
 
     return updateSlide(presentation, updateObject(slide, {
         ...selectedObject,
-        source: newSource,
+        source: payload.newSource,
     }))
 }
 
-export function changeObjectSize(presentation: Presentation, newWidth: number | null, newHeight: number | null): Presentation
+export type ChangeObjectSizePayload = {
+    newWidth: number | null
+    newHeight: number | null
+}
+
+export function changeObjectSize(presentation: Presentation, payload: ChangeObjectSizePayload): Presentation
 {
     const [ slide, [ selectedObject ] ] = getSelected(presentation)
     if (!slide || !selectedObject)
@@ -116,8 +150,8 @@ export function changeObjectSize(presentation: Presentation, newWidth: number | 
 
     return updateSlide(presentation, updateObject(slide, {
         ...selectedObject,
-        width: !newWidth ? selectedObject.width : newWidth,
-        height: !newHeight ? selectedObject.height : newHeight,
+        width: !payload.newWidth ? selectedObject.width : payload.newWidth,
+        height: !payload.newHeight ? selectedObject.height : payload.newHeight,
     }))
 }
 
