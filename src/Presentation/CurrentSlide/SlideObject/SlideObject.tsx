@@ -8,33 +8,38 @@ import Text from './Objects/Text';
 
 interface SlideObjects
 {
+    key: string
     object: type.SlideObject
     coef: number
+    presentation: type.Presentation
+    changeSelectedPresentation: Function
+    isSelected: boolean
 }
 
 export default function SlideObject(props: SlideObjects)
 {
-    let object = props.object;
+    const object = props.object;
     let render;
-    switch (object.type) {
+    switch (object.type)
+    {
         case 'rectangle':
-            render = <Rectangle object={object} coef={props.coef}/>
+            render = <Rectangle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation}/>
             break;
 
         case 'circle':
-            render = <Circle object={object} coef={props.coef}/>
+            render = <Circle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation}/>
             break;
 
         case 'triangle':
-            render = <Triangle object={object} coef={props.coef}/>
+            render = <Triangle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation}/>
             break;
 
         case 'image':
-            render = <Image object={object} coef={props.coef}/>
+            render = <Image object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation}/>
             break;
 
         case 'text':
-            render = <Text object={object} coef={props.coef}/>
+            render = <Text object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation}/>
             break;
 
         default:

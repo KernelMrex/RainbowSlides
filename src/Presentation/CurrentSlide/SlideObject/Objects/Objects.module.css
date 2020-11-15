@@ -7,3 +7,8 @@
 {
     width: 100%;
 }
+
+.selected
+{
+    border: 3px dashed #d3cde4;
+}

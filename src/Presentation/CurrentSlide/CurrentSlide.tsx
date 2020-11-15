@@ -1,21 +1,31 @@
-import React from 'react';
+import React  from 'react';
 import * as type from '../../core/types';
 import style from './CurrentSlide.module.css'
 import SlideObject from './SlideObject/SlideObject'
 
+
 interface Slide
 {
     currentSlide: type.Slide | null
+    presentation: type.Presentation
+    changeSelectedPresentation: Function
 }
 
 export default function CurrentSlide(props: Slide)
 {
     let mapList;
+    const selectedObjects: Array<string> = props.presentation.selection.objects;
     let background = '#ffffff';
     if (props.currentSlide !== null && props.currentSlide.objects !== [])
     {
         mapList = props.currentSlide.objects.map((slideObjects) =>
-            <SlideObject key={slideObjects.id} object={slideObjects} coef={1}/>
+            <SlideObject
+                key={slideObjects.id}
+                object={slideObjects}
+                coef={1}
+                presentation={props.presentation}
+                changeSelectedPresentation={props.changeSelectedPresentation}
+                isSelected={selectedObjects.find((objectID) => objectID === slideObjects.id) !== undefined ? true : false}/>
         );
 
         background = defineBackground(props.currentSlide.background);

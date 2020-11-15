@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import * as type from '../../core/types';
 import style from './SlideList.module.css';
 import MiniSlide from './MiniSlide';
@@ -8,6 +8,7 @@ interface Presentation
 {
     presentation: type.Presentation
     setNewPresentation: Function
+    changeSelectedPresentation: Function
 }
 
 export default function SlideList(props: Presentation)
@@ -18,7 +19,7 @@ export default function SlideList(props: Presentation)
         slideList = props.presentation.slides.map((slide) => (
             <div key={slide.id} style={{background: (props.presentation.selection.slide === slide.id) ? '#00000024' : 'transparent'}}
                 onClick={(e) => props.presentation.selection.slide !== slide.id ? props.setNewPresentation(selectSlide(props.presentation, slide)) : ''}>
-                <MiniSlide slide={slide}/>
+                <MiniSlide slide={slide} presentation={props.presentation} changeSelectedPresentation={props.changeSelectedPresentation}/>
             </div>
         ));
     }

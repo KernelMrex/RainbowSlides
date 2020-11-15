@@ -1,4 +1,4 @@
-import { Presentation, Slide, SlideObject } from '../types'
+import {Presentation, Slide, SlideObject} from '../types'
 
 function selectSlide(presentation: Presentation, slide: Slide): Presentation
 {
@@ -24,6 +24,12 @@ function deleteSlideFromSelection(presentation: Presentation): Presentation
 
 function selectObject(presentation: Presentation, objectId: string): Presentation
 {
+    const selectedSlide: Slide | null = getSelectedSlide(presentation);
+    if (selectedSlide === null || selectedSlide.objects.find((object) => object.id ===objectId) === undefined)
+    {
+        return presentation
+    }
+
     if (presentation.selection.slide !== null)
     {
         let objects: Array<string>
@@ -31,9 +37,8 @@ function selectObject(presentation: Presentation, objectId: string): Presentatio
 
         if (presentation.selection.objects !== [])
         {
-            objects = [ ...presentation.selection.objects ]
-        }
-        else
+            objects = [...presentation.selection.objects]
+        } else
         {
             objects = []
         }
@@ -50,8 +55,7 @@ function selectObject(presentation: Presentation, objectId: string): Presentatio
                 objects: objects
             }
         }
-    }
-    else
+    } else
     {
         return presentation
     }
@@ -61,7 +65,7 @@ function deleteObjectFromSelection(presentation: Presentation, objectId: string)
 {
     if (presentation.selection.objects !== [])
     {
-        let objects: Array<string> = [ ...presentation.selection.objects ]
+        let objects: Array<string> = [...presentation.selection.objects]
         objects.splice(presentation.selection.objects.indexOf(objectId), 1)
         return {
             ...presentation,
@@ -73,6 +77,17 @@ function deleteObjectFromSelection(presentation: Presentation, objectId: string)
     }
 
     return presentation
+}
+
+function deleteAllObjectsFromSelection(presentation: Presentation): Presentation
+{
+    return {
+        ...presentation,
+        selection: {
+            ...presentation.selection,
+            objects: []
+        }
+    }
 }
 
 function getSelectedSlide(presentation: Presentation): Slide | null
@@ -101,9 +116,9 @@ function getSelectedObjects(presentation: Presentation): Array<SlideObject>
     )
 }
 
-function getSelected(presentation: Presentation): [ Slide | null, Array<SlideObject> ]
+function getSelected(presentation: Presentation): [Slide | null, Array<SlideObject>]
 {
-    return [ getSelectedSlide(presentation), getSelectedObjects(presentation) ]
+    return [getSelectedSlide(presentation), getSelectedObjects(presentation)]
 }
 
 export {
@@ -113,5 +128,6 @@ export {
     deleteSlideFromSelection,
     getSelectedSlide,
     getSelectedObjects,
-    getSelected
+    getSelected,
+    deleteAllObjectsFromSelection
 }

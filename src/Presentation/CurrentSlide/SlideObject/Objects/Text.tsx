@@ -6,6 +6,8 @@ interface SlideObjects
 {
     object: type.TextBlock
     coef: number
+    selectObject: Function
+    isSelected: boolean
 }
 
 export default function Text(props: SlideObjects)
@@ -20,11 +22,12 @@ export default function Text(props: SlideObjects)
         fontFamily: props.object.font.family,
         fontSize: props.object.font.size / props.coef + 'px',
         fontStyle: props.object.font.style,
-        fontWeight: props.object.font.weight
+        fontWeight: props.object.font.weight,
+        border: props.isSelected ? '3px dashed #d3cde4' : ''
     };
 
     return (
-        <div className={style.wrapper} style={objectStyle}>
+        <div className={style.wrapper} style={objectStyle} onClick={(e) => props.selectObject(props.object, e)}>
             <p>{props.object.content}</p>
         </div>
     );

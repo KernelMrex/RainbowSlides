@@ -6,6 +6,8 @@ import SlideObject from '../CurrentSlide/SlideObject/SlideObject'
 interface Slide
 {
     slide: type.Slide,
+    presentation: type.Presentation
+    changeSelectedPresentation: Function
 }
 
 export default function MiniSlide(props: Slide)
@@ -15,7 +17,13 @@ export default function MiniSlide(props: Slide)
     if (props.slide !== null && props.slide.objects !== [])
     {
         mapList = props.slide.objects.map((slideObjects) =>
-            <SlideObject key={slideObjects.id} object={slideObjects} coef={5.6}/>
+            <SlideObject
+                key={slideObjects.id}
+                object={slideObjects}
+                coef={5.6}
+                presentation={props.presentation}
+                changeSelectedPresentation={props.changeSelectedPresentation}
+                isSelected={false}/>
         );
 
         background = defineBackground(props.slide.background);
