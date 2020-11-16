@@ -1,6 +1,6 @@
-export type ActionHistory = {
-    undo: Array<Presentation>
-    redo: Array<Presentation>
+export type StateHistory<StateType> = {
+    undo: Array<StateType>
+    redo: Array<StateType>
 }
 
 export type Presentation = {

@@ -1,24 +1,45 @@
-import { Presentation, ActionHistory } from '../types'
+import { StateHistory } from '../types'
+import { immutablePop, immutablePush } from '../../common/immutable/array';
 
-function addChangeToHistory(presentation: Presentation, history: ActionHistory)
+export function newHistory<StateType>(): StateHistory<StateType>
 {
-    history.undo.push(presentation)
+    return {
+        undo: [],
+        redo: []
+    }
 }
 
-function undoChange(presentation: Presentation, history: ActionHistory): Presentation | undefined
+export function add<StateType>(history: StateHistory<StateType>, state: StateType): StateHistory<StateType>
 {
-    history.redo.push(presentation)
-
-    return history.undo.pop()
+    return { ...history, undo: [ ...history.undo, state ] }
 }
 
-function redoChange(history: ActionHistory)
+export function undo<StateType>(history: StateHistory<StateType>): StateHistory<StateType>
 {
-    return history.redo.pop()
+    const [ updatedUndo, change ] = immutablePop<StateType>(history.undo)
+
+    return {
+        undo: updatedUndo,
+        redo: immutablePush<StateType>(history.redo, change),
+    }
 }
 
-export {
-    addChangeToHistory,
-    undoChange,
-    redoChange
+export function redo<StateType>(history: StateHistory<StateType>): StateHistory<StateType>
+{
+    const [ updatedRedo, change ] = immutablePop<StateType>(history.redo)
+
+    return {
+        redo: updatedRedo,
+        undo: immutablePush<StateType>(history.undo, change),
+    }
+}
+
+export function getUndoTail<StateType>(history: StateHistory<StateType>): StateType | undefined
+{
+    return { ...history.undo.slice(-1, 1)[0] }
+}
+
+export function getRedoTail<StateType>(history: StateHistory<StateType>): StateType | undefined
+{
+    return { ...history.redo.slice(-1, 1)[0] }
 }

@@ -1,17 +1,21 @@
-import {Presentation, Slide, SlideObject} from '../types'
+import { Presentation, Slide, SlideObject } from '../types'
 
-function selectSlide(presentation: Presentation, slide: Slide): Presentation
+export type SelectSlidePayload = {
+    slide: Slide
+}
+
+export function selectSlide(presentation: Presentation, payload: SelectSlidePayload): Presentation
 {
     return {
         ...presentation,
         selection: {
-            slide: slide.id,
+            slide: payload.slide.id,
             objects: []
         }
     }
 }
 
-function deleteSlideFromSelection(presentation: Presentation): Presentation
+export function deleteSlideFromSelection(presentation: Presentation): Presentation
 {
     return {
         ...presentation,
@@ -22,10 +26,14 @@ function deleteSlideFromSelection(presentation: Presentation): Presentation
     }
 }
 
-function selectObject(presentation: Presentation, objectId: string): Presentation
+export type SelectObjectPayload = {
+    objectId: string
+}
+
+export function selectObject(presentation: Presentation, payload: SelectObjectPayload): Presentation
 {
     const selectedSlide: Slide | null = getSelectedSlide(presentation);
-    if (selectedSlide === null || selectedSlide.objects.find((object) => object.id ===objectId) === undefined)
+    if (selectedSlide === null || selectedSlide.objects.find((object) => object.id === payload.objectId) === undefined)
     {
         return presentation
     }
@@ -43,9 +51,9 @@ function selectObject(presentation: Presentation, objectId: string): Presentatio
             objects = []
         }
 
-        if (objectId === currentSlide.objects.filter(object => object.id === objectId)[0].id)
+        if (payload.objectId === currentSlide.objects.filter(object => object.id === payload.objectId)[0].id)
         {
-            objects.push(objectId)
+            objects.push(payload.objectId)
         }
 
         return {
@@ -55,18 +63,23 @@ function selectObject(presentation: Presentation, objectId: string): Presentatio
                 objects: objects
             }
         }
-    } else
+    }
+    else
     {
         return presentation
     }
 }
 
-function deleteObjectFromSelection(presentation: Presentation, objectId: string): Presentation
+export type DeleteObjectFromSelectionPayload = {
+    objectId: string
+}
+
+export function deleteObjectFromSelection(presentation: Presentation, payload: DeleteObjectFromSelectionPayload): Presentation
 {
     if (presentation.selection.objects !== [])
     {
-        let objects: Array<string> = [...presentation.selection.objects]
-        objects.splice(presentation.selection.objects.indexOf(objectId), 1)
+        let objects: Array<string> = [ ...presentation.selection.objects ]
+        objects.splice(presentation.selection.objects.indexOf(payload.objectId), 1)
         return {
             ...presentation,
             selection: {
@@ -79,7 +92,7 @@ function deleteObjectFromSelection(presentation: Presentation, objectId: string)
     return presentation
 }
 
-function deleteAllObjectsFromSelection(presentation: Presentation): Presentation
+export function deleteAllObjectsFromSelection(presentation: Presentation): Presentation
 {
     return {
         ...presentation,
@@ -90,7 +103,7 @@ function deleteAllObjectsFromSelection(presentation: Presentation): Presentation
     }
 }
 
-function getSelectedSlide(presentation: Presentation): Slide | null
+export function getSelectedSlide(presentation: Presentation): Slide | null
 {
     const selectedSlideID = presentation.selection.slide
     if (!selectedSlideID)
@@ -103,7 +116,7 @@ function getSelectedSlide(presentation: Presentation): Slide | null
     return slide ? slide : null
 }
 
-function getSelectedObjects(presentation: Presentation): Array<SlideObject>
+export function getSelectedObjects(presentation: Presentation): Array<SlideObject>
 {
     const selectedSlide = getSelectedSlide(presentation)
     if (!selectedSlide || !presentation.selection.objects)
@@ -116,18 +129,7 @@ function getSelectedObjects(presentation: Presentation): Array<SlideObject>
     )
 }
 
-function getSelected(presentation: Presentation): [Slide | null, Array<SlideObject>]
+export function getSelected(presentation: Presentation): [ Slide | null, Array<SlideObject> ]
 {
-    return [getSelectedSlide(presentation), getSelectedObjects(presentation)]
-}
-
-export {
-    selectSlide,
-    selectObject,
-    deleteObjectFromSelection,
-    deleteSlideFromSelection,
-    getSelectedSlide,
-    getSelectedObjects,
-    getSelected,
-    deleteAllObjectsFromSelection
+    return [ getSelectedSlide(presentation), getSelectedObjects(presentation) ]
 }

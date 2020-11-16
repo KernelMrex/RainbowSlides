@@ -3,8 +3,6 @@ import {
     changeOrderOfSlide,
     changesSlidesBackground,
     deleteSlide,
-    getDefaultSlide,
-    getNewId
 } from './slides'
 
 import { Presentation, Slide, Color } from '../types'
@@ -113,15 +111,6 @@ describe('tests for module Slides', () => {
         expect(newPresentation.slides[1].background).toEqual({ hex: '#ffffff' });
     });
 
-    test('create default slide', () => {
-        expect(getDefaultSlide().background).toEqual({ hex: '#ffffff' });
-    });
-
-    test('create new id', () => {
-        expect(typeof getNewId()).toBe('string');
-        expect(getNewId()[0]).toBe('f');
-    });
-
 
     test('delete alone selected slide', () => {
         const newPresentation: Presentation = deleteSlide(presentationWithSlides);
@@ -150,51 +139,51 @@ describe('tests for module Slides', () => {
 
     test('change background of slide', () => {
         const color: Color = { hex: '#000000' };
-        const newPresentation: Presentation = changesSlidesBackground(presentationWithSlides, color);
+        const newPresentation: Presentation = changesSlidesBackground(presentationWithSlides, {background: color});
 
         expect(newPresentation.slides[0].background).toEqual({ hex: '#000000' });
     });
 
     test('change background of slide !error', () => {
         const color: Color = { hex: '#000000' };
-        const newPresentation: Presentation = changesSlidesBackground(presentationWithoutSelectedSlides, color);
+        const newPresentation: Presentation = changesSlidesBackground(presentationWithoutSelectedSlides, {background: color});
 
         expect(newPresentation).toEqual(presentationWithoutSelectedSlides);
     });
 
 
     test('change order non selected slide', () => {
-        const newPresentation: Presentation = changeOrderOfSlide(presentationWithoutSelectedSlides, 0);
+        const newPresentation: Presentation = changeOrderOfSlide(presentationWithoutSelectedSlides, {place: 0});
         expect(newPresentation).toEqual(presentationWithoutSelectedSlides);
     });
 
     test('change order selected slide alone', () => {
-        const newPresentation: Presentation = changeOrderOfSlide(presentationWithSlides, 0);
+        const newPresentation: Presentation = changeOrderOfSlide(presentationWithSlides, {place: 0});
         expect(newPresentation).toEqual(presentationWithSlides);
     });
 
     test('change order selected slide non alone', () => {
-        const newPresentation: Presentation = changeOrderOfSlide(presentationWithTwoSlidesSelected, 0);
+        const newPresentation: Presentation = changeOrderOfSlide(presentationWithTwoSlidesSelected, {place: 0});
         expect(newPresentation).toEqual(presentationWithTwoSlidesNonSelectedReverse);
     });
 
     test('change order selected slide non alone at the same place', () => {
-        const newPresentation: Presentation = changeOrderOfSlide(presentationWithTwoSlidesSelected, 1);
+        const newPresentation: Presentation = changeOrderOfSlide(presentationWithTwoSlidesSelected, {place: 1});
         expect(newPresentation).toEqual(presentationWithTwoSlidesSelected);
     });
 
     test('change order selected slide non alone at the wrong place', () => {
-        const newPresentation: Presentation = changeOrderOfSlide(presentationWithTwoSlidesSelected, 3);
+        const newPresentation: Presentation = changeOrderOfSlide(presentationWithTwoSlidesSelected, {place: 3});
         expect(newPresentation).toEqual(presentationWithTwoSlidesSelected);
     });
 
     test('change order middle slide for first slide', () => {
-        const newPresentation: Presentation = changeOrderOfSlide(presentationWithThreeSlidesSelected, 0);
+        const newPresentation: Presentation = changeOrderOfSlide(presentationWithThreeSlidesSelected, {place: 0});
         expect(newPresentation).toEqual(presentationWithThreeSlidesNonSelectedReverseFirst);
     });
 
     test('change order middle slide for last slide', () => {
-        const newPresentation: Presentation = changeOrderOfSlide(presentationWithThreeSlidesSelected, 2);
+        const newPresentation: Presentation = changeOrderOfSlide(presentationWithThreeSlidesSelected, {place: 2});
         expect(newPresentation).toEqual(presentationWithThreeSlidesNonSelectedReverseLast);
     });
 })

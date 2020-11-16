@@ -1,13 +1,13 @@
 import {
     addObjectToSlide,
-    removeObjectFromSlide,
+    changeMediaSource,
     changeObjectName,
     changeObjectPosition,
-    changeTextFont,
-    changeMediaSource,
     changeObjectSize,
-    changeTextContent
-} from './slide-object'
+    changeTextContent,
+    changeTextFont,
+    removeObjectFromSlide
+} from './objects'
 
 import { MediaBlock, Presentation, RectangleBlock, Slide, TextBlock } from '../types'
 
@@ -77,7 +77,7 @@ describe('test module "Slide Object"', () => {
             ]
         }
         const object = { ...mockRectangle }
-        const newPresentationInstance = addObjectToSlide(presentation, 'mock-slide', object)
+        const newPresentationInstance = addObjectToSlide(presentation, { slideID: 'mock-slide', object: object })
         expect(newPresentationInstance).not.toBe(presentation)
         expect(presentation.slides[0].objects).not.toContain(object)
         expect(newPresentationInstance.slides[0].objects).toContain(object)
@@ -91,7 +91,7 @@ describe('test module "Slide Object"', () => {
             ]
         }
         const object = { ...mockRectangle }
-        const newPresentationInstance = addObjectToSlide(presentation, 'no-existing-slide', object)
+        const newPresentationInstance = addObjectToSlide(presentation, { slideID: 'no-existing-slide', object: object })
         expect(newPresentationInstance).toBe(presentation)
         expect(newPresentationInstance.slides[0].objects).not.toContain(object)
     })
@@ -109,7 +109,10 @@ describe('test module "Slide Object"', () => {
             ]
         }
 
-        const newPresentationInstance = removeObjectFromSlide(presentation, 'mock-slide', 'mock-rectangle')
+        const newPresentationInstance = removeObjectFromSlide(presentation, {
+            slideID: 'mock-slide',
+            objectID: 'mock-rectangle'
+        })
         expect(presentation.slides[0].objects).toContain(object)
         expect(newPresentationInstance.slides[0].objects).not.toContain(object)
         expect(newPresentationInstance.selection.objects).not.toContain('mock-rectangle')
@@ -127,7 +130,10 @@ describe('test module "Slide Object"', () => {
             ]
         }
 
-        const newPresentationInstance = removeObjectFromSlide(presentation, 'not-existing-slide', 'mock-rectangle')
+        const newPresentationInstance = removeObjectFromSlide(presentation, {
+            slideID: 'not-existing-slide',
+            objectID: 'mock-rectangle'
+        })
         expect(newPresentationInstance).toBe(presentation)
         expect(presentation.slides[0].objects).toContain(object)
         expect(newPresentationInstance.slides[0].objects).toContain(object)
@@ -150,7 +156,7 @@ describe('test module "Slide Object"', () => {
             }
         }
 
-        const newPresentationInstance = changeObjectName(presentation, 'Changed name')
+        const newPresentationInstance = changeObjectName(presentation, { newName: 'Changed name' })
 
         expect(newPresentationInstance).not.toBe(presentation)
         expect(newPresentationInstance.slides[0].objects[0].name).toBe('Changed name')
@@ -171,7 +177,7 @@ describe('test module "Slide Object"', () => {
                 objects: [ 'mock-rectangle' ]
             }
         }
-        const newPresentationInstance = changeObjectName(presentation, 'Changed name')
+        const newPresentationInstance = changeObjectName(presentation, { newName: 'Changed name' })
 
         expect(newPresentationInstance).toBe(presentation)
         expect(newPresentationInstance.slides[0].objects[0].name).not.toBe('Changed name')
@@ -193,7 +199,7 @@ describe('test module "Slide Object"', () => {
             }
         }
 
-        const newPresentationInstance = changeObjectName(presentation, 'Changed name')
+        const newPresentationInstance = changeObjectName(presentation, { newName: 'Changed name' })
 
         expect(newPresentationInstance).toBe(presentation)
         expect(newPresentationInstance.slides[0].objects[0].name).toBe(presentation.slides[0].objects[0].name)
@@ -215,7 +221,7 @@ describe('test module "Slide Object"', () => {
                 objects: [ 'mock-rectangle' ]
             }
         }
-        const newPresentationInstance = changeObjectPosition(presentation, { x: 50, y: 60 })
+        const newPresentationInstance = changeObjectPosition(presentation, { newPosition: { x: 50, y: 60 } })
 
         expect(newPresentationInstance).not.toBe(presentation)
         expect(newPresentationInstance.slides[0].objects[0].position).toStrictEqual({ x: 50, y: 60 })
@@ -236,7 +242,7 @@ describe('test module "Slide Object"', () => {
                 objects: [ 'mock-rectangle' ]
             }
         }
-        const newPresentationInstance = changeObjectPosition(presentation, { x: 50, y: 60 })
+        const newPresentationInstance = changeObjectPosition(presentation, { newPosition: { x: 50, y: 60 } })
 
         expect(newPresentationInstance).toBe(presentation)
         expect(newPresentationInstance.slides[0].objects[0].position).not.toBe({ x: 50, y: 60 })
@@ -257,7 +263,7 @@ describe('test module "Slide Object"', () => {
                 objects: [ 'not-existing-object' ]
             }
         }
-        const newPresentationInstance = changeObjectPosition(presentation, { x: 50, y: 60 })
+        const newPresentationInstance = changeObjectPosition(presentation, { newPosition: { x: 50, y: 60 } })
 
         expect(newPresentationInstance).toBe(presentation)
         expect(newPresentationInstance.slides[0].objects[0].position).not.toStrictEqual({ x: 50, y: 60 })
@@ -281,10 +287,12 @@ describe('test module "Slide Object"', () => {
         }
 
         const newPresentationInstance = changeTextFont(presentation, {
-            family: 'changed-font-family',
-            size: 50,
-            style: 'italic',
-            weight: 300
+            newFont: {
+                family: 'changed-font-family',
+                size: 50,
+                style: 'italic',
+                weight: 300
+            }
         })
 
         if (!('font' in newPresentationInstance.slides[0].objects[0]))
@@ -318,10 +326,12 @@ describe('test module "Slide Object"', () => {
         }
 
         const newPresentationInstance = changeTextFont(presentation, {
-            family: 'changed-font-family',
-            size: 50,
-            style: 'italic',
-            weight: 300
+            newFont: {
+                family: 'changed-font-family',
+                size: 50,
+                style: 'italic',
+                weight: 300
+            }
         })
 
         if (!('font' in newPresentationInstance.slides[0].objects[0]))
@@ -355,10 +365,12 @@ describe('test module "Slide Object"', () => {
         }
 
         const newPresentationInstance = changeTextFont(presentation, {
-            family: 'changed-font-family',
-            size: 50,
-            style: 'italic',
-            weight: 300
+            newFont: {
+                family: 'changed-font-family',
+                size: 50,
+                style: 'italic',
+                weight: 300
+            }
         })
 
         if (!('font' in newPresentationInstance.slides[0].objects[0]))
@@ -392,10 +404,12 @@ describe('test module "Slide Object"', () => {
         }
 
         const newPresentationInstance = changeTextFont(presentation, {
-            family: 'changed-font-family',
-            size: 50,
-            style: 'italic',
-            weight: 300
+            newFont: {
+                family: 'changed-font-family',
+                size: 50,
+                style: 'italic',
+                weight: 300
+            }
         })
 
         expect(newPresentationInstance).toBe(presentation)
@@ -422,7 +436,7 @@ describe('test module "Slide Object"', () => {
             }
         }
 
-        const newPresentationInstance = changeTextContent(presentation, 'Changed text')
+        const newPresentationInstance = changeTextContent(presentation, { newContent: 'Changed text' })
 
         if (!('content' in newPresentationInstance.slides[0].objects[0]))
         {
@@ -449,7 +463,7 @@ describe('test module "Slide Object"', () => {
             }
         }
 
-        const newPresentationInstance = changeTextContent(presentation, 'Changed text')
+        const newPresentationInstance = changeTextContent(presentation, { newContent: 'Changed text' })
 
         if (!('content' in newPresentationInstance.slides[0].objects[0]))
         {
@@ -476,7 +490,7 @@ describe('test module "Slide Object"', () => {
             }
         }
 
-        const newPresentationInstance = changeTextContent(presentation, 'Changed text')
+        const newPresentationInstance = changeTextContent(presentation, { newContent: 'Changed text' })
 
         if (!('content' in newPresentationInstance.slides[0].objects[0]))
         {
@@ -503,7 +517,7 @@ describe('test module "Slide Object"', () => {
             }
         }
 
-        const newPresentationInstance = changeTextContent(presentation, 'Changed text')
+        const newPresentationInstance = changeTextContent(presentation, { newContent: 'Changed text' })
 
         expect(newPresentationInstance).toBe(presentation)
         if ('content' in newPresentationInstance.slides[0].objects[0])
@@ -529,7 +543,7 @@ describe('test module "Slide Object"', () => {
             }
         }
 
-        const newPresentationInstance = changeMediaSource(presentation, 'changed source')
+        const newPresentationInstance = changeMediaSource(presentation, { newSource: 'changed source' })
 
         if (!('source' in newPresentationInstance.slides[0].objects[0]))
         {
@@ -556,7 +570,7 @@ describe('test module "Slide Object"', () => {
             }
         }
 
-        const newPresentationInstance = changeMediaSource(presentation, 'changed source')
+        const newPresentationInstance = changeMediaSource(presentation, { newSource: 'changed source' })
 
         if (!('source' in newPresentationInstance.slides[0].objects[0]))
         {
@@ -583,7 +597,7 @@ describe('test module "Slide Object"', () => {
             }
         }
 
-        const newPresentationInstance = changeMediaSource(presentation, 'changed source')
+        const newPresentationInstance = changeMediaSource(presentation, { newSource: 'changed source' })
 
         if (!('source' in newPresentationInstance.slides[0].objects[0]))
         {
@@ -610,7 +624,7 @@ describe('test module "Slide Object"', () => {
             }
         }
 
-        const newPresentationInstance = changeMediaSource(presentation, 'changed source')
+        const newPresentationInstance = changeMediaSource(presentation, { newSource: 'changed source' })
 
         expect(newPresentationInstance).toBe(presentation)
         if ('source' in newPresentationInstance.slides[0].objects[0])
@@ -636,7 +650,7 @@ describe('test module "Slide Object"', () => {
             }
         }
 
-        const newPresentationInstance = changeObjectSize(presentation, 100, 200)
+        const newPresentationInstance = changeObjectSize(presentation, { newWidth: 100, newHeight: 200 })
 
         expect(newPresentationInstance).not.toBe(presentation)
         expect(newPresentationInstance.slides[0].objects[0].width).toBe(100)
@@ -659,7 +673,7 @@ describe('test module "Slide Object"', () => {
             }
         }
 
-        const newPresentationInstance = changeObjectSize(presentation, null, 200)
+        const newPresentationInstance = changeObjectSize(presentation, { newWidth: null, newHeight: 200 })
 
         expect(newPresentationInstance).not.toBe(presentation)
         expect(newPresentationInstance.slides[0].objects[0].width).toBe(object.width)
@@ -682,7 +696,7 @@ describe('test module "Slide Object"', () => {
             }
         }
 
-        const newPresentationInstance = changeObjectSize(presentation, 100, null)
+        const newPresentationInstance = changeObjectSize(presentation, { newWidth: 100, newHeight: null })
 
         expect(newPresentationInstance).not.toBe(presentation)
         expect(newPresentationInstance.slides[0].objects[0].width).toBe(100)
@@ -705,7 +719,7 @@ describe('test module "Slide Object"', () => {
             }
         }
 
-        const newPresentationInstance = changeObjectSize(presentation, 100, 200)
+        const newPresentationInstance = changeObjectSize(presentation, { newWidth: 100, newHeight: 200 })
 
         expect(newPresentationInstance).toBe(presentation)
         expect(newPresentationInstance.slides[0].objects[0].width).not.toBe(100)
@@ -728,7 +742,7 @@ describe('test module "Slide Object"', () => {
             }
         }
 
-        const newPresentationInstance = changeObjectSize(presentation, 100, 200)
+        const newPresentationInstance = changeObjectSize(presentation, { newWidth: 100, newHeight: 200 })
 
         expect(newPresentationInstance).toBe(presentation)
         expect(newPresentationInstance.slides[0].objects[0].width).not.toBe(100)
