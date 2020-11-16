@@ -1,8 +1,9 @@
 import { Presentation, Slide, SlideObject, Picture, Color } from '../types'
 import { deleteSlideFromSelection } from '../selection/selection';
 
-function addSlide(presentation: Presentation, slide: Slide = getDefaultSlide()): Presentation
+export function addSlide(presentation: Presentation): Presentation
 {
+    const slide = getDefaultSlide();
     return {
         ...presentation,
         slides: [ ...presentation.slides, slide ]
@@ -21,7 +22,7 @@ function getDefaultSlide(): Slide
     }
 }
 
-function deleteSlide(presentation: Presentation): Presentation
+export function deleteSlide(presentation: Presentation): Presentation
 {
     const currentSlideId: string | null = presentation.selection.slide;
     if (currentSlideId !== null)
@@ -46,14 +47,18 @@ function getNewId(): string
     return `f${(~~(Math.random() * 1e8)).toString(16)}`;
 }
 
-function changeOrderOfSlide(presentation: Presentation, place: number): Presentation
+export type ChangeOrderOfSlidePayload = {
+    place: number
+}
+
+export function changeOrderOfSlide(presentation: Presentation, payload: ChangeOrderOfSlidePayload): Presentation
 {
-    if (presentation.selection.slide !== null && presentation.slides.length >= place)
+    if (presentation.selection.slide !== null && presentation.slides.length >= payload.place)
     {
         const currentSlide: Slide = presentation.slides.filter(slide => slide.id === presentation.selection.slide)[0];
         let newSlidesList: Array<Slide> = [ ...presentation.slides ];
         newSlidesList.splice(presentation.slides.indexOf(currentSlide), 1);
-        newSlidesList.splice(place, 0, currentSlide);
+        newSlidesList.splice(payload.place, 0, currentSlide);
 
         return {
             ...presentation,
@@ -63,14 +68,18 @@ function changeOrderOfSlide(presentation: Presentation, place: number): Presenta
     return presentation;
 }
 
-function changesSlidesBackground(presentation: Presentation, background: Picture | Color): Presentation
+export type ChangesSlidesBackgroundPayload = {
+    background: Picture | Color
+}
+
+export function changesSlidesBackground(presentation: Presentation, payload: ChangesSlidesBackgroundPayload): Presentation
 {
     if (presentation.selection.slide !== null)
     {
         const currentSlide: Slide = presentation.slides.filter(slide => slide.id === presentation.selection.slide)[0]
         const newSlide: Slide = {
             ...currentSlide,
-            background: background
+            background: payload.background
         };
 
         const slides: Array<Slide> = createNewArraySlidesWithNewSlide(presentation, newSlide);
@@ -100,14 +109,3 @@ function createNewArraySlidesWithNewSlide(presentation: Presentation, newSlide: 
         return presentation.slides
     }
 }
-
-export {
-    changeOrderOfSlide,
-    addSlide,
-    changesSlidesBackground,
-    createNewArraySlidesWithNewSlide,
-    deleteSlide,
-    getDefaultSlide,
-    getNewId
-};
-
