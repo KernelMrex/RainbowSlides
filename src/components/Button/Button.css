@@ -1,0 +1,26 @@
+.button
+{
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+
+    cursor: pointer;
+}
+
+.button:focus
+{
+    outline: none;
+}
+
+.button_size_m
+{
+    padding: 10px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    border-radius: 4px;
+}
+
+.button_color_white
+{
+    background: #ffffff;
+}

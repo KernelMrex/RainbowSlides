@@ -1,0 +1,18 @@
+.submenu
+{
+    display: flex;
+}
+
+.submenu__item
+{
+    padding: 2px 6px 2px 0;
+
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 19px;
+
+    color: #ffffff;
+    cursor: pointer;
+}
