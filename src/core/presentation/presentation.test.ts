@@ -26,9 +26,21 @@ const newPresentation: Presentation = {
 
 describe('test module "Presentation"', () => {
     test('get new presentation', () => {
-        const newPresentation: Presentation = createPresentation('How to grow up')
+        const newPresentation: Presentation = createPresentation({name: 'How to grow up'})
         expect(newPresentation).toEqual({
             name: 'How to grow up',
+            slides: [],
+            selection: {
+                slide: null,
+                objects: []
+            }
+        })
+    })
+
+    test('get new presentation without name', () => {
+        const newPresentation: Presentation = createPresentation({})
+        expect(newPresentation).toEqual({
+            name: 'simple name',
             slides: [],
             selection: {
                 slide: null,
@@ -48,7 +60,7 @@ describe('test module "Presentation"', () => {
     })
 
     test('change name of presentation on right name', () => {
-        const newNamedPresentation: Presentation = changePresentationName(newPresentation, 'test')
+        const newNamedPresentation: Presentation = changePresentationName(newPresentation, {name: 'test'})
         expect(newNamedPresentation).toEqual({
             ...newPresentation,
             name: 'test'

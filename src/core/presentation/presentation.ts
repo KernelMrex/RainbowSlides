@@ -1,9 +1,17 @@
 import { Presentation } from '../types'
 
-function createPresentation(name: string = 'simple name'): Presentation
+export type CreatePresentationPayload = {
+    name?: string
+}
+
+export function createPresentation(payload: CreatePresentationPayload): Presentation
 {
+    if (payload.name === undefined)
+    {
+        payload.name = 'simple name'
+    }
     return {
-        name: name,
+        name: payload.name,
         slides: [],
         selection: {
             slide: null,
@@ -12,27 +20,24 @@ function createPresentation(name: string = 'simple name'): Presentation
     }
 }
 
-function changePresentationName(presentation: Presentation, name: string): Presentation
+export type ChangePresentationNamePayload = {
+    name: string
+}
+
+export function changePresentationName(presentation: Presentation, payload: ChangePresentationNamePayload): Presentation
 {
     return {
         ...presentation,
-        name: name
+        name: payload.name
     }
 }
 
-function getJSONOfPresentation(presentation: Presentation): string
+export function getJSONOfPresentation(presentation: Presentation): string
 {
     return JSON.stringify(presentation)
 }
 
-function getPresentationFromJSON(presentationInJSON: string): Presentation
+export function getPresentationFromJSON(presentationInJSON: string): Presentation
 {
     return JSON.parse(presentationInJSON)
-}
-
-export {
-    changePresentationName,
-    createPresentation,
-    getJSONOfPresentation,
-    getPresentationFromJSON
 }

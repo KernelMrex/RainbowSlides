@@ -4,7 +4,7 @@ import * as history from '../core/history/history';
 import { Action } from './update-state-actions';
 
 type StateType = Presentation
-const initialState: StateType = createPresentation();
+const initialState: StateType = createPresentation({});
 
 let state: StateType = initialState;
 let stateHistory: StateHistory<StateType> = history.newHistory<StateType>()
