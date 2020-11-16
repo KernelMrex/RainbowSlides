@@ -91,7 +91,7 @@ const presentationWithSelectedSlide2: Presentation = {
 
 describe('test module "Selection"', () => {
     test('select slide without previous', () => {
-        let newPresentation: Presentation = selectSlide(presentationWithoutSelectedSlide, slide1)
+        let newPresentation: Presentation = selectSlide(presentationWithoutSelectedSlide, {slide: slide1})
         expect(newPresentation).toEqual({
             ...presentationWithoutSelectedSlide,
             selection: {
@@ -102,7 +102,7 @@ describe('test module "Selection"', () => {
     })
 
     test('select slide with already selected slide', () => {
-        let newPresentation: Presentation = selectSlide(presentationWithSelectedSlide, slide2)
+        let newPresentation: Presentation = selectSlide(presentationWithSelectedSlide, {slide: slide2})
         expect(newPresentation).toEqual({
             ...presentationWithSelectedSlide,
             selection: {
@@ -128,7 +128,7 @@ describe('test module "Selection"', () => {
         let selectedSlide: Slide = presentationWithoutSelectedObject.slides.filter(slide => slide.id === selectedSlideId)[0]
         let newSelectedObjectId: string = selectedSlide.objects.filter(object => object.id === simpleCircle.id)[0].id
 
-        let newPresentation: Presentation = selectObject(presentationWithoutSelectedObject, newSelectedObjectId)
+        let newPresentation: Presentation = selectObject(presentationWithoutSelectedObject, {objectId: newSelectedObjectId})
         expect(newPresentation).toEqual({
             ...presentationWithoutSelectedObject,
             selection: {
@@ -143,7 +143,7 @@ describe('test module "Selection"', () => {
         let selectedSlide: Slide = presentationWithSelectedSlide.slides.filter(slide => slide.id === selectedSlideId)[0]
         let newSelectedObjectId: string = selectedSlide.objects.filter(object => object.id === simpleCircle.id)[0].id
 
-        let newPresentation: Presentation = selectObject(presentationWithSelectedSlide, newSelectedObjectId)
+        let newPresentation: Presentation = selectObject(presentationWithSelectedSlide, {objectId: newSelectedObjectId})
         expect(newPresentation).toEqual({
             ...presentationWithSelectedSlide,
             selection: {
@@ -154,12 +154,12 @@ describe('test module "Selection"', () => {
     })
 
     test('delete last object with already selected object', () => {
-        let newPresentation: Presentation = deleteObjectFromSelection(presentationWithSelectedSlide1, simpleCircle.id)
+        let newPresentation: Presentation = deleteObjectFromSelection(presentationWithSelectedSlide1, {objectId: simpleCircle.id})
         expect(newPresentation).toEqual(presentationWithSelectedSlide)
     })
 
     test('delete first object with already selected object', () => {
-        let newPresentation: Presentation = deleteObjectFromSelection(presentationWithSelectedSlide1, picture.id)
+        let newPresentation: Presentation = deleteObjectFromSelection(presentationWithSelectedSlide1, {objectId: picture.id})
         expect(newPresentation).toEqual(presentationWithSelectedSlide2)
     })
 })
