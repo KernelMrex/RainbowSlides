@@ -15,9 +15,9 @@ interface Slide
 export default function CurrentSlide(props: Slide)
 {
     let mapList;
-    const selectedObjects: Array<string> = props.presentation.selection.objects;
+    const selectedObjects: Array<string> | [] = props.presentation.selection.objects;
     let background = '#ffffff';
-    if (props.currentSlide !== null && props.currentSlide.objects !== [])
+    if (props.currentSlide && props.currentSlide.objects !== [])
     {
         mapList = props.currentSlide.objects.map((slideObjects) =>
             <SlideObject

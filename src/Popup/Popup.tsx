@@ -13,7 +13,7 @@ interface Popup
 export default function Popup(props: Popup)
 {
     let render = <></>;
-    let presentation: type.Presentation = createPresentation();
+    let presentation: type.Presentation = createPresentation({});
     if (props.isShowind)
     {
         render = <div className={style.wrapper}>

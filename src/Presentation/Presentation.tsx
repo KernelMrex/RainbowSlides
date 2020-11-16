@@ -7,9 +7,9 @@ import SlideList from './SlideList/SlideList'
 interface Presentation
 {
     presentation: type.Presentation
-    setNewPresentation: Function
     changeSelectedPresentation: Function
     removeAllSelectedObjects: Function
+    changeSlide: Function
 }
 
 export default function Presentation(props: Presentation)
@@ -27,8 +27,8 @@ export default function Presentation(props: Presentation)
         <div className={style.container}>
             <SlideList
                 presentation={props.presentation}
-                setNewPresentation={props.setNewPresentation}
-                changeSelectedPresentation={props.changeSelectedPresentation}/>
+                changeSelectedPresentation={props.changeSelectedPresentation}
+                changeSlide={props.changeSlide}/>
             <CurrentSlide
                 currentSlide={currentSlide}
                 presentation={props.presentation}

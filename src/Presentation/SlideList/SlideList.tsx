@@ -7,7 +7,7 @@ import { selectSlide } from '../../core/selection/selection'
 interface Presentation
 {
     presentation: type.Presentation
-    setNewPresentation: Function
+    changeSlide: Function
     changeSelectedPresentation: Function
 }
 
@@ -18,7 +18,7 @@ export default function SlideList(props: Presentation)
     {
         slideList = props.presentation.slides.map((slide) => (
             <div key={slide.id} style={{background: (props.presentation.selection.slide === slide.id) ? '#00000024' : 'transparent'}}
-                onClick={(e) => props.presentation.selection.slide !== slide.id ? props.setNewPresentation(selectSlide(props.presentation, slide)) : ''}>
+                onClick={(e) => props.presentation.selection.slide !== slide.id ? props.changeSlide(slide) : ''}>
                 <MiniSlide slide={slide} presentation={props.presentation} changeSelectedPresentation={props.changeSelectedPresentation}/>
             </div>
         ));

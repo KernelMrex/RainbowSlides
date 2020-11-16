@@ -6,7 +6,7 @@ import TopBar from './TopBar/TopBar'
 import Presentation from './Presentation/Presentation'
 import Popup from './Popup/Popup'
 import { createPresentation, getPresentationFromJSON } from './core/presentation/presentation';
-import { useModal, useChangePresentation } from './customHooks/customHooks';
+import { useModal, usePresentationChanges } from './customHooks/customHooks';
 
 interface Presentation
 {
@@ -17,11 +17,11 @@ export default function App(props: Presentation)
 {
     const {
         presentation,
-        changePresentation,
         downloadPresentation,
         changeSelectedPresentation,
-        removeAllSelectedObjects
-    } = useChangePresentation(props.presentation);
+        removeAllSelectedObjects,
+        changeSlide
+    } = usePresentationChanges(props.presentation);
     const {isShowing, toggle} = useModal();
         return (
             <div className={style.appWrapper}>
@@ -30,9 +30,9 @@ export default function App(props: Presentation)
                     <TopBar presentation={presentation} modal={toggle}/>
                     <Presentation
                         presentation={presentation}
-                        setNewPresentation={changePresentation}
                         changeSelectedPresentation={changeSelectedPresentation}
-                        removeAllSelectedObjects={removeAllSelectedObjects}/>
+                        removeAllSelectedObjects={removeAllSelectedObjects}
+                        changeSlide={changeSlide}/>
                     <Footer/>
                 </div>
             </div>
