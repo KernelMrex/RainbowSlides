@@ -9,7 +9,7 @@ const initialState: StateType = createPresentation();
 let state: StateType = initialState;
 let stateHistory: StateHistory<StateType> = history.newHistory<StateType>()
 
-export function dispatch<PayloadType>(action: Action, payload: PayloadType): void
+export function dispatch<PayloadType>(action: Action, payload?: PayloadType): void
 {
     let newState: StateType | undefined;
 
