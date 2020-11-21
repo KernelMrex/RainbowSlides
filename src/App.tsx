@@ -6,7 +6,7 @@ import TopBar from './TopBar/TopBar'
 import Presentation from './Presentation/Presentation'
 import Popup from './Popup/Popup'
 import { createPresentation, getPresentationFromJSON } from './core/presentation/presentation';
-import { useModal, usePresentationChanges } from './customHooks/customHooks';
+import { useModal, useNewPresentation } from './CustomHooks/CustomHooks';
 
 interface Presentation
 {
@@ -21,13 +21,14 @@ export default function App(props: Presentation)
         changeSelectedPresentation,
         removeAllSelectedObjects,
         changeSlide
-    } = usePresentationChanges(props.presentation);
-    const {isShowing, toggle} = useModal();
+    } = useNewPresentation(props.presentation);
+
+    const {popupState, changeVisabilityPopup} = useModal();
         return (
             <div className={style.appWrapper}>
-                <Popup isShowind={isShowing} hide={toggle} setNewPresentation={downloadPresentation}/>
+                <Popup presentation={presentation} hidePopup={changeVisabilityPopup} setNewPresentation={downloadPresentation} popupState={popupState}/>
                 <div className={style.app}>
-                    <TopBar presentation={presentation} modal={toggle}/>
+                    <TopBar presentation={presentation} modal={changeVisabilityPopup}/>
                     <Presentation
                         presentation={presentation}
                         changeSelectedPresentation={changeSelectedPresentation}

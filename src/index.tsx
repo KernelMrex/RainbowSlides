@@ -70,17 +70,18 @@ const picture: type.ImageBlock = {
         hex: '#ffffff'
     }
 }
+
 const picture2: type.ImageBlock = {
     id: 'f128',
     type: 'image',
     name: 'Toronto2',
     position: {
-        x: 200,
-        y: 230
+        x: 600,
+        y: 300
     },
-    height: 500,
-    width: 360,
-    source: src,
+    height: 256,
+    width: 256,
+    source: 'https://at-cdn-s02.audiotool.com/2018/12/12/documents/n1f68tt0/0/cover256x256-3b54774168b54f3ead1d00ea2cc0908a.jpg',
     background: {
         hex: '#ffffff'
     }
@@ -149,7 +150,6 @@ const slide2: type.Slide = {
 
 const presentation: type.Presentation = {
     name: 'my first presentation',
-//    slides: [slide1, slide2, slide1, slide1, slide1, slide1],
     slides: [slide1, slide2],
     selection: {
         slide: slide1.id,

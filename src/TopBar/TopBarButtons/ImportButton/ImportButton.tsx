@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as type from '../../../core/types';
 import style from './ImportButton.module.css';
 import { getPresentationFromJSON } from '../../../core/presentation/presentation';
+import { PopupState } from '../../../Popup/PopupState';
 
 interface Presentation
 {
@@ -12,10 +13,9 @@ interface Presentation
 
 export default function ImportButton(props: Presentation)
 {
-    const [popup, showPopup] = useState(false);
     return (
         <div>
-            <a className={props.class} onClick={(e) => props.modal()}>import</a>
+            <a className={props.class} onClick={(e) => props.modal(PopupState.ImportPresentation)}>import</a>
         </div>
     )
 }

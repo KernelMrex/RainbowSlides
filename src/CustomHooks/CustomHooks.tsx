@@ -1,32 +1,35 @@
 import React, {useState} from 'react';
 import * as type from '../core/types';
 import {createPresentation, getPresentationFromJSON} from '../core/presentation/presentation';
-import { deleteObjectFromSelection,
+import {
+    deleteObjectFromSelection,
     deleteAllObjectsFromSelection,
     selectObject, getSelectedObjects,
     DeleteObjectFromSelectionPayload,
     SelectObjectPayload,
     selectSlide,
-    SelectSlidePayload} from '../core/selection/selection';
-import { dispatch, getState, setState } from '../state/state-manager';
-import { createAction } from '../state/update-state-actions';
+    SelectSlidePayload
+} from '../core/selection/selection';
+import {dispatch, getState, setState} from '../state/state-manager';
+import {createAction} from '../state/update-state-actions';
+import { PopupState } from '../Popup/PopupState';
 
 export const useModal = () =>
 {
-    const [isShowing, setIsShowing] = useState(false)
+    const [popupState, setNewPopupState] = useState(PopupState.Closed) //
 
-    function toggle()
+    function changeVisabilityPopup(newPopupState: PopupState)
     {
-        setIsShowing(!isShowing)
+        setNewPopupState(newPopupState)
     }
 
     return {
-        isShowing,
-        toggle,
+        popupState,
+        changeVisabilityPopup
     }
 }
 
-export const usePresentationChanges = (presentationState: type.Presentation) =>
+export const useNewPresentation = (presentationState: type.Presentation) =>
 {
     const [presentation, setNewPresentation] = useState(presentationState)
 
@@ -51,12 +54,14 @@ export const usePresentationChanges = (presentationState: type.Presentation) =>
             {
                 dispatch<DeleteObjectFromSelectionPayload>(createAction(deleteObjectFromSelection, true, true), {objectId: selectedObject.id})
                 setNewPresentation(getState())
-            } else
+            }
+            else
             {
                 dispatch<SelectObjectPayload>(createAction(selectObject, true, true), {objectId: selectedObject.id})
                 setNewPresentation(getState())
             }
-        } else
+        }
+        else
         {
             dispatch<{}>(createAction(deleteAllObjectsFromSelection, true, true), {})
             dispatch<SelectObjectPayload>(createAction(selectObject, true, true), {objectId: selectedObject.id})
