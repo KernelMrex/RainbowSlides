@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import * as type from '../../../core/types';
 import Rectangle from './Objects/Rectangle'
 import Circle from './Objects/Circle';
 import Triangle from './Objects/Triangle';
 import Image from './Objects/Image';
 import Text from './Objects/Text';
+import { useDragAndDrop } from '../../../CustomHooks/DragAndDrop';
 
 interface SlideObjects
 {
@@ -13,6 +14,7 @@ interface SlideObjects
     coef: number
     presentation: type.Presentation
     changeSelectedPresentation: Function
+    changePosition: Function
     isSelected: boolean
     isLock: boolean
 }
@@ -24,7 +26,7 @@ export default function SlideObject(props: SlideObjects)
     switch (object.type)
     {
         case 'rectangle':
-            render = <Rectangle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock}/>
+            render = <Rectangle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock} changePosition={props.changePosition}/>
             break;
 
         case 'circle':

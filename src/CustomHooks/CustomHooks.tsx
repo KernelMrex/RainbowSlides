@@ -13,6 +13,7 @@ import {
 import {dispatch, getState, setState} from '../state/state-manager';
 import {createAction} from '../state/update-state-actions';
 import { PopupState } from '../Popup/PopupState';
+import { changeObjectPosition, ChangeObjectPositionPayload } from '../core/objects/objects';
 
 export const useModal = () =>
 {
@@ -97,9 +98,25 @@ export const useNewPresentation = (presentationState: type.Presentation) =>
         }
     }
 
+    function changePosition(object: type.SlideObject, position: type.Anchor)
+    {
+        let selectedObjects: Array<type.SlideObject> = getSelectedObjects(getState());
+        if ((selectedObjects.length === 0) || (selectedObjects.find((selectedElement) => selectedElement.id === object.id) === undefined))
+        {
+            dispatch<SelectObjectPayload>(createAction(selectObject, true, true), {objectId: object.id})
+        }
+        console.log(getSelectedObjects(getState()));
+        console.log(object);
+        selectedObjects.forEach((object) =>
+            dispatch<ChangeObjectPositionPayload>(createAction(changeObjectPosition, true, true), {newPosition: position}))
+        setNewPresentation(getState())
+        console.log(getSelectedObjects(getState()));
+    }
+
     return {
         presentation,
         downloadPresentation,
+        changePosition,
         changeSelectedPresentation,
         removeAllSelectedObjects,
         changeSlide

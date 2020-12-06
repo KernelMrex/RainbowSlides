@@ -10,6 +10,7 @@ interface Slide
     presentation: type.Presentation
     changeSelectedPresentation: Function
     removeAllSelectedObjects: Function
+    changePosition: Function
 }
 
 export default function CurrentSlide(props: Slide)
@@ -26,6 +27,7 @@ export default function CurrentSlide(props: Slide)
                 coef={1}
                 presentation={props.presentation}
                 changeSelectedPresentation={props.changeSelectedPresentation}
+                changePosition={props.changePosition}
                 isSelected={selectedObjects.find((objectID) => objectID === slideObjects.id) !== undefined ? true : false}
                 isLock={false}/>
         );

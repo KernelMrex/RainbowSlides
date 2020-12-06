@@ -8,6 +8,7 @@ interface Slide
     slide: type.Slide,
     presentation: type.Presentation
     changeSelectedPresentation: Function
+    changePosition: Function
 }
 
 export default function MiniSlide(props: Slide)
@@ -22,6 +23,7 @@ export default function MiniSlide(props: Slide)
                 object={slideObjects}
                 coef={5.6}
                 presentation={props.presentation}
+                changePosition={props.changePosition}
                 changeSelectedPresentation={props.changeSelectedPresentation}
                 isSelected={false}
                 isLock={true}/>

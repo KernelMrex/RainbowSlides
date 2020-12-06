@@ -18,6 +18,7 @@ export default function App(props: Presentation)
     const {
         presentation,
         downloadPresentation,
+        changePosition,
         changeSelectedPresentation,
         removeAllSelectedObjects,
         changeSlide
@@ -33,7 +34,9 @@ export default function App(props: Presentation)
                         presentation={presentation}
                         changeSelectedPresentation={changeSelectedPresentation}
                         removeAllSelectedObjects={removeAllSelectedObjects}
-                        changeSlide={changeSlide}/>
+                        changeSlide={changeSlide}
+                        changePosition={changePosition}
+                    />
                     <Footer/>
                 </div>
             </div>
