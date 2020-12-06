@@ -1,0 +1,19 @@
+.subheader
+{
+    height: 40px;
+    border-bottom: 1px solid #d5d5d5;
+}
+
+.subheader__column
+{
+    border-right: 1px solid #D5D5D5;
+    width: 310px;
+    height: 100%;
+}
+
+.subheader__column_content_center
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

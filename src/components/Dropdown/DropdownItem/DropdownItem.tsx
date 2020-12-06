@@ -1,7 +1,7 @@
 import React from 'react'
 import './DropdownItem.css'
 
-interface DropdownItemProps
+export interface DropdownItemProps
 {
     text: string
     onClick?: Function
@@ -9,11 +9,12 @@ interface DropdownItemProps
 
 export default function DropdownItem(props: DropdownItemProps)
 {
-    const onClick = (event: React.MouseEvent<HTMLElement>): void => props.onClick ? props.onClick(event) : () => {}
+    const onClick = (event: React.MouseEvent<HTMLElement>): void => props.onClick ? props.onClick(event) : () => {
+    }
 
     return (
-        <div onClick={onClick}>
-            {props.text}
+        <div onClick={ onClick } className={ 'dropdown__item' }>
+            { props.text }
         </div>
     )
 }

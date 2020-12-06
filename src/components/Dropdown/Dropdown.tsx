@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import DropdownItem from './DropdownItem/DropdownItem'
 import './Dropdown.css'
+import DropdownItem, { DropdownItemProps } from './DropdownItem/DropdownItem';
 
 interface DropdownProps
 {
-    text: string,
-    children?: Array<JSX.Element> | JSX.Element
+    text: string
+    items?: Array<DropdownItemProps>
 }
 
 export default function Dropdown(props: DropdownProps)
@@ -16,21 +16,15 @@ export default function Dropdown(props: DropdownProps)
         return active ? className + ' dropdown_active' : className
     }
 
-    const getItems = (children?: Array<JSX.Element> | JSX.Element) => {
-        if (Array.isArray(children))
-        {
-            return children.map(item => <div className={ 'dropdown__item' }>{ item }</div>)
-        }
-        return [ <div className={ 'dropdown__item' }>{ children }</div> ]
+    const getItems = (items?: Array<DropdownItemProps>): JSX.Element[] => {
+        return items ? items.map(item => <DropdownItem text={ item.text } onClick={ item.onClick }/>) : []
     }
 
     return (
-        <div
-            className={ updateClassNameIfActive('dropdown', active) }
-        >
+        <div className={ updateClassNameIfActive('dropdown', active) }>
             <div className={ 'dropdown__text' } onClick={ () => setActive(!active) }>{ props.text }</div>
             <div className={ 'dropdown__items' }>
-                { getItems(props.children) }
+                { getItems(props.items) }
             </div>
         </div>
     )
