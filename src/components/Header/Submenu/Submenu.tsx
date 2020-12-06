@@ -1,28 +1,64 @@
-import React from 'react'
-
+import React, { useState } from 'react'
+import Dropdown from './Dropdown/Dropdown';
+import { DropdownItemProps } from './Dropdown/DropdownItem/DropdownItem';
 import './Submenu.css'
+
+interface SubmenuItemProps
+{
+    type: 'button' | 'dropdown'
+    text: string
+}
+
+interface SubmenuDropdownItemProps extends SubmenuItemProps
+{
+    items: Array<DropdownItemProps>
+    isActive?: boolean
+    onOpen?: Function
+}
 
 interface SubmenuProps
 {
-    children: Array<JSX.Element> | JSX.Element
+    items: Array<SubmenuItemProps | SubmenuDropdownItemProps>
+}
+
+function useDropdownActive(initialDropdownIndex: number): [ number, Function ]
+{
+    const [ activeDropdown, setActiveDropdown ] = useState(initialDropdownIndex)
+
+    return [ activeDropdown, (dropdownIndex: number): void => {
+        if (activeDropdown === dropdownIndex)
+        {
+            setActiveDropdown(-1)
+            return
+        }
+        setActiveDropdown(dropdownIndex)
+    } ]
 }
 
 export default function Submenu(props: SubmenuProps)
 {
-    let items;
+    const [ activeDropdown, setActiveDropdown ] = useDropdownActive(-1)
 
-    if (Array.isArray(props.children))
-    {
-        items = props.children.map(item => <div className={'submenu__item'}>{item}</div>)
-    }
-    else
-    {
-        items = [ <div className={'submenu__item'}>{props.children}</div> ];
-    }
+    const items = props.items.map((item, index) => {
+        switch (item.type)
+        {
+            case 'button':
+                return <div className={ 'submenu__item' } key={ index }>{ item.text }</div>
+            case 'dropdown':
+                return <div className={ 'submenu__item' } key={ index }>
+                    <Dropdown
+                        text={ item.text }
+                        items={ (item as SubmenuDropdownItemProps).items }
+                        isActive={ index === activeDropdown }
+                        onButtonClick={ () => {
+                            setActiveDropdown(index)
+                        } }
+                    />
+                </div>
+            default:
+                return <></>
+        }
+    })
 
-    return (
-        <div className={'submenu'}>
-            {items}
-        </div>
-    )
+    return <div className={ 'submenu' }>{ items }</div>
 }
