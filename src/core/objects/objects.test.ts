@@ -3,6 +3,7 @@ import {
     changeMediaSource,
     changeObjectName,
     changeObjectPosition,
+    changeObjectsPosition,
     changeObjectSize,
     changeTextContent,
     changeTextFont,
@@ -202,6 +203,28 @@ describe('test module "Slide Object"', () => {
         expect(newPresentationInstance.slides[0].objects[0].name).toBe(presentation.slides[0].objects[0].name)
     })
 
+
+    test('Change objects position on selected slide', () => {
+        const object = { ...mockRectangle }
+        const presentation: Presentation = {
+            ...mockPresentation,
+            slides: [
+                {
+                    ...mockSlide,
+                    objects: [ object, mockTextBlock ]
+                }
+            ],
+            selection: {
+                slide: 'mock-slide',
+                objects: [ 'mock-rectangle', 'mock-text' ]
+            }
+        }
+        const newPresentationInstance = changeObjectsPosition(presentation, { deltaPosition: { x: 40, y: 40 } })
+
+        expect(newPresentationInstance).not.toBe(presentation)
+        expect(newPresentationInstance.slides[0].objects[0].position).toStrictEqual({ x: 50, y: 60 });
+        expect(newPresentationInstance.slides[0].objects[1].position).toStrictEqual({ x: 50, y: 60 });
+    })
 
     test('Change object position on selected slide', () => {
         const object = { ...mockRectangle }
