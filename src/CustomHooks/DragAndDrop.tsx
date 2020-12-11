@@ -9,47 +9,42 @@ enum dragAndDropState
 
 let state: dragAndDropState = dragAndDropState.none;
 
-export const useDragAndDrop = (element: Element | null, setDeltaPos: Function) =>
-{
-    let cursorPosition = {
-        new: {
-            x: 0,
-            y: 0
-        },
-        old: {
-            x: 0,
-            y: 0
-        }
+let cursorPosition = {
+    old: {
+        x: 0,
+        y: 0
     }
+}
 
-    const dragEnd = () =>
+export const useDragAndDrop = (element: Element | null, setDeltaPos: Function, setViewPos: Function) =>
+{
+    const dragEnd = (event: any) =>
     {
-        let deltaX, deltaY: Number;
         console.log('end');
 
-        if (state === dragAndDropState.moving)
-        {
-            deltaX = cursorPosition.new.x - cursorPosition.old.x
-            deltaY = cursorPosition.new.y - cursorPosition.old.y
-        } else
-        {
-            deltaX = 0
-            deltaY = 0
-        }
-
-        setDeltaPos({
-            x: deltaX,
-            y: deltaY
-        });
-
+        setDeltaPos(cursorPosition.old);
         state = dragAndDropState.none;
+        cursorPosition.old = {x: 0, y: 0}
     };
 
     const dragProcess = (event: any) =>
     {
-        console.log('moving');
         state = dragAndDropState.moving;
-        cursorPosition.new = {x: event.pageX, y: event.pageY};
+        console.log('moving');
+
+        setViewPos({
+            x: event.pageX - cursorPosition.old.x,
+            y: event.pageY - cursorPosition.old.y
+        });
+
+
+        console.log({
+            xEvent: event.pageX,
+            yEvent: event.pageY,
+            xOld: cursorPosition.old.x,
+            yOld: cursorPosition.old.y
+        })
+        cursorPosition.old = {x: event.pageX, y: event.pageY}
     };
 
     const dragStart = (event: any) =>
@@ -57,6 +52,7 @@ export const useDragAndDrop = (element: Element | null, setDeltaPos: Function) =
         console.log('start');
         state = dragAndDropState.start;
         cursorPosition.old = {x: event.pageX, y: event.pageY}
+        event.preventDefault()
         window.addEventListener("mousemove", dragProcess);
         window.addEventListener("mouseup", dragEnd);
     };
@@ -69,8 +65,14 @@ export const useDragAndDrop = (element: Element | null, setDeltaPos: Function) =
             {
                 element.addEventListener("mousedown", dragStart);
             }
+            if (state === dragAndDropState.moving)
+            {
+                window.addEventListener("mousemove", dragProcess);
+                window.addEventListener("mouseup", dragEnd);
+            }
             return () =>
             {
+                console.log('exit');
                 element.removeEventListener("mousedown", dragStart);
                 window.removeEventListener("mousemove", dragProcess);
                 window.removeEventListener("mouseup", dragEnd);

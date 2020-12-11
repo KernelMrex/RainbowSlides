@@ -16,17 +16,24 @@ interface SlideObjects
 
 export default function Rectangle(props: SlideObjects)
 {
+    console.log('isLock = ' + props.isLock);
+    const [pos, setNewPos] = useState(props.object.position);
     const ref = useRef(null);
-    useDragAndDropElement(ref.current, props.changePosition, props.object, props.isLock);
-
+    useDragAndDropElement(ref.current, props.changePosition, setNewPos, props.object, props.isLock);
+    console.log({x: props.object.position.x / props.coef, y: props.object.position.y / props.coef});
+    console.log({x: pos.x / props.coef, y: pos.y / props.coef});
+    if (props.isLock && pos !== props.object.position)
+    {
+        setNewPos(props.object.position)
+    }
     return (
         <svg className={style.wrapper}
              ref={ref}
              width={(props.object.width) / props.coef}
              height={(props.object.height) / props.coef}
              style={{
-                 top: '' + props.object.position.y / props.coef + 'px',
-                 left: '' + props.object.position.x / props.coef + 'px',
+                 top: '' + pos.y / props.coef + 'px',
+                 left: '' + pos.x / props.coef + 'px',
                  border: props.isSelected ? '3px dashed #d3cde4' : ''
              }}
              onClick={(e) => !props.isLock ? props.selectObject(props.object, e) : e.preventDefault()}>

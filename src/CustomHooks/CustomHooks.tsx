@@ -13,7 +13,7 @@ import {
 import {dispatch, getState, setState} from '../state/state-manager';
 import {createAction} from '../state/update-state-actions';
 import { PopupState } from '../Popup/PopupState';
-import { changeObjectPosition, ChangeObjectPositionPayload } from '../core/objects/objects';
+import { changeObjectPosition, ChangeObjectPositionPayload, changeObjectsPosition, ChangeObjectsPositionPayload } from '../core/objects/objects';
 
 export const useModal = () =>
 {
@@ -105,12 +105,22 @@ export const useNewPresentation = (presentationState: type.Presentation) =>
         {
             dispatch<SelectObjectPayload>(createAction(selectObject, true, true), {objectId: object.id})
         }
-        console.log(getSelectedObjects(getState()));
-        console.log(object);
-        selectedObjects.forEach((object) =>
-            dispatch<ChangeObjectPositionPayload>(createAction(changeObjectPosition, true, true), {newPosition: position}))
-        setNewPresentation(getState())
-        console.log(getSelectedObjects(getState()));
+
+        if (selectedObjects.length === 0)
+        {
+            dispatch<ChangeObjectPositionPayload>(createAction(changeObjectPosition, true, true), {newPosition:
+                    {
+                        x: position.x + object.position.x,
+                        y: position.y + object.position.y,
+                    }})
+        } else
+        {
+            dispatch<ChangeObjectsPositionPayload>(createAction(changeObjectsPosition, true, true), {deltaPosition: position})
+        }
+
+        console.log(getState());
+        changePresentation(getState())
+        console.log(getState().slides[0].objects[1]);
     }
 
     return {
