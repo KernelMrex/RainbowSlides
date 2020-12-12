@@ -23,8 +23,6 @@ export default function App(props: Presentation)
         removeAllSelectedObjects,
         changeSlide
     } = useNewPresentation(props.presentation);
-    console.log('RERENDER APP, BITCH');
-    console.log(presentation.slides[0].objects[1].position);
     const {popupState, changeVisabilityPopup} = useModal();
         return (
             <div className={style.appWrapper}>

@@ -16,12 +16,9 @@ interface SlideObjects
 
 export default function Rectangle(props: SlideObjects)
 {
-    console.log('isLock = ' + props.isLock);
     const [pos, setNewPos] = useState(props.object.position);
     const ref = useRef(null);
     useDragAndDropElement(ref.current, props.changePosition, setNewPos, props.object, props.isLock);
-    console.log({x: props.object.position.x / props.coef, y: props.object.position.y / props.coef});
-    console.log({x: pos.x / props.coef, y: pos.y / props.coef});
     if (props.isLock && pos !== props.object.position)
     {
         setNewPos(props.object.position)

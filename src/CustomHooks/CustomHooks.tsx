@@ -118,9 +118,7 @@ export const useNewPresentation = (presentationState: type.Presentation) =>
             dispatch<ChangeObjectsPositionPayload>(createAction(changeObjectsPosition, true, true), {deltaPosition: position})
         }
 
-        console.log(getState());
         changePresentation(getState())
-        console.log(getState().slides[0].objects[1]);
     }
 
     return {

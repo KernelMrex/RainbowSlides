@@ -23,7 +23,7 @@ export default function Image(props: SlideObjects)
     };
 
     return (
-        <div onSelect={(e) => console.log('fj')} className={style.wrapper} style={objectStyle} onClick={(e) => !props.isLock ? props.selectObject(props.object, e) : e.preventDefault()}>
+        <div className={style.wrapper} style={objectStyle} onClick={(e) => !props.isLock ? props.selectObject(props.object, e) : e.preventDefault()}>
             <img src={props.object.source} className={style.media}/>
         </div>
     );

@@ -7,8 +7,10 @@ interface SlideObjects
     object: type.TextBlock
     coef: number
     selectObject: Function
+    changePosition: Function
     isSelected: boolean
     isLock: boolean
+    ref: any
 }
 
 export default function Text(props: SlideObjects)
@@ -26,9 +28,9 @@ export default function Text(props: SlideObjects)
         fontWeight: props.object.font.weight,
         border: props.isSelected ? '3px dashed #d3cde4' : ''
     };
-
+    console.log(props.ref)
     return (
-        <div className={style.wrapper} style={objectStyle} onClick={(e) => !props.isLock ? props.selectObject(props.object, e) : e.preventDefault()}>
+        <div ref={props.ref} className={style.wrapper} style={objectStyle} onClick={(e) => !props.isLock ? props.selectObject(props.object, e) : e.preventDefault()}>
             <p>{props.object.content}</p>
         </div>
     );

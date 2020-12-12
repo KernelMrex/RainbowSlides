@@ -11,21 +11,11 @@ export const useDragAndDropElement = (element: Element | null, changePosition: F
     {
         if (!isLock)
         {
-            console.log(newPosition)
-            console.log(object.position)
             let deltaPosition: type.Anchor = {
-                // x: newPosition.x - pos.x - 418,
-                // y: newPosition.y - pos.y - 103
                 x: pos.x - object.position.x,
                 y: pos.y - object.position.y
             }
-
-            console.log('setting in model')
-            console.log(deltaPosition)
             changePosition(object, deltaPosition)
-            console.log('Results')
-            console.log(pos)
-            console.log(object.position)
         } else
         {
             setNewPos(pos)
@@ -40,8 +30,6 @@ export const useDragAndDropElement = (element: Element | null, changePosition: F
                 x: delta.x + pos.x,
                 y: delta.y + pos.y
             }
-            console.log(delta)
-            console.log(object.position)
 
             setNewPos(newPos)
             setPos(newPos)
