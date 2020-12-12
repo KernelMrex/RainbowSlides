@@ -37,9 +37,7 @@ export type RectangleBlock = {
     width: number
 }
 
-export type CircleBlock = RectangleBlock & {
-    radius: number
-}
+export type CircleBlock = RectangleBlock
 
 export type TextBlock = RectangleBlock & {
     content: string
