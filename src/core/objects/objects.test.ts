@@ -35,7 +35,8 @@ const mockRectangle: RectangleBlock = {
     position: { x: 10, y: 20 },
     type: 'rectangle',
     width: 30,
-    height: 40
+    height: 40,
+    background: { hex: '#000000' },
 }
 
 const mockTextBlock: TextBlock = {
@@ -52,7 +53,8 @@ const mockTextBlock: TextBlock = {
         style: 'none'
     },
     content: 'Mock text block content',
-    color: { hex: '#ffffff' }
+    color: { hex: '#ffffff' },
+    background: { hex: '#000000' },
 }
 
 const mockMediaBlock: MediaBlock = {
@@ -64,6 +66,7 @@ const mockMediaBlock: MediaBlock = {
     height: 40,
     mediaType: 'video',
     source: 'test-source',
+    background: { hex: '#000000' },
 }
 
 describe('test module "Slide Object"', () => {

@@ -1,0 +1,10 @@
+.wrapper
+{
+    width: 242px;
+    height: 137px;
+    border: 1px solid;
+    border-radius: 20px;
+    margin: 10px auto;
+    position: relative;
+    overflow: hidden;
+}

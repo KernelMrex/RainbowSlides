@@ -26,22 +26,31 @@ export type Color = {
     hex: string
 }
 
-export type SlideObject = CircleBlock | RectangleBlock | TextBlock | MediaBlock | ImageBlock
+export type SlideObject = CircleBlock | RectangleBlock | TriangleBlock | TextBlock | MediaBlock | ImageBlock
 
-export type RectangleBlock = {
+export type CommonBlock = {
     id: string
-    type: ObjectType
     name: string
     position: Anchor
     height: number
     width: number
+    background: Color
 }
 
-export type CircleBlock = RectangleBlock & {
-    radius: number
+export type RectangleBlock = CommonBlock & {
+    type: 'rectangle'
 }
 
-export type TextBlock = RectangleBlock & {
+export type CircleBlock = CommonBlock & {
+    type: 'circle'
+}
+
+export type TriangleBlock = CommonBlock & {
+    type: 'triangle'
+}
+
+export type TextBlock = CommonBlock & {
+    type: 'text'
     content: string
     font: Font
     color: Color
@@ -54,16 +63,16 @@ export type Font = {
     style: 'italic' | 'bold' | 'none'
 }
 
-export type MediaBlock = RectangleBlock & {
+export type MediaBlock = CommonBlock & {
+    type: 'media'
     mediaType: 'video' | 'gif'
     source: string
 }
 
-export type ImageBlock = RectangleBlock & {
+export type ImageBlock = CommonBlock & {
     source: string
+    type: 'image'
 }
-
-export type ObjectType = 'rectangle' | 'text' | 'circle' | 'media' | 'image'
 
 export type Anchor = {
     x: number

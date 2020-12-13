@@ -1,0 +1,29 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper
+{
+    position: absolute;
+    display: flex;
+    width: 14%;
+    height: 93%;
+    border: 1px;
+    border-style: none solid none none;
+}
+
+.content
+{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 96.5%;
+}
+
+.error_text
+{
+
+}
