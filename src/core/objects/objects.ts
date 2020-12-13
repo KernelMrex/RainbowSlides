@@ -164,8 +164,10 @@ export function changeMediaSource(presentation: Presentation, payload: ChangeMed
         return presentation
     }
 
+
     return updateSlide(presentation, updateObject(slide, {
         ...selectedObject,
+        // @ts-ignore
         source: payload.newSource,
     }))
 }
