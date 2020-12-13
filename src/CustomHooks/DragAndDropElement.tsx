@@ -12,8 +12,8 @@ export const useDragAndDropElement = (element: Element | null, changePosition: F
         if (!isLock)
         {
             let deltaPosition: type.Anchor = {
-                x: pos.x - object.position.x,
-                y: pos.y - object.position.y
+                x: pos.x,
+                y: pos.y
             }
             changePosition(object, deltaPosition)
         } else

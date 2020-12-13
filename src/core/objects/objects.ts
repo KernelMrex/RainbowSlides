@@ -1,4 +1,4 @@
-import {Anchor, Font, Presentation, Slide, SlideObject} from '../types'
+import {Anchor, Font, Presentation, Slide, SlideObject, CommonBlock} from '../types'
 import {getSelected} from '../selection/selection'
 
 export type AddObjectToSlidePayload = {
@@ -81,41 +81,6 @@ export function changeObjectPosition(presentation: Presentation, payload: Change
     }))
 }
 
-export type ChangeObjectsPositionPayload = {
-    deltaPosition: Anchor
-}
-
-export function changeObjectsPosition(presentation: Presentation, payload: ChangeObjectsPositionPayload): Presentation
-{
-    const [selectedSlide, selectedObjects] = getSelected(presentation)
-    if (!selectedSlide || !selectedObjects || selectedObjects === undefined)
-    {
-        return presentation
-    }
-
-    let newSelectedObjects: Array<SlideObject> = [...selectedObjects];
-    let newObjects:Array<SlideObject> = [...selectedSlide.objects];
-
-    newSelectedObjects.forEach((object: SlideObject) =>
-    {
-        object.position = {
-            x: object.position.x + payload.deltaPosition.x,
-            y: object.position.y + payload.deltaPosition.y
-        }
-    })
-
-    newObjects.forEach((object) =>
-    {
-        const newObject: SlideObject | undefined = newSelectedObjects.find((newSelectedObjects) => newSelectedObjects.id === object.id)
-        object = newObject !== undefined ? newObject : object
-    })
-
-    return updateSlide(presentation, {
-        ...selectedSlide,
-        objects: newObjects
-    })
-}
-
 export type ChangeTextFontPayload = {
     newFont: Font
 }
@@ -167,9 +132,8 @@ export function changeMediaSource(presentation: Presentation, payload: ChangeMed
 
     return updateSlide(presentation, updateObject(slide, {
         ...selectedObject,
-        // @ts-ignore
         source: payload.newSource,
-    }))
+    } as SlideObject))
 }
 
 export type ChangeObjectSizePayload = {

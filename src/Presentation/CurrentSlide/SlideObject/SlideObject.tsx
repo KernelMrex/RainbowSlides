@@ -31,15 +31,15 @@ export default function SlideObject(props: SlideObjects)
             break;
 
         case 'circle':
-            render = <Circle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock}/>
+            render = <Circle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock} changePosition={props.changePosition}/>
             break;
 
         case 'triangle':
-            render = <Triangle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock}/>
+            render = <Triangle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock} changePosition={props.changePosition}/>
             break;
 
         case 'image':
-            render = <Image object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock}/>
+            render = <Image object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock} changePosition={props.changePosition}/>
             break;
 
         case 'text':

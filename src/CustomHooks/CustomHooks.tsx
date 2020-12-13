@@ -12,8 +12,11 @@ import {
 } from '../core/selection/selection';
 import {dispatch, getState, setState} from '../state/state-manager';
 import {createAction} from '../state/update-state-actions';
-import { PopupState } from '../Popup/PopupState';
-import { changeObjectPosition, ChangeObjectPositionPayload, changeObjectsPosition, ChangeObjectsPositionPayload } from '../core/objects/objects';
+import {PopupState} from '../Popup/PopupState';
+import {
+    changeObjectPosition,
+    ChangeObjectPositionPayload,
+} from '../core/objects/objects';
 
 export const useModal = () =>
 {
@@ -49,25 +52,10 @@ export const useNewPresentation = (presentationState: type.Presentation) =>
 
     function changeSelectedPresentation(selectedObject: type.SlideObject, event: any)
     {
-        if (event.shiftKey)
-        {
-            if (getSelectedObjects(presentation).find((object) => object.id === selectedObject.id) !== undefined)
-            {
-                dispatch<DeleteObjectFromSelectionPayload>(createAction(deleteObjectFromSelection, true, true), {objectId: selectedObject.id})
-                setNewPresentation(getState())
-            }
-            else
-            {
-                dispatch<SelectObjectPayload>(createAction(selectObject, true, true), {objectId: selectedObject.id})
-                setNewPresentation(getState())
-            }
-        }
-        else
-        {
-            dispatch<{}>(createAction(deleteAllObjectsFromSelection, true, true), {})
-            dispatch<SelectObjectPayload>(createAction(selectObject, true, true), {objectId: selectedObject.id})
-            setNewPresentation(getState())
-        }
+        dispatch<{}>(createAction(deleteAllObjectsFromSelection, true, true), {})
+        dispatch<SelectObjectPayload>(createAction(selectObject, true, true), {objectId: selectedObject.id})
+        setNewPresentation(getState())
+
     }
 
     function removeAllSelectedObjects(event: any)
@@ -101,22 +89,12 @@ export const useNewPresentation = (presentationState: type.Presentation) =>
     function changePosition(object: type.SlideObject, position: type.Anchor)
     {
         let selectedObjects: Array<type.SlideObject> = getSelectedObjects(getState());
-        if ((selectedObjects.length === 0) || (selectedObjects.find((selectedElement) => selectedElement.id === object.id) === undefined))
+        if (selectedObjects.length !== 0)
         {
-            dispatch<SelectObjectPayload>(createAction(selectObject, true, true), {objectId: object.id})
+            dispatch<{}>(createAction(deleteAllObjectsFromSelection, true, true), {})
         }
-
-        if (selectedObjects.length === 0)
-        {
-            dispatch<ChangeObjectPositionPayload>(createAction(changeObjectPosition, true, true), {newPosition:
-                    {
-                        x: position.x + object.position.x,
-                        y: position.y + object.position.y,
-                    }})
-        } else
-        {
-            dispatch<ChangeObjectsPositionPayload>(createAction(changeObjectsPosition, true, true), {deltaPosition: position})
-        }
+        dispatch<SelectObjectPayload>(createAction(selectObject, true, true), {objectId: object.id})
+        dispatch<ChangeObjectPositionPayload>(createAction(changeObjectPosition, true, true), {newPosition: position})
 
         changePresentation(getState())
     }
