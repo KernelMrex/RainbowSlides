@@ -8,7 +8,7 @@ interface SlideObjects
     object: type.TriangleBlock
     coef: number
     selectObject: Function
-    changePosition: Function
+    changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
     isSelected: boolean
     isLock: boolean
 }
@@ -17,7 +17,7 @@ export default function Triangle(props: SlideObjects)
 {
     const [pos, setNewPos] = useState(props.object.position);
     const ref = useRef(null);
-    useDragAndDropElement(ref.current, props.changePosition, setNewPos, props.object, props.isLock);
+    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, props.isLock);
     if (props.isLock && pos !== props.object.position)
     {
         setNewPos(props.object.position)
@@ -39,7 +39,7 @@ export default function Triangle(props: SlideObjects)
                  border: props.isSelected ? '3px solid transparent' : '',
                  outline: props.isSelected ? '2px dashed #d3cde4' : 'none'
              }}
-             onClick={(e) => !props.isLock ? props.selectObject(props.object, e) : e.preventDefault()}>
+             onClick={(e) => !props.isLock ? props.selectObject(props.object) : e.preventDefault()}>
             <polygon
                 fill={props.object.background.hex}
                 points={points}>

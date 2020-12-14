@@ -14,7 +14,7 @@ interface SlideObjects
     coef: number
     presentation: type.Presentation
     changeSelectedPresentation: Function
-    changePosition: Function
+    changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
     isSelected: boolean
     isLock: boolean
 }

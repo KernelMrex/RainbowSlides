@@ -1,8 +1,9 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, RefObject} from 'react';
 import * as type from '../core/types';
 import {useDragAndDrop} from './DragAndDrop'
 
-export const useDragAndDropElement = (element: Element | null, changePosition: Function, setNewPos: Function, object: type.SlideObject, isLock: boolean) =>
+export const useDragAndDropElement = (element: RefObject<HTMLElement>, changePosition: (obj: type.SlideObject, pos: type.Anchor) => void, setNewPos: (pos: type.Anchor) => void, object: type.SlideObject, isLock: boolean) =>
+
 {
     const [pos, setPos] = useState(object.position)
     useDragAndDrop(element, setDeltaPos, setViewPos)

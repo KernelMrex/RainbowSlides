@@ -8,7 +8,7 @@ interface Slide
     slide: type.Slide,
     presentation: type.Presentation
     changeSelectedPresentation: Function
-    changePosition: Function
+    changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
 }
 
 export default function MiniSlide(props: Slide)

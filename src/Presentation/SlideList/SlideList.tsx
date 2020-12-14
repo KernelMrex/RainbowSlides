@@ -8,7 +8,7 @@ interface Presentation
 {
     presentation: type.Presentation
     changeSlide: Function
-    changePosition: Function
+    changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
     changeSelectedPresentation: Function
 }
 

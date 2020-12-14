@@ -3,14 +3,13 @@ import * as type from '../../core/types';
 import style from './CurrentSlide.module.css'
 import SlideObject from './SlideObject/SlideObject'
 
-
 interface Slide
 {
     currentSlide: type.Slide | null
     presentation: type.Presentation
     changeSelectedPresentation: Function
     removeAllSelectedObjects: Function
-    changePosition: Function
+    changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
 }
 
 export default function CurrentSlide(props: Slide)

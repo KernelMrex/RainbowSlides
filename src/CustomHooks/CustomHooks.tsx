@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, SyntheticEvent} from 'react';
 import * as type from '../core/types';
 import {createPresentation, getPresentationFromJSON} from '../core/presentation/presentation';
 import {
@@ -20,7 +20,7 @@ import {
 
 export const useModal = () =>
 {
-    const [popupState, setNewPopupState] = useState(PopupState.Closed) //
+    const [popupState, setNewPopupState] = useState(PopupState.Closed)
 
     function changeVisabilityPopup(newPopupState: PopupState)
     {
@@ -50,7 +50,7 @@ export const useNewPresentation = (presentationState: type.Presentation) =>
         setNewPresentation(getState())
     }
 
-    function changeSelectedPresentation(selectedObject: type.SlideObject, event: any)
+    function changeSelectedPresentation(selectedObject: type.SlideObject)
     {
         dispatch<{}>(createAction(deleteAllObjectsFromSelection, true, true), {})
         dispatch<SelectObjectPayload>(createAction(selectObject, true, true), {objectId: selectedObject.id})
@@ -60,7 +60,8 @@ export const useNewPresentation = (presentationState: type.Presentation) =>
 
     function removeAllSelectedObjects(event: any)
     {
-        if (event.target.tagName === 'DIV')
+        console.log(typeof event)
+        if (event !== null && event.target.tagName === 'DIV')
         {
             dispatch<{}>(createAction(deleteAllObjectsFromSelection, true, true), {})
             setNewPresentation(getState())
@@ -86,7 +87,7 @@ export const useNewPresentation = (presentationState: type.Presentation) =>
         }
     }
 
-    function changePosition(object: type.SlideObject, position: type.Anchor)
+    function changePosition(object: type.SlideObject, position: type.Anchor): void
     {
         let selectedObjects: Array<type.SlideObject> = getSelectedObjects(getState());
         if (selectedObjects.length !== 0)

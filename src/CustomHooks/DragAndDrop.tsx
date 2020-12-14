@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, RefObject} from 'react';
 
 enum dragAndDropState
 {
@@ -16,16 +16,16 @@ let cursorPosition = {
     }
 }
 
-export const useDragAndDrop = (element: Element | null, setDeltaPos: Function, setViewPos: Function) =>
+export const useDragAndDrop = (element: RefObject<HTMLElement>, setDeltaPos: Function, setViewPos: Function) =>
 {
-    const dragEnd = (event: any) =>
+    const dragEnd = (event: MouseEvent) =>
     {
         setDeltaPos(cursorPosition.old);
         state = dragAndDropState.none;
         cursorPosition.old = {x: 0, y: 0}
     };
 
-    const dragProcess = (event: any) =>
+    const dragProcess = (event: MouseEvent) =>
     {
         state = dragAndDropState.moving;
         setViewPos({
@@ -36,7 +36,7 @@ export const useDragAndDrop = (element: Element | null, setDeltaPos: Function, s
         cursorPosition.old = {x: event.pageX, y: event.pageY}
     };
 
-    const dragStart = (event: any) =>
+    const dragStart = (event: MouseEvent) =>
     {
         state = dragAndDropState.start;
         cursorPosition.old = {x: event.pageX, y: event.pageY}
@@ -47,11 +47,13 @@ export const useDragAndDrop = (element: Element | null, setDeltaPos: Function, s
 
     useEffect(() =>
     {
-        if (element)
+
+        if (element.current)
         {
+            const elementRef = element.current;
             if (state === dragAndDropState.none)
             {
-                element.addEventListener("mousedown", dragStart);
+                element.current.addEventListener("mousedown", dragStart);
             }
             if (state === dragAndDropState.moving)
             {
@@ -60,7 +62,7 @@ export const useDragAndDrop = (element: Element | null, setDeltaPos: Function, s
             }
             return () =>
             {
-                element.removeEventListener("mousedown", dragStart);
+                elementRef.removeEventListener("mousedown", dragStart);
                 window.removeEventListener("mousemove", dragProcess);
                 window.removeEventListener("mouseup", dragEnd);
             }

@@ -10,7 +10,7 @@ interface Presentation
     changeSelectedPresentation: Function
     removeAllSelectedObjects: Function
     changeSlide: Function
-    changePosition: Function
+    changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
 }
 
 export default function Presentation(props: Presentation)
