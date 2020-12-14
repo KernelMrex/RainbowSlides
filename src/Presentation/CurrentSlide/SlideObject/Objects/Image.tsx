@@ -23,12 +23,19 @@ export default function Image(props: SlideObjects)
     {
         setNewPos(props.object.position)
     }
+
+    const width: number = props.object.width / props.coef;
+    const height: number = props.object.height / props.coef;
+    const x: number = props.isSelected ? pos.x - 3 / props.coef : pos.x / props.coef;
+    const y: number = props.isSelected ? pos.y - 3 / props.coef : pos.y / props.coef;
+
     const objectStyle = {
-        width: props.object.width / props.coef,
-        height: props.object.height / props.coef,
-        left: pos.x / props.coef + 'px',
-        top: pos.y / props.coef + 'px',
-        border: props.isSelected ? '3px dashed #d3cde4' : ''
+        width: width,
+        height: height,
+        left: x + 'px',
+        top: y + 'px',
+        border: props.isSelected ? '3px solid transparent' : '',
+        outline: props.isSelected ? '2px dashed #d3cde4' : 'none'
     };
 
     return (

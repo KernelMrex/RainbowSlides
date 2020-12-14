@@ -22,15 +22,23 @@ export default function Triangle(props: SlideObjects)
     {
         setNewPos(props.object.position)
     }
+
     const width: number = props.object.width  / props.coef;
     const height: number = props.object.height  / props.coef;
-    const x: number = pos.x  / props.coef;
-    const y: number = pos.y  / props.coef;
+    const x: number = props.isSelected ? pos.x - 3 / props.coef : pos.x / props.coef;
+    const y: number = props.isSelected ? pos.y - 3 / props.coef : pos.y / props.coef;
     const points: string = '0 ' + height + ', ' + width / 2 + ' 0, ' + width + ' ' + height;
+
     return (
-        <svg ref={ref} className={style.wrapper} width={width} height={height}
-             style={{top: '' + y + 'px', left: '' + x + 'px',
-                 border: props.isSelected ? '3px dashed #d3cde4' : ''}}
+        <svg ref={ref}
+             className={style.wrapper}
+             width={width} height={height}
+             style={{
+                 top: '' + y + 'px',
+                 left: '' + x + 'px',
+                 border: props.isSelected ? '3px solid transparent' : '',
+                 outline: props.isSelected ? '2px dashed #d3cde4' : 'none'
+             }}
              onClick={(e) => !props.isLock ? props.selectObject(props.object, e) : e.preventDefault()}>
             <polygon
                 fill={props.object.background.hex}

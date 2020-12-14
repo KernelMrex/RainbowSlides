@@ -22,19 +22,30 @@ export default function Circle(props: SlideObjects)
     {
         setNewPos(props.object.position)
     }
+
+    const width: number = props.object.width / props.coef;
+    const height: number = props.object.height / props.coef;
+    const x: number = props.isSelected ? pos.x - 3 / props.coef : pos.x / props.coef;
+    const y: number = props.isSelected ? pos.y - 3 / props.coef : pos.y / props.coef;
+
     return (
-        <svg ref={ref} className={style.wrapper} width={(props.object.width) / props.coef}
-             height={(props.object.height) / props.coef}
-             style={{top: '' + pos.y / props.coef + 'px',
-                 left: '' + pos.x / props.coef + 'px',
-                 border: props.isSelected ? '3px dashed #d3cde4' : ''}}
+        <svg ref={ref}
+             className={style.wrapper}
+             width={width}
+             height={height}
+             style={{
+                 top: '' + y + 'px',
+                 left: '' + x + 'px',
+                 border: props.isSelected ? '3px solid transparent' : '',
+                 outline: props.isSelected ? '2px dashed #d3cde4' : 'none'
+             }}
              onClick={(e) => !props.isLock ? props.selectObject(props.object, e) : e.preventDefault()}>
             <ellipse
                 fill={props.object.background.hex}
-                cx={(props.object.width / 2) / props.coef}
-                cy={(props.object.height / 2) / props.coef}
-                rx={(props.object.width / 2) / props.coef}
-                ry={(props.object.height / 2) / props.coef}>
+                cx={width / 2}
+                cy={height / 2}
+                rx={width / 2}
+                ry={height / 2}>
             </ellipse>
         </svg>
     );
