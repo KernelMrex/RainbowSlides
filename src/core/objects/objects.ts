@@ -1,4 +1,4 @@
-import { Anchor, Font, Presentation, Slide, SlideObject } from '../types'
+import { Font, Presentation, Slide, SlideObject } from '../types'
 import { getSelected } from '../selection/selection'
 
 export type AddObjectToSlidePayload = {
@@ -64,7 +64,8 @@ export function changeObjectName(presentation: Presentation, payload: ChangeObje
 }
 
 export type ChangeObjectPositionPayload = {
-    newPosition: Anchor
+    newX?: number
+    newY?: number
 }
 
 export function changeObjectPosition(presentation: Presentation, payload: ChangeObjectPositionPayload): Presentation
@@ -77,7 +78,10 @@ export function changeObjectPosition(presentation: Presentation, payload: Change
 
     return updateSlide(presentation, updateObject(slide, {
         ...selectedObject,
-        position: payload.newPosition,
+        position: {
+            x: typeof payload.newX === 'number' ? payload.newX : selectedObject.position.x,
+            y: typeof payload.newY === 'number' ? payload.newY : selectedObject.position.y
+        },
     }))
 }
 
@@ -117,30 +121,11 @@ export function changeTextContent(presentation: Presentation, payload: ChangeTex
     }))
 }
 
-export type ChangeMediaSourcePayload = {
-    newSource: string
+export type ChangeObjectHeightPayload = {
+    newHeight: number
 }
 
-export function changeMediaSource(presentation: Presentation, payload: ChangeMediaSourcePayload): Presentation
-{
-    const [ slide, [ selectedObject ] ] = getSelected(presentation)
-    if (!slide || !selectedObject || ![ 'media', 'image' ].includes(selectedObject.type))
-    {
-        return presentation
-    }
-
-    return updateSlide(presentation, updateObject(slide, {
-        ...selectedObject,
-        source: payload.newSource,
-    }))
-}
-
-export type ChangeObjectSizePayload = {
-    newWidth: number | null
-    newHeight: number | null
-}
-
-export function changeObjectSize(presentation: Presentation, payload: ChangeObjectSizePayload): Presentation
+export function changeObjectHeight(presentation: Presentation, payload: ChangeObjectHeightPayload)
 {
     const [ slide, [ selectedObject ] ] = getSelected(presentation)
     if (!slide || !selectedObject)
@@ -148,11 +133,38 @@ export function changeObjectSize(presentation: Presentation, payload: ChangeObje
         return presentation
     }
 
-    return updateSlide(presentation, updateObject(slide, {
-        ...selectedObject,
-        width: !payload.newWidth ? selectedObject.width : payload.newWidth,
-        height: !payload.newHeight ? selectedObject.height : payload.newHeight,
-    }))
+    if ('height' in selectedObject && typeof selectedObject.height === 'number')
+    {
+        return updateSlide(presentation, updateObject(slide, {
+            ...selectedObject,
+            height: payload.newHeight
+        }))
+    }
+
+    return presentation
+}
+
+export type ChangeObjectWidthPayload = {
+    width: number
+}
+
+export function changeObjectWidth(presentation: Presentation, payload: ChangeObjectWidthPayload)
+{
+    const [ slide, [ selectedObject ] ] = getSelected(presentation)
+    if (!slide || !selectedObject)
+    {
+        return presentation
+    }
+
+    if ('width' in selectedObject && typeof selectedObject.width === 'number')
+    {
+        return updateSlide(presentation, updateObject(slide, {
+            ...selectedObject,
+            width: payload.width,
+        }))
+    }
+
+    return presentation
 }
 
 function updateSlide(presentation: Presentation, newSlide: Slide): Presentation

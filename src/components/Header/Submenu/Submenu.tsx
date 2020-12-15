@@ -1,16 +1,21 @@
-import React, { useState } from 'react'
-import Dropdown from './Dropdown/Dropdown';
-import { DropdownItemProps } from './Dropdown/DropdownItem/DropdownItem';
+import React, { useRef, useState } from 'react'
+import Dropdown, { DropdownItemProps } from './Dropdown/Dropdown'
+import { useClickOutsideNotifier } from '../../../hooks/useClickOutsideNotifier'
 import './Submenu.css'
 
 interface SubmenuItemProps
 {
-    type: 'button' | 'dropdown'
     text: string
+}
+
+interface SubmenuButtonItemProps extends SubmenuItemProps
+{
+    type: 'button'
 }
 
 interface SubmenuDropdownItemProps extends SubmenuItemProps
 {
+    type: 'dropdown'
     items: Array<DropdownItemProps>
     isActive?: boolean
     onOpen?: Function
@@ -18,8 +23,10 @@ interface SubmenuDropdownItemProps extends SubmenuItemProps
 
 interface SubmenuProps
 {
-    items: Array<SubmenuItemProps | SubmenuDropdownItemProps>
+    items: Array<SubmenuButtonItemProps | SubmenuDropdownItemProps>
 }
+
+const ANY_DROPDOWN_ACTIVE: number = -1
 
 function useDropdownActive(initialDropdownIndex: number): [ number, Function ]
 {
@@ -28,7 +35,7 @@ function useDropdownActive(initialDropdownIndex: number): [ number, Function ]
     return [ activeDropdown, (dropdownIndex: number): void => {
         if (activeDropdown === dropdownIndex)
         {
-            setActiveDropdown(-1)
+            setActiveDropdown(ANY_DROPDOWN_ACTIVE)
             return
         }
         setActiveDropdown(dropdownIndex)
@@ -37,7 +44,12 @@ function useDropdownActive(initialDropdownIndex: number): [ number, Function ]
 
 export default function Submenu(props: SubmenuProps)
 {
-    const [ activeDropdown, setActiveDropdown ] = useDropdownActive(-1)
+    const [ activeDropdown, setActiveDropdown ] = useDropdownActive(ANY_DROPDOWN_ACTIVE)
+
+    const ref = useRef<HTMLDivElement>(null)
+    useClickOutsideNotifier(ref, () => {
+        setActiveDropdown(ANY_DROPDOWN_ACTIVE)
+    })
 
     const items = props.items.map((item, index) => {
         switch (item.type)
@@ -48,11 +60,10 @@ export default function Submenu(props: SubmenuProps)
                 return <div className={ 'submenu__item' } key={ index }>
                     <Dropdown
                         text={ item.text }
-                        items={ (item as SubmenuDropdownItemProps).items }
+                        items={ item.items }
+                        activate={ () => setActiveDropdown(index) }
+                        close={ () => setActiveDropdown(ANY_DROPDOWN_ACTIVE) }
                         isActive={ index === activeDropdown }
-                        onButtonClick={ () => {
-                            setActiveDropdown(index)
-                        } }
                     />
                 </div>
             default:
@@ -60,5 +71,5 @@ export default function Submenu(props: SubmenuProps)
         }
     })
 
-    return <div className={ 'submenu' }>{ items }</div>
+    return <div className={ 'submenu' } ref={ ref }>{ items }</div>
 }

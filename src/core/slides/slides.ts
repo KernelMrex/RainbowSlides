@@ -1,5 +1,5 @@
-import { Presentation, Slide, SlideObject, Picture, Color } from '../types'
-import { deleteSlideFromSelection } from '../selection/selection';
+import { Color, Picture, Presentation, Slide, SlideObject } from '../types'
+import { deleteSlideFromSelection } from '../selection/selection'
 
 export function addSlide(presentation: Presentation): Presentation
 {
@@ -16,9 +16,7 @@ function getDefaultSlide(): Slide
     return {
         id: getNewId(),
         objects: slideObjects,
-        background: {
-            hex: '#ffffff'
-        }
+        background: { red: 255, green: 255, blue: 255, alpha: 1 }
     }
 }
 

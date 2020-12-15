@@ -15,34 +15,56 @@ export type Presentation = {
 export type Slide = {
     id: string
     objects: Array<SlideObject>
-    background: Picture | Color
+    background: Color | Picture
 }
 
-export type Picture = {
-    source: string
-}
+export type SlideObject = RectangleBlock | CircleBlock | TriangleBlock | TextBlock | ImageBlock | VideoBlock
 
-export type Color = {
-    hex: string
-}
-
-export type SlideObject = CircleBlock | RectangleBlock | TextBlock | MediaBlock | ImageBlock
-
-export type RectangleBlock = {
+type CommonBlock = {
     id: string
-    type: ObjectType
     name: string
     position: Anchor
-    height: number
-    width: number
 }
 
-export type CircleBlock = RectangleBlock
+type GeometricBlock = CommonBlock & {
+    height: number
+    width: number
+    fill: Color
+    stroke?: Stroke
+}
 
-export type TextBlock = RectangleBlock & {
+export type RectangleBlock = GeometricBlock & {
+    type: 'rectangle'
+}
+
+export type CircleBlock = GeometricBlock & {
+    type: 'circle'
+}
+
+export type TriangleBlock = GeometricBlock & {
+    type: 'triangle'
+}
+
+export type TextBlock = CommonBlock & {
+    type: 'text'
     content: string
     font: Font
     color: Color
+    width: number
+}
+
+export type VideoBlock = CommonBlock & {
+    type: 'video'
+    sourceType: 'youtube'
+    source: string
+    width: number
+    height: number
+}
+
+export type ImageBlock = CommonBlock & Picture & {
+    type: 'image'
+    width: number
+    height: number
 }
 
 export type Font = {
@@ -52,18 +74,24 @@ export type Font = {
     style: 'italic' | 'bold' | 'none'
 }
 
-export type MediaBlock = RectangleBlock & {
-    mediaType: 'video' | 'gif'
-    source: string
-}
-
-export type ImageBlock = RectangleBlock & {
-    source: string
-}
-
-export type ObjectType = 'rectangle' | 'text' | 'circle' | 'media' | 'image'
-
 export type Anchor = {
     x: number
     y: number
+}
+
+export type Stroke = {
+    style: 'solid' | 'dashed'
+    color: Color
+}
+
+export type Color = {
+    red: number
+    green: number
+    blue: number
+    alpha?: number
+}
+
+export type Picture = {
+    content: string
+    extension: 'jpg' | 'jpeg' | 'png'
 }

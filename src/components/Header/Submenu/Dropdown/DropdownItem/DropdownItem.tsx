@@ -1,15 +1,26 @@
 import React from 'react'
 import './DropdownItem.css'
 
-export interface DropdownItemProps
+interface DropdownItemProps
 {
     text: string
-    onClick?: Function
+    closeAfterClick: boolean
+    closeDropdown: () => void
+    onClick?: (event?: React.MouseEvent<HTMLElement>) => void
 }
 
 export default function DropdownItem(props: DropdownItemProps)
 {
-    const onClick = (event: React.MouseEvent<HTMLElement>): void => props.onClick ? props.onClick(event) : () => {
+    const onClick = (event: React.MouseEvent<HTMLElement>) => {
+        if (props.onClick)
+        {
+            props.onClick(event)
+        }
+
+        if (props.closeAfterClick)
+        {
+            props.closeDropdown()
+        }
     }
 
     return (

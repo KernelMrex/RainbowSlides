@@ -1,0 +1,1 @@
+export const PDF_EXPORT_SIZE = { X: 1366, Y: 768 }
