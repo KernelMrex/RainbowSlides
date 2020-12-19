@@ -8,6 +8,7 @@ interface Presentation
 {
     presentation: type.Presentation
     changeSlide: Function
+    changeSize: Function
     changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
     changeSelectedPresentation: Function
 }
@@ -25,6 +26,7 @@ export default function SlideList(props: Presentation)
                     slide={slide}
                     presentation={props.presentation}
                     changeSelectedPresentation={props.changeSelectedPresentation}
+                    changeSize={props.changeSize}
                     changePosition={props.changePosition}/>
             </div>
         ));

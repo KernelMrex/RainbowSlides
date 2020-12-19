@@ -16,13 +16,14 @@ let cursorPosition = {
     }
 }
 
-export const useDragAndDrop = (element: RefObject<HTMLElement>, setDeltaPos: Function, setViewPos: Function) =>
+export const useDragAndDrop = (element: RefObject<HTMLElement>, setModelPos: Function, setViewPos: Function) =>
 {
     const dragEnd = (event: MouseEvent) =>
     {
-        setDeltaPos(cursorPosition.old);
+        setModelPos();
         state = dragAndDropState.none;
         cursorPosition.old = {x: 0, y: 0}
+        event.preventDefault()
     };
 
     const dragProcess = (event: MouseEvent) =>
@@ -47,7 +48,6 @@ export const useDragAndDrop = (element: RefObject<HTMLElement>, setDeltaPos: Fun
 
     useEffect(() =>
     {
-
         if (element.current)
         {
             const elementRef = element.current;

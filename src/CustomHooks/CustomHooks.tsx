@@ -16,6 +16,8 @@ import {PopupState} from '../Popup/PopupState';
 import {
     changeObjectPosition,
     ChangeObjectPositionPayload,
+    changeObjectSize,
+    ChangeObjectSizePayload,
 } from '../core/objects/objects';
 
 export const useModal = () =>
@@ -55,12 +57,10 @@ export const useNewPresentation = (presentationState: type.Presentation) =>
         dispatch<{}>(createAction(deleteAllObjectsFromSelection, true, true), {})
         dispatch<SelectObjectPayload>(createAction(selectObject, true, true), {objectId: selectedObject.id})
         setNewPresentation(getState())
-
     }
 
     function removeAllSelectedObjects(event: any)
     {
-        console.log(typeof event)
         if (event !== null && event.target.tagName === 'DIV')
         {
             dispatch<{}>(createAction(deleteAllObjectsFromSelection, true, true), {})
@@ -100,12 +100,20 @@ export const useNewPresentation = (presentationState: type.Presentation) =>
         changePresentation(getState())
     }
 
+    function changeSize(position: type.Anchor, height: number, width: number): void
+    {
+        dispatch<ChangeObjectSizePayload>(createAction(changeObjectSize, true, true), {newPosition: position, newHeight: height, newWidth: width})
+        changePresentation(getState())
+        changePresentation(getState())
+    }
+
     return {
         presentation,
         downloadPresentation,
         changePosition,
         changeSelectedPresentation,
         removeAllSelectedObjects,
-        changeSlide
+        changeSlide,
+        changeSize
     }
 }

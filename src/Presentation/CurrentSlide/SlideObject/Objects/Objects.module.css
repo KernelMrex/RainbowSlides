@@ -12,3 +12,11 @@
 {
     border: 3px dashed #d3cde4;
 }
+
+.resizerDot
+{
+    width: 10px;
+    height: 10px;
+    background: #1098ad;
+    position: absolute;
+}

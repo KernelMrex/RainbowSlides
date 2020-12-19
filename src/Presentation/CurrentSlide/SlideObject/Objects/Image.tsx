@@ -9,6 +9,7 @@ interface SlideObjects
     object: type.ImageBlock
     coef: number
     selectObject: Function
+    changeSize: Function
     changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
     isSelected: boolean
     isLock: boolean

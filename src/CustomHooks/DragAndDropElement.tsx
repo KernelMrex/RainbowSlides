@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback, RefObject} from 'react';
+import React, {useState, RefObject} from 'react';
 import * as type from '../core/types';
 import {useDragAndDrop} from './DragAndDrop'
 
@@ -6,9 +6,9 @@ export const useDragAndDropElement = (element: RefObject<HTMLElement>, changePos
 
 {
     const [pos, setPos] = useState(object.position)
-    useDragAndDrop(element, setDeltaPos, setViewPos)
+    useDragAndDrop(element, setModelPos, setViewPos)
 
-    function setDeltaPos(newPosition: type.Anchor)
+    function setModelPos()
     {
         if (!isLock)
         {

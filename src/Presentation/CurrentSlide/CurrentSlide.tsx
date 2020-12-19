@@ -9,6 +9,7 @@ interface Slide
     presentation: type.Presentation
     changeSelectedPresentation: Function
     removeAllSelectedObjects: Function
+    changeSize: Function
     changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
 }
 
@@ -27,6 +28,7 @@ export default function CurrentSlide(props: Slide)
                 presentation={props.presentation}
                 changeSelectedPresentation={props.changeSelectedPresentation}
                 changePosition={props.changePosition}
+                changeSize={props.changeSize}
                 isSelected={selectedObjects.find((objectID) => objectID === slideObjects.id) !== undefined ? true : false}
                 isLock={false}/>
         );

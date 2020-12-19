@@ -8,6 +8,7 @@ interface SlideObjects
     object: type.TextBlock
     coef: number
     selectObject: Function
+    changeSize: Function
     changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
     isSelected: boolean
     isLock: boolean
@@ -19,7 +20,7 @@ export default function Text(props: SlideObjects)
     const ref = useRef(null);
     useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, props.isLock);
 
-    if (props.isLock && pos !== props.object.position)
+    if ((props.isLock && pos !== props.object.position))
     {
         setNewPos(props.object.position)
     }
@@ -36,7 +37,7 @@ export default function Text(props: SlideObjects)
         top: y + 'px',
         color: props.object.color.hex,
         fontFamily: props.object.font.family,
-        fontSize: props.object.font.size / props.coef + 'px',
+        fontSize: (props.object.font.size / props.coef).toFixed() + 'px',
         fontStyle: props.object.font.style,
         fontWeight: props.object.font.weight,
         border: props.isSelected ? '3px solid transparent' : '',

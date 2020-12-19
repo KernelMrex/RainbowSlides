@@ -21,7 +21,8 @@ export default function App(props: Presentation)
         changePosition,
         changeSelectedPresentation,
         removeAllSelectedObjects,
-        changeSlide
+        changeSlide,
+        changeSize
     } = useNewPresentation(props.presentation);
     const {popupState, changeVisabilityPopup} = useModal();
         return (
@@ -35,6 +36,7 @@ export default function App(props: Presentation)
                         removeAllSelectedObjects={removeAllSelectedObjects}
                         changeSlide={changeSlide}
                         changePosition={changePosition}
+                        changeSize={changeSize}
                     />
                     <Footer/>
                 </div>

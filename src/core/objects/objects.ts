@@ -137,6 +137,7 @@ export function changeMediaSource(presentation: Presentation, payload: ChangeMed
 }
 
 export type ChangeObjectSizePayload = {
+    newPosition: Anchor
     newWidth: number | null
     newHeight: number | null
 }
@@ -151,6 +152,7 @@ export function changeObjectSize(presentation: Presentation, payload: ChangeObje
 
     return updateSlide(presentation, updateObject(slide, {
         ...selectedObject,
+        position: !payload.newPosition ? selectedObject.position : payload.newPosition,
         width: !payload.newWidth ? selectedObject.width : payload.newWidth,
         height: !payload.newHeight ? selectedObject.height : payload.newHeight,
     }))
