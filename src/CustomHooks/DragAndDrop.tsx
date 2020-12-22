@@ -16,34 +16,50 @@ let cursorPosition = {
     }
 }
 
+let currentItem: any = null;
+
 export const useDragAndDrop = (element: RefObject<HTMLElement>, setModelPos: Function, setViewPos: Function) =>
 {
     const dragEnd = (event: MouseEvent) =>
     {
-        setModelPos();
+        if (element.current === currentItem)
+        {
+            setModelPos();
+            cursorPosition.old = {x: 0, y: 0}
+            event.preventDefault()
+            if (element.current) element.current.removeEventListener("mousedown", dragStart);
+        }
         state = dragAndDropState.none;
-        cursorPosition.old = {x: 0, y: 0}
-        event.preventDefault()
+        window.removeEventListener("mousemove", dragProcess);
+        window.removeEventListener("mouseup", dragEnd);
     };
 
     const dragProcess = (event: MouseEvent) =>
     {
         state = dragAndDropState.moving;
-        setViewPos({
-            x: event.pageX - cursorPosition.old.x,
-            y: event.pageY - cursorPosition.old.y
-        });
+        if (element.current === currentItem)
+        {
+            setViewPos({
+                x: event.pageX - cursorPosition.old.x,
+                y: event.pageY - cursorPosition.old.y
+            });
 
-        cursorPosition.old = {x: event.pageX, y: event.pageY}
+            cursorPosition.old = {x: event.pageX, y: event.pageY}
+        }
     };
 
     const dragStart = (event: MouseEvent) =>
     {
-        state = dragAndDropState.start;
-        cursorPosition.old = {x: event.pageX, y: event.pageY}
-        event.preventDefault()
-        window.addEventListener("mousemove", dragProcess);
-        window.addEventListener("mouseup", dragEnd);
+        if (!event.defaultPrevented)
+        {
+            currentItem = event.target;
+            state = dragAndDropState.start;
+            cursorPosition.old = {x: event.pageX, y: event.pageY}
+            event.preventDefault()
+            event.stopPropagation()
+            window.addEventListener("mousemove", dragProcess);
+            window.addEventListener("mouseup", dragEnd);
+        }
     };
 
     useEffect(() =>

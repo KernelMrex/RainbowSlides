@@ -2,7 +2,6 @@ import React, {useRef, useState} from 'react';
 import * as type from '../../../../core/types';
 import style from './Objects.module.css';
 import {useDragAndDropElement} from '../../../../CustomHooks/DragAndDropElement';
-import HOCTopLeft from "./Resizers/HOCTopLeft";
 import HOCDots from './Resizers/HOCDots';
 
 interface SlideObjects
@@ -22,12 +21,12 @@ export default function Rectangle(props: SlideObjects)
     const [physicalParams, setNewPhysicalParams] = useState({height: props.object.height, width: props.object.width});
     const ref = useRef(null);
 
-    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, props.isLock);
-
     if (props.isLock && pos !== props.object.position)
     {
         setNewPos(props.object.position)
     }
+
+    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, pos, props.isLock);
 
     if (props.isLock && (physicalParams.width !== props.object.width || physicalParams.height !== props.object.height))
     {
@@ -41,9 +40,13 @@ export default function Rectangle(props: SlideObjects)
 
     return (
         <div className={style.wrapper}
-             style={{width: width, height: height, top: '' + y + 'px', left: '' + x + 'px',}}>
+             style={{width: width, height: height, top: '' + y + 'px', left: '' + x + 'px'}}>
+            {!props.isLock && props.isSelected &&
+            <HOCDots object={props.object} pos={pos} physicalParams={physicalParams} callbackSize={setNewPhysicalParams}
+                     callbackPosition={setNewPos}
+                     changeSize={props.changeSize}/>
+            }
             <svg
-                ref={ref}
                 width={width}
                 height={height}
                 style={{
@@ -54,14 +57,12 @@ export default function Rectangle(props: SlideObjects)
                 }}
                 onClick={(e) => !props.isLock ? props.selectObject(props.object) : e.preventDefault()}>
                 <rect
+                    ref={ref}
                     width={width}
-                    height={height}>
+                    height={height}
+                    style={{zIndex: 1}}>
                 </rect>
             </svg>
-            {!props.isLock && props.isSelected &&
-            <HOCDots object={props.object} pos={pos} physicalParams={physicalParams} callbackSize={setNewPhysicalParams} callbackPosition={setNewPos}
-                     changeSize={props.changeSize}/>
-            }
         </div>
     )
 }

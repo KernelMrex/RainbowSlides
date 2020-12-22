@@ -4,7 +4,7 @@ import ResizerDot from "./ResizerDot";
 import {useDragAndDropResize} from '../../../../../CustomHooks/DragAndDropResizer';
 import {PhysicalParams, Size, HOCDotsInterface} from './HOCDots';
 
-export default function HOCTopLeft(props: HOCDotsInterface)
+export default function HOCTop(props: HOCDotsInterface)
 {
     function createParamsToModel(newPos: type.Anchor): PhysicalParams
     {
@@ -19,7 +19,7 @@ export default function HOCTopLeft(props: HOCDotsInterface)
     function createPosition(newPos: type.Anchor): type.Anchor
     {
         return {
-            x: props.object.position.x + newPos.x, y: props.object.position.y + newPos.y
+            x: props.object.position.x, y: props.object.position.y + newPos.y
         }
     }
 
@@ -27,12 +27,12 @@ export default function HOCTopLeft(props: HOCDotsInterface)
     {
         return {
             height: props.object.height - newPos.y,
-            width: props.object.width - newPos.x
+            width: props.object.width
         }
     }
 
     const childRef: RefObject<HTMLElement> = useRef(null);
-    const position: type.Anchor = {x: -7, y: -7};
+    const position: type.Anchor = {x: props.physicalParams.width / 2 - 2, y: -7};
     useDragAndDropResize(childRef, props.object, props.callbackSize, props.callbackPosition, props.changeSize, createParamsToModel, createPosition, createSize)
 
     return (

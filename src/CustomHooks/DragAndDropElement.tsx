@@ -2,24 +2,22 @@ import React, {useState, RefObject} from 'react';
 import * as type from '../core/types';
 import {useDragAndDrop} from './DragAndDrop'
 
-export const useDragAndDropElement = (element: RefObject<HTMLElement>, changePosition: (obj: type.SlideObject, pos: type.Anchor) => void, setNewPos: (pos: type.Anchor) => void, object: type.SlideObject, isLock: boolean) =>
-
+export const useDragAndDropElement = (element: RefObject<HTMLElement>, changePosition: (obj: type.SlideObject, pos: type.Anchor) => void, setNewPos: (pos: type.Anchor) => void, object: type.SlideObject, pos: type.Anchor, isLock: boolean) =>
 {
-    const [pos, setPos] = useState(object.position)
+    const [deltaPos, setPos] = useState(pos)
+
     useDragAndDrop(element, setModelPos, setViewPos)
 
     function setModelPos()
     {
         if (!isLock)
         {
-            let deltaPosition: type.Anchor = {
-                x: pos.x,
-                y: pos.y
-            }
-            changePosition(object, deltaPosition)
+            changePosition(object, pos)
+            setPos(pos)
         } else
         {
-            setNewPos(pos)
+            setNewPos(deltaPos)
+            setPos(deltaPos)
         }
     }
 

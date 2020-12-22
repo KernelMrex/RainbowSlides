@@ -1,7 +1,7 @@
-import React, {useState, RefObject, MutableRefObject} from 'react';
+import React, {useState, RefObject} from 'react';
 import * as type from '../core/types';
 import {useDragAndDrop} from './DragAndDrop';
-import { PhysicalParams, Size } from '../Presentation/CurrentSlide/SlideObject/Objects/Resizers/HOCDots';
+import {PhysicalParams, Size} from '../Presentation/CurrentSlide/SlideObject/Objects/Resizers/HOCDots';
 
 export const useDragAndDropResize = (
     element: RefObject<HTMLElement>,
@@ -9,14 +9,12 @@ export const useDragAndDropResize = (
     callbackSize: Function,
     callbackPosition: Function,
     changeSize: Function,
-    createParamsToModel: (newPos?: type.Anchor | undefined) => (PhysicalParams | undefined),
+    createParamsToModel: (newPos: type.Anchor) => PhysicalParams,
     createPosition: (newPos: type.Anchor) => type.Anchor,
     createSize: (newPos: type.Anchor) => Size) =>
 {
     const [pos, setNewPos] = useState({x: 0, y: 0})
     useDragAndDrop(element, setModelParams, setViewParams)
-
-    console.log(element.current)
 
     function setModelParams()
     {
@@ -29,6 +27,8 @@ export const useDragAndDropResize = (
         {
             changeSize(physicalParams.pos, physicalParams.size.height, physicalParams.size.width)
         }
+
+        setNewPos({x: 0, y: 0})
     }
 
     function setViewParams(delta: type.Anchor)
@@ -38,14 +38,9 @@ export const useDragAndDropResize = (
             y: delta.y + pos.y
         }
         const newSize: Size = createSize(newPos);
-
-        setNewPos(newPos)
-        if (newSize.height < 10 || newSize.width < 10)
+        if (newSize.width > 10 && newSize.height > 10)
         {
-            callbackSize({x: 10, y: 10})
-            callbackPosition(createPosition({x: 10, y: 10}))
-        } else
-        {
+            setNewPos(newPos)
             callbackPosition(createPosition(newPos))
             callbackSize(newSize)
         }
