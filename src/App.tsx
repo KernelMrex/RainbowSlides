@@ -5,7 +5,6 @@ import Footer from './Footer/Footer'
 import TopBar from './TopBar/TopBar'
 import Presentation from './Presentation/Presentation'
 import Popup from './Popup/Popup'
-import { createPresentation, getPresentationFromJSON } from './core/presentation/presentation';
 import { useModal, useNewPresentation } from './CustomHooks/CustomHooks';
 
 interface Presentation
@@ -22,7 +21,8 @@ export default function App(props: Presentation)
         changeSelectedPresentation,
         removeAllSelectedObjects,
         changeSlide,
-        changeSize
+        changeSize,
+        changeText
     } = useNewPresentation(props.presentation);
     const {popupState, changeVisabilityPopup} = useModal();
         return (
@@ -37,6 +37,7 @@ export default function App(props: Presentation)
                         changeSlide={changeSlide}
                         changePosition={changePosition}
                         changeSize={changeSize}
+                        changeText={changeText}
                     />
                     <Footer/>
                 </div>

@@ -12,6 +12,7 @@ interface Presentation
     changeSlide: Function
     changeSize: Function
     changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
+    changeText: (content: string) => void
 }
 
 export default function Presentation(props: Presentation)
@@ -32,6 +33,7 @@ export default function Presentation(props: Presentation)
                 changeSelectedPresentation={props.changeSelectedPresentation}
                 changeSlide={props.changeSlide}
                 changeSize={props.changeSize}
+                changeText={props.changeText}
                 changePosition={props.changePosition}/>
             <CurrentSlide
                 currentSlide={currentSlide}
@@ -39,6 +41,7 @@ export default function Presentation(props: Presentation)
                 changeSelectedPresentation={props.changeSelectedPresentation}
                 removeAllSelectedObjects={props.removeAllSelectedObjects}
                 changeSize={props.changeSize}
+                changeText={props.changeText}
                 changePosition={props.changePosition}/>
         </div>
     )

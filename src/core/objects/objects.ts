@@ -99,11 +99,11 @@ export function changeTextFont(presentation: Presentation, payload: ChangeTextFo
     }))
 }
 
-export type ChangeTextContent = {
+export type ChangeTextContentPayload = {
     newContent: string
 }
 
-export function changeTextContent(presentation: Presentation, payload: ChangeTextContent): Presentation
+export function changeTextContent(presentation: Presentation, payload: ChangeTextContentPayload): Presentation
 {
     const [slide, [selectedObject]] = getSelected(presentation)
     if (!slide || !selectedObject || selectedObject.type !== 'text')

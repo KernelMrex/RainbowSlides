@@ -2,10 +2,8 @@ import React, {useState, SyntheticEvent} from 'react';
 import * as type from '../core/types';
 import {createPresentation, getPresentationFromJSON} from '../core/presentation/presentation';
 import {
-    deleteObjectFromSelection,
     deleteAllObjectsFromSelection,
     selectObject, getSelectedObjects,
-    DeleteObjectFromSelectionPayload,
     SelectObjectPayload,
     selectSlide,
     SelectSlidePayload
@@ -17,7 +15,7 @@ import {
     changeObjectPosition,
     ChangeObjectPositionPayload,
     changeObjectSize,
-    ChangeObjectSizePayload,
+    ChangeObjectSizePayload, ChangeTextContentPayload, changeTextContent,
 } from '../core/objects/objects';
 
 export const useModal = () =>
@@ -107,6 +105,14 @@ export const useNewPresentation = (presentationState: type.Presentation) =>
         changePresentation(getState())
     }
 
+    function changeText(content: string): void
+    {
+        console.log(content)
+        dispatch<ChangeTextContentPayload>(createAction(changeTextContent, true, true), {newContent: content})
+        console.log(getState());
+        changePresentation(getState())
+    }
+
     return {
         presentation,
         downloadPresentation,
@@ -114,6 +120,7 @@ export const useNewPresentation = (presentationState: type.Presentation) =>
         changeSelectedPresentation,
         removeAllSelectedObjects,
         changeSlide,
-        changeSize
+        changeSize,
+        changeText
     }
 }

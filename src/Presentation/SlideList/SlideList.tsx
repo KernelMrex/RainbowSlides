@@ -10,6 +10,7 @@ interface Presentation
     changeSlide: Function
     changeSize: Function
     changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
+    changeText: (content: string) => void
     changeSelectedPresentation: Function
 }
 
@@ -27,6 +28,7 @@ export default function SlideList(props: Presentation)
                     presentation={props.presentation}
                     changeSelectedPresentation={props.changeSelectedPresentation}
                     changeSize={props.changeSize}
+                    changeText={props.changeText}
                     changePosition={props.changePosition}/>
             </div>
         ));
