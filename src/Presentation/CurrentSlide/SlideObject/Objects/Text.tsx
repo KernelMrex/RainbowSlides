@@ -52,15 +52,16 @@ export default function Text(props: SlideObjects)
         outline: props.isSelected ? '2px dashed #d3cde4' : 'none'
     };
     return (
-        <div ref={ref} className={style.wrapper} style={objectStyle}
-             onClick={(e) => !props.isLock ? props.selectObject(props.object) : e.preventDefault()}
-            >
+        <div className={style.wrapper} style={{width: width, height: height, left: x + 'px', top: y + 'px',}}>
             {!props.isLock && props.isSelected &&
-            <HOCDots object={props.object} pos={pos} physicalParams={physicalParams} callbackSize={setNewPhysicalParams}
+            <HOCDots object={props.object} pos={pos} physicalParams={{width: physicalParams.width + 13, height: physicalParams.height}} callbackSize={setNewPhysicalParams}
                      callbackPosition={setNewPos}
                      changeSize={props.changeSize}/>
             }
-            <p className={style.textIndent}>{props.object.content}</p>
+            <p onClick={(e) => !props.isLock ? props.selectObject(props.object) : e.preventDefault()}
+               style={objectStyle}
+               ref={ref}
+               className={style.textIndent}>{props.object.content}</p>
         </div>
     );
 }
