@@ -107,9 +107,7 @@ export const useNewPresentation = (presentationState: type.Presentation) =>
 
     function changeText(content: string): void
     {
-        console.log(content)
         dispatch<ChangeTextContentPayload>(createAction(changeTextContent, true, true), {newContent: content})
-        console.log(getState());
         changePresentation(getState())
     }
 

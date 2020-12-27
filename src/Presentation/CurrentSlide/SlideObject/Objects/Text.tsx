@@ -69,10 +69,6 @@ export default function Text(props: SlideObjects)
                      callbackPosition={setNewPos}
                      changeSize={props.changeSize}/>
             }
-            {/*<p onClick={(e) => !props.isLock ? props.selectObject(props.object) : e.preventDefault()}*/}
-            {/*   style={objectStyle}*/}
-            {/*   ref={ref}*/}
-            {/*   className={style.textIndent}>{props.object.content}</p>*/}
 
             <textarea onClick={(e) => !props.isLock ? props.selectObject(props.object) : e.preventDefault()}
                       style={objectStyle}
@@ -80,7 +76,6 @@ export default function Text(props: SlideObjects)
                       className={textStyle}
                       onDoubleClick={(e) =>
                       {
-                          console.log(e)
                           // @ts-ignore
                           e.target.focus();
                       }}
