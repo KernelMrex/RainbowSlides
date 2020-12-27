@@ -1,0 +1,40 @@
+.wrapper
+{
+    position: absolute;
+}
+
+.media
+{
+    width: 100%;
+    height: 100%;
+    user-select: none;
+}
+
+.selected
+{
+    border: 3px dashed #d3cde4;
+}
+
+.resizerDot
+{
+    width: 10px;
+    height: 10px;
+    background: #1098ad;
+    position: absolute;
+}
+
+.notSelectedText
+{
+    padding: 0 6px;
+    resize: none;
+    overflow: hidden;
+    user-select: none;
+}
+
+.selectedText
+{
+    padding: 0 6px;
+    resize: none;
+    overflow: hidden;
+    user-select: all;
+}
