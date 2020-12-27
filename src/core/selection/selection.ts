@@ -32,6 +32,12 @@ export type SelectObjectPayload = {
 
 export function selectObject(presentation: Presentation, payload: SelectObjectPayload): Presentation
 {
+    const selectedSlide: Slide | null = getSelectedSlide(presentation);
+    if (selectedSlide === null || selectedSlide.objects.find((object) => object.id === payload.objectId) === undefined)
+    {
+        return presentation
+    }
+
     if (presentation.selection.slide !== null)
     {
         let objects: Array<string>
@@ -39,9 +45,8 @@ export function selectObject(presentation: Presentation, payload: SelectObjectPa
 
         if (presentation.selection.objects !== [])
         {
-            objects = [ ...presentation.selection.objects ]
-        }
-        else
+            objects = [...presentation.selection.objects]
+        } else
         {
             objects = []
         }
