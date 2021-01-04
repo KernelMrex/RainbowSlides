@@ -1,8 +1,9 @@
 import React from 'react'
 import Logo from '../Logo/Logo'
-import './Header.css'
 import Submenu from './Submenu/Submenu'
 import Button from '../Button/Button'
+
+import './Header.css'
 
 export default function Header() {
     return (
@@ -15,16 +16,16 @@ export default function Header() {
                 <div className={ 'header__submenu' }>
                     <Submenu items={ [
                         {
-                            type: ('dropdown' as const),
+                            type: 'dropdown',
                             text: 'Файл',
                             items: [
                                 { text: 'Открыть' },
                                 { text: 'Сохранить' },
-                                { text: 'Экспорт' },
+                                { text: 'Экспорт', onClick: () => console.log('Export pdf'), stayOpenAfterClick: false },
                             ],
                         },
                         {
-                            type: ('dropdown' as const),
+                            type: 'dropdown',
                             text: 'Помощь',
                             items: [
                                 { text: 'Инструкция' },

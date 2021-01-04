@@ -5,3 +5,9 @@
     margin: 0;
     border: 0;
 }
+
+.app__workspace
+{
+    height: calc(100vh - 121px);
+    display: flex;
+}

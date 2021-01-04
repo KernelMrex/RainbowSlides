@@ -84,6 +84,8 @@ function renderCircleOnPDF(doc: jsPDF, circle: CircleBlock): void
 
 function renderTextOnPDF(doc: jsPDF, text: TextBlock): void
 {
+    doc.setFont(text.font.family)
+    doc.setFontSize(text.font.size)
     doc.text(text.content, text.position.x, text.position.y)
 }
 

@@ -1,0 +1,7 @@
+.sidebar
+{
+    height: 100%;
+    width: 310px;
+    border-right: 1px solid #D4D4D4;
+    flex-shrink: 0;
+}
