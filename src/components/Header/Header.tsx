@@ -1,18 +1,30 @@
 import React from 'react'
-import Logo from '../Logo/Logo'
-import Submenu from './Submenu/Submenu'
+import { connect } from 'react-redux'
+import { renamePresentation } from '../../store/presentation/actions'
+import { RootState } from '../../store/store'
 import Button from '../Button/Button'
-
+import { Input } from '../Input/Input'
+import Logo from '../Logo/Logo'
 import './Header.css'
+import Submenu from './Submenu/Submenu'
 
-export default function Header() {
+const mapState = (state: RootState) => ({ name: state.presentation.name })
+const mapDispatch = { renamePresentation: renamePresentation }
+
+type StateProps = ReturnType<typeof mapState>
+type DispatchProps = typeof mapDispatch
+type HeaderProps = StateProps & DispatchProps
+
+function Header(props: HeaderProps)
+{
     return (
         <div className={ 'header' }>
             <div className={ 'header__logo' }>
                 <Logo/>
             </div>
             <div className={ 'header__title-wrapper' }>
-                <h1 className={ 'header__title' }>Название презентации</h1>
+                <Input text={ props.name } className={ 'header__title' }
+                       onUpdate={ (value) => props.renamePresentation(value) }/>
                 <div className={ 'header__submenu' }>
                     <Submenu items={ [
                         {
@@ -21,7 +33,11 @@ export default function Header() {
                             items: [
                                 { text: 'Открыть' },
                                 { text: 'Сохранить' },
-                                { text: 'Экспорт', onClick: () => console.log('Export pdf'), stayOpenAfterClick: false },
+                                {
+                                    text: 'Экспорт',
+                                    onClick: () => console.log('Export pdf'),
+                                    stayOpenAfterClick: false,
+                                },
                             ],
                         },
                         {
@@ -41,3 +57,5 @@ export default function Header() {
         </div>
     )
 }
+
+export default connect(mapState, mapDispatch)(Header)
