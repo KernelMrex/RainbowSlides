@@ -23,7 +23,7 @@
     height: 96.5%;
 }
 
-.error_text
+.relativeBlock
 {
-
+    position: relative;
 }

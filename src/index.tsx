@@ -148,9 +148,42 @@ const slide2: type.Slide = {
     }
 }
 
+const slide3: type.Slide = {
+    id: 'f521',
+    objects: [],
+    background: {
+        hex: '#f2ee9a'
+    }
+}
+
+const slide4: type.Slide = {
+    id: 'f621',
+    objects: [],
+    background: {
+        hex: '#20987f'
+    }
+}
+
+
+const slide5: type.Slide = {
+    id: 'f721',
+    objects: [],
+    background: {
+        hex: '#a75c2a'
+    }
+}
+
+const slide6: type.Slide = {
+    id: 'f821',
+    objects: [],
+    background: {
+        hex: '#e904ca'
+    }
+}
+
 const presentation: type.Presentation = {
     name: 'my first presentation',
-    slides: [slide1, slide2],
+    slides: [slide1, slide2, slide3, slide4, slide5, slide6],
     selection: {
         slide: slide1.id,
         objects: []

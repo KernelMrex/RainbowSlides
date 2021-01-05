@@ -34,7 +34,7 @@ export default function HOCDots(props: HOCDotsInterface)
     return (
         <div>
             <HOCTopRight pos={props.pos} physicalParams={props.physicalParams} object={props.object} callbackSize={props.callbackSize} callbackPosition={props.callbackPosition}
-                         changeSize={props.changeSize}/>
+                     changeSize={props.changeSize}/>
             <HOCTopLeft pos={props.pos} physicalParams={props.physicalParams} object={props.object} callbackSize={props.callbackSize} callbackPosition={props.callbackPosition}
                      changeSize={props.changeSize}/>
             <HOCBottomLeft pos={props.pos} physicalParams={props.physicalParams} object={props.object} callbackSize={props.callbackSize} callbackPosition={props.callbackPosition}

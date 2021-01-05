@@ -13,6 +13,7 @@ interface Presentation
     changeSize: Function
     changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
     changeText: (content: string) => void
+    changeSlidePosition: (estimateSlideId: string, currentSlideId: string, position: 'bottom' | 'top') => void
 }
 
 export default function Presentation(props: Presentation)
@@ -34,6 +35,7 @@ export default function Presentation(props: Presentation)
                 changeSlide={props.changeSlide}
                 changeSize={props.changeSize}
                 changeText={props.changeText}
+                changeSlidePosition={props.changeSlidePosition}
                 changePosition={props.changePosition}/>
             <CurrentSlide
                 currentSlide={currentSlide}

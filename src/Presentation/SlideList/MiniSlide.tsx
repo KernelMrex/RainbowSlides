@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {RefObject, useRef, useState} from 'react';
 import * as type from '../../core/types';
 import style from './MiniSlide.module.css'
 import SlideObject from '../CurrentSlide/SlideObject/SlideObject'
+import {useDragAndDropSlides} from '../../CustomHooks/DragAndDropSlides';
+import {HorizontalLineSlides} from './SlideList';
 
 interface Slide
 {
@@ -11,12 +13,21 @@ interface Slide
     changeSize: Function
     changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
     changeText: (content: string) => void
+    changeSlidePosition: (estimateSlideId: string, currentSlideId: string, position: 'bottom' | 'top') => void
 }
+
+const defaultValue: HorizontalLineSlides = {id: '', position: ''}
 
 export default function MiniSlide(props: Slide)
 {
-    let mapList;
-    let background = '#ffffff';
+    const slides: Array<string> = getAllIdSlides(props.presentation.slides)
+    const ref = useRef(null)
+    const [estimatedNextSlide, changeEstimatedNextSlide] = useState(defaultValue);
+
+    useDragAndDropSlides(ref, props.slide.id, changeEstimatedNextSlide, props.changeSlidePosition)
+
+    let mapList: Array<JSX.Element> = [];
+    let background: string = '#ffffff';
     if (props.slide !== null && props.slide.objects !== [])
     {
         mapList = props.slide.objects.map((slideObjects) =>
@@ -32,21 +43,32 @@ export default function MiniSlide(props: Slide)
                 isSelected={false}
                 isLock={true}/>
         );
-
         background = defineBackground(props.slide.background);
     }
+
+    const boost: number = estimatedNextSlide.position === 'bottom' ? 1 : 0;
+
+    let positionHr: number = (slides.indexOf(estimatedNextSlide.id) - slides.indexOf(props.slide.id) + boost) * 158
+
     return (
-        <div className={style.wrapper} style={{background: background}}>
-            {(props.slide !== null) && (props.slide.objects !== []) &&
-            mapList
+        <>
+            {estimatedNextSlide.id && estimatedNextSlide.id !== '' &&
+            <hr className={style.lineDragAndDrop}
+                style={{top: positionHr}}/>
             }
-        </div>
+            <div ref={ref} id={props.slide.id} className={style.wrapper}
+                 style={{background: background}}>
+                {(props.slide !== null) && (props.slide.objects !== []) &&
+                mapList
+                }
+            </div>
+        </>
     )
 }
 
-function isColor(pet: type.Color | type.Picture): pet is type.Color
+function isColor(background: type.Color | type.Picture): background is type.Color
 {
-    return (pet as type.Color).hex !== undefined;
+    return (background as type.Color).hex !== undefined;
 }
 
 function defineBackground(unknownBackground: type.Picture | type.Color): string
@@ -55,4 +77,14 @@ function defineBackground(unknownBackground: type.Picture | type.Color): string
     background = isColor(unknownBackground) ? unknownBackground.hex : unknownBackground.source;
 
     return background;
+}
+
+function getAllIdSlides(slides: Array<type.Slide>): Array<string>
+{
+    let slidesId: Array<string> = slides.map((slide) =>
+    {
+        return slide.id
+    })
+
+    return slidesId
 }

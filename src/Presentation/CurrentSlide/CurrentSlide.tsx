@@ -49,8 +49,8 @@ export default function CurrentSlide(props: Slide)
     )
 }
 
-function isColor(pet: type.Color | type.Picture): pet is type.Color {
-    return (pet as type.Color).hex !== undefined;
+function isColor(background: type.Color | type.Picture): background is type.Color {
+    return (background as type.Color).hex !== undefined;
 }
 
 function defineBackground(unknownBackground: type.Picture | type.Color): string

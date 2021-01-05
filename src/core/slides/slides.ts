@@ -1,5 +1,6 @@
 import { Presentation, Slide, SlideObject, Picture, Color } from '../types'
 import { deleteSlideFromSelection } from '../selection/selection';
+import {getState} from "../../state/state-manager";
 
 export function addSlide(presentation: Presentation): Presentation
 {
@@ -48,14 +49,19 @@ function getNewId(): string
 }
 
 export type ChangeOrderOfSlidePayload = {
-    place: number
+    place: number,
+    currentSlideId: string,
 }
 
 export function changeOrderOfSlide(presentation: Presentation, payload: ChangeOrderOfSlidePayload): Presentation
 {
-    if (presentation.selection.slide !== null && presentation.slides.length >= payload.place)
+    const slidesId: Array<string> = presentation.slides.map((slide) =>
     {
-        const currentSlide: Slide = presentation.slides.filter(slide => slide.id === presentation.selection.slide)[0];
+        return slide.id
+    })
+    if (slidesId.find((id) => id === payload.currentSlideId) && slidesId.length >= payload.place)
+    {
+        const currentSlide: Slide = presentation.slides.filter(slide => slide.id === payload.currentSlideId)[0];
         let newSlidesList: Array<Slide> = [ ...presentation.slides ];
         newSlidesList.splice(presentation.slides.indexOf(currentSlide), 1);
         newSlidesList.splice(payload.place, 0, currentSlide);
@@ -65,6 +71,7 @@ export function changeOrderOfSlide(presentation: Presentation, payload: ChangeOr
             slides: newSlidesList
         }
     }
+
     return presentation;
 }
 

@@ -3,6 +3,7 @@ import * as type from '../../../../core/types';
 import style from './Objects.module.css';
 import {useDragAndDropElement} from '../../../../CustomHooks/DragAndDropElement';
 import HOCDots from "./Resizers/HOCDots";
+import { PointerType } from '../SlideObject';
 
 interface SlideObjects
 {
@@ -39,8 +40,10 @@ export default function Triangle(props: SlideObjects)
     const y: number = props.isSelected ? pos.y - 3 / props.coef : pos.y / props.coef;
     const points: string = '0 ' + height + ', ' + width / 2 + ' 0, ' + width + ' ' + height;
 
+    const pointerLock: PointerType = props.isLock ? "none" : undefined
+
     return (
-        <div className={style.wrapper} style={{width: width, height: height, top: '' + y + 'px', left: '' + x + 'px'}}>
+        <div className={style.wrapper} style={{width: width, height: height, top: '' + y + 'px', left: '' + x + 'px', pointerEvents: pointerLock}}>
             {!props.isLock && props.isSelected &&
             <HOCDots object={props.object} pos={pos} physicalParams={physicalParams} callbackSize={setNewPhysicalParams}
                      callbackPosition={setNewPos}

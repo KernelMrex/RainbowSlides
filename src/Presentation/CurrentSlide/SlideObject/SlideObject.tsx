@@ -20,6 +20,8 @@ interface SlideObjects
     isLock: boolean
 }
 
+export type PointerType = "none" | "-moz-initial" | "inherit" | "initial" | "revert" | "unset" | "auto" | "all" | "fill" | "painted" | "stroke" | "visible" | "visibleFill" | "visiblePainted" | "visibleStroke" | undefined
+
 export default function SlideObject(props: SlideObjects)
 {
     const object = props.object;

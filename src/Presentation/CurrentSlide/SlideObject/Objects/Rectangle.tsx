@@ -3,6 +3,7 @@ import * as type from '../../../../core/types';
 import style from './Objects.module.css';
 import {useDragAndDropElement} from '../../../../CustomHooks/DragAndDropElement';
 import HOCDots from './Resizers/HOCDots';
+import {PointerType} from "../SlideObject";
 
 interface SlideObjects
 {
@@ -38,9 +39,11 @@ export default function Rectangle(props: SlideObjects)
     const x: number = props.isSelected ? pos.x - 3 / props.coef : pos.x / props.coef;
     const y: number = props.isSelected ? pos.y - 3 / props.coef : pos.y / props.coef;
 
+    const pointerLock: PointerType = props.isLock ? "none" : undefined
+
     return (
         <div className={style.wrapper}
-             style={{width: width, height: height, top: '' + y + 'px', left: '' + x + 'px'}}>
+             style={{width: width, height: height, top: '' + y + 'px', left: '' + x + 'px', pointerEvents: pointerLock}}>
             {!props.isLock && props.isSelected &&
             <HOCDots object={props.object} pos={pos} physicalParams={physicalParams} callbackSize={setNewPhysicalParams}
                      callbackPosition={setNewPos}

@@ -3,6 +3,7 @@ import * as type from '../../../../core/types';
 import style from './Objects.module.css';
 import {useDragAndDropElement} from '../../../../CustomHooks/DragAndDropElement';
 import HOCDots from "./Resizers/HOCDots";
+import {PointerType} from "../SlideObject";
 
 interface SlideObjects
 {
@@ -46,6 +47,8 @@ export default function Text(props: SlideObjects)
     const x: number = props.isSelected ? pos.x - 3 / props.coef : pos.x / props.coef;
     const y: number = props.isSelected ? pos.y - 3 / props.coef : pos.y / props.coef;
 
+    const pointerLock: PointerType = props.isLock ? "none" : undefined
+
     const objectStyle = {
         width: width,
         height: height,
@@ -61,7 +64,7 @@ export default function Text(props: SlideObjects)
         outline: props.isSelected ? '2px dashed #d3cde4' : 'none',
     };
     return (
-        <div className={style.wrapper} style={{width: width, height: height, left: x + 'px', top: y + 'px',}}>
+        <div className={style.wrapper} style={{width: width, height: height, left: x + 'px', top: y + 'px', pointerEvents: pointerLock}}>
             {!props.isLock && props.isSelected &&
             <HOCDots object={props.object} pos={pos}
                      physicalParams={{width: physicalParams.width + 13, height: physicalParams.height}}

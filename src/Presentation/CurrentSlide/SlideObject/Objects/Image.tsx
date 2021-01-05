@@ -3,6 +3,7 @@ import * as type from '../../../../core/types';
 import style from './Objects.module.css';
 import { useDragAndDropElement } from '../../../../CustomHooks/DragAndDropElement';
 import HOCDots from './Resizers/HOCDots';
+import {PointerType} from "../SlideObject";
 
 
 interface SlideObjects
@@ -38,13 +39,16 @@ export default function Image(props: SlideObjects)
     const x: number = props.isSelected ? pos.x - 3 / props.coef : pos.x / props.coef;
     const y: number = props.isSelected ? pos.y - 3 / props.coef : pos.y / props.coef;
 
+    const pointerLock: PointerType = props.isLock ? "none" : undefined
+
     const objectStyle = {
         width: width,
         height: height,
         left: x + 'px',
         top: y + 'px',
         border: props.isSelected ? '3px solid transparent' : '',
-        outline: props.isSelected ? '2px dashed #d3cde4' : 'none'
+        outline: props.isSelected ? '2px dashed #d3cde4' : 'none',
+        pointerEvents: pointerLock
     };
 
     return (
