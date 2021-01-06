@@ -1,0 +1,62 @@
+import React  from 'react';
+import * as type from '../../core/types';
+import style from './CurrentSlide.module.css'
+import SlideObject from './SlideObject/SlideObject'
+
+interface Slide
+{
+    currentSlide: type.Slide | null
+    presentation: type.Presentation
+    changeSelectedPresentation: Function
+    removeAllSelectedObjects: Function
+    changeSize: Function
+    changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
+    changeText: (content: string) => void
+}
+
+export default function CurrentSlide(props: Slide)
+{
+    let mapList;
+    const selectedObjects: Array<string> | [] = props.presentation.selection.objects;
+    let background = '#ffffff';
+    if (props.currentSlide && props.currentSlide.objects !== [])
+    {
+        mapList = props.currentSlide.objects.map((slideObjects) =>
+            <SlideObject
+                key={slideObjects.id}
+                object={slideObjects}
+                coef={1}
+                presentation={props.presentation}
+                changeSelectedPresentation={props.changeSelectedPresentation}
+                changePosition={props.changePosition}
+                changeSize={props.changeSize}
+                changeText={props.changeText}
+                isSelected={selectedObjects.find((objectID) => objectID === slideObjects.id) !== undefined ? true : false}
+                isLock={false}/>
+        );
+
+        background = defineBackground(props.currentSlide.background);
+    }
+
+    return (
+        <div className={style.wrapper} onClick={(e) => props.removeAllSelectedObjects(e)}>
+            <div className={style.content} style={{background: background}}>
+                {(props.currentSlide !== null) && (props.currentSlide.objects !== []) &&
+                mapList
+                }
+            </div>
+        </div>
+    )
+}
+
+function isColor(background: type.Color | type.Picture): background is type.Color {
+    return (background as type.Color).hex !== undefined;
+}
+
+function defineBackground(unknownBackground: type.Picture | type.Color): string
+{
+    let background: string;
+    background = isColor(unknownBackground) ? unknownBackground.hex : unknownBackground.source;
+
+    return background;
+}
