@@ -40,7 +40,7 @@ export default function CurrentSlide(props: Slide)
 
     return (
         <div className={style.wrapper} onClick={(e) => props.removeAllSelectedObjects(e)}>
-            <div className={style.content} style={{background: background}}>
+            <div className={style.content} style={{background: background, backgroundSize: 'cover'}}>
                 {(props.currentSlide !== null) && (props.currentSlide.objects !== []) &&
                 mapList
                 }
@@ -56,7 +56,7 @@ function isColor(background: type.Color | type.Picture): background is type.Colo
 function defineBackground(unknownBackground: type.Picture | type.Color): string
 {
     let background: string;
-    background = isColor(unknownBackground) ? unknownBackground.hex : unknownBackground.source;
+    background = isColor(unknownBackground) ? unknownBackground.hex : 'url(\'' + unknownBackground.source + '\')';
 
     return background;
 }

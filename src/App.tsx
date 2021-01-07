@@ -6,16 +6,18 @@ import TopBar from './TopBar/TopBar'
 import Presentation from './Presentation/Presentation'
 import Popup from './Popup/Popup'
 import { useModal, useNewPresentation } from './CustomHooks/CustomHooks';
+import {bindKeys} from "./common/bindKeys";
 
 interface Presentation
 {
     presentation: type.Presentation
 }
 
-export default function App(props: Presentation)
+export default function App()
 {
     const {
         presentation,
+        changePresentation,
         downloadPresentation,
         changePosition,
         changeSelectedPresentation,
@@ -24,7 +26,8 @@ export default function App(props: Presentation)
         changeSize,
         changeText,
         changeSlidePosition
-    } = useNewPresentation(props.presentation);
+    } = useNewPresentation();
+
     const {popupState, changeVisabilityPopup} = useModal();
         return (
             <div className={style.appWrapper}>

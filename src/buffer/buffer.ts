@@ -5,15 +5,15 @@ let buffer: Buffer<BufferObject> = newBuffer<BufferObject>()
 
 export function newBuffer<BufferObject>(): Buffer<BufferObject>
 {
-    return {object: null}
+    return {object: undefined}
 }
 
-export function getBufferElement(): BufferObject | null
+export function getBufferElement(): BufferObject | undefined
 {
     return buffer.object
 }
 
-export function setBufferElement(element: BufferObject | null): void
+export function setBufferElement(element: BufferObject | undefined): void
 {
     buffer.object = element
 }

@@ -57,7 +57,7 @@ export default function MiniSlide(props: Slide)
                 style={{top: positionHr}}/>
             }
             <div ref={ref} id={props.slide.id} className={style.wrapper}
-                 style={{background: background}}>
+                 style={{background: background, backgroundSize: 'cover'}}>
                 {(props.slide !== null) && (props.slide.objects !== []) &&
                 mapList
                 }
@@ -74,7 +74,7 @@ function isColor(background: type.Color | type.Picture): background is type.Colo
 function defineBackground(unknownBackground: type.Picture | type.Color): string
 {
     let background: string;
-    background = isColor(unknownBackground) ? unknownBackground.hex : unknownBackground.source;
+    background = isColor(unknownBackground) ? unknownBackground.hex : 'url(\'' + unknownBackground.source + '\')';
 
     return background;
 }

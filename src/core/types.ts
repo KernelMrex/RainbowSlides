@@ -1,5 +1,5 @@
 export type Buffer<BufferObject> = {
-    object: BufferObject | null
+    object: BufferObject | undefined
 }
 
 export type StateHistory<StateType> = {

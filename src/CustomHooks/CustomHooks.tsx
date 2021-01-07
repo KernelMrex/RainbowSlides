@@ -35,11 +35,9 @@ export const useModal = () =>
     }
 }
 
-export const useNewPresentation = (presentationState: type.Presentation) =>
+export const useNewPresentation = () =>
 {
-    const [presentation, setNewPresentation] = useState(presentationState)
-
-    setState(presentation);
+    const [presentation, setNewPresentation] = useState(getState())
 
     function changePresentation(newPresentation: type.Presentation)
     {
@@ -144,6 +142,7 @@ export const useNewPresentation = (presentationState: type.Presentation) =>
 
     return {
         presentation,
+        changePresentation,
         downloadPresentation,
         changePosition,
         changeSelectedPresentation,

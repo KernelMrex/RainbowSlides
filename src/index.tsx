@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as type from './core/types';
 import src from './src'
+import { bindKeys } from './common/bindKeys'
+import { setState } from './state/state-manager';
 
 const textFor1: type.TextBlock = {
     id: 'f134',
@@ -152,7 +154,7 @@ const slide3: type.Slide = {
     id: 'f521',
     objects: [],
     background: {
-        hex: '#f2ee9a'
+        source: 'https://fony-kartinki.ru/_ph/137/2/668474667.png'
     }
 }
 
@@ -160,7 +162,7 @@ const slide4: type.Slide = {
     id: 'f621',
     objects: [],
     background: {
-        hex: '#20987f'
+        source: 'https://img5.goodfon.ru/wallpaper/nbig/9/21/girl-anime-wallpapers-anime-girl.jpg'
     }
 }
 
@@ -190,9 +192,12 @@ const presentation: type.Presentation = {
     }
 }
 
+setState(presentation)
+bindKeys()
+
 ReactDOM.render(
     <React.StrictMode>
-        <App presentation={presentation}/>
+        <App/>
     </React.StrictMode>,
     document.getElementById('root')
 );

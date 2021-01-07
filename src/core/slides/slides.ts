@@ -1,6 +1,5 @@
 import { Presentation, Slide, SlideObject, Picture, Color } from '../types'
 import { deleteSlideFromSelection } from '../selection/selection';
-import {getState} from "../../state/state-manager";
 
 export function addSlide(presentation: Presentation): Presentation
 {
@@ -43,7 +42,7 @@ export function deleteSlide(presentation: Presentation): Presentation
     return presentation;
 }
 
-function getNewId(): string
+export function getNewId(): string
 {
     return `f${(~~(Math.random() * 1e8)).toString(16)}`;
 }

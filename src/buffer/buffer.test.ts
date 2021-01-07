@@ -1,5 +1,5 @@
 import {Presentation, RectangleBlock, Slide} from '../core/types';
-import {setBufferElement} from "./buffer";
+import {getBufferElement, setBufferElement} from "./buffer";
 
 const mockRectangle: RectangleBlock = {
     type: 'rectangle',
@@ -32,10 +32,18 @@ const mockPresentation: Presentation = {
 
 describe('test buffer for copy and paste elements', () =>
 {
-    test('copy non selected element', () =>
+    test('not copied element', () =>
     {
-        setBufferElement(null)
+        setBufferElement(undefined)
+        expect(getBufferElement()).toEqual(undefined)
+    })
+    test('copy selected element', () =>
+    {
+        setBufferElement(undefined)
+        setBufferElement(mockRectangle)
 
-        console.log(mockPresentation.selection.objects[0])
+        console.log(getBufferElement())
+        expect(getBufferElement()).toEqual(mockRectangle)
+        expect(getBufferElement()).toEqual(mockRectangle)
     })
 })
