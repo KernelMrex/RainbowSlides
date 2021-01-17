@@ -4,25 +4,28 @@ import style from './Objects.module.css';
 import { useDragAndDropElement } from '../../../../CustomHooks/DragAndDropElement';
 import HOCDots from './Resizers/HOCDots';
 import {PointerType} from "../SlideObject";
+import {connect} from "react-redux";
+import {changeSize, selectObject, changePosition} from '../../../../store/presentation/actions';
 
+const mapDispatch = { selectObject: selectObject, changeSize: changeSize, changePosition: changePosition }
+
+type DispatchProps = typeof mapDispatch
+type ImageProps = DispatchProps
 
 interface SlideObjects
 {
     object: type.ImageBlock
     coef: number
-    selectObject: Function
-    changeSize: Function
-    changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
     isSelected: boolean
     isLock: boolean
 }
 
-export default function Image(props: SlideObjects)
+function Image(props: SlideObjects & ImageProps)
 {
     const [pos, setNewPos] = useState(props.object.position);
     const ref = useRef(null);
     const [physicalParams, setNewPhysicalParams] = useState({height: props.object.height, width: props.object.width});
-    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, pos, props.isLock);
+    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, pos, props.isLock, props.selectObject);
 
     if (props.isLock && pos !== props.object.position)
     {
@@ -52,7 +55,7 @@ export default function Image(props: SlideObjects)
     };
 
     return (
-        <div className={style.wrapper} style={objectStyle} onClick={(e) => !props.isLock ? props.selectObject(props.object) : e.preventDefault()}>
+        <div className={style.wrapper} style={objectStyle} onClick={(e) => !props.isLock ? props.selectObject(props.object.id) : e.preventDefault()}>
             {!props.isLock && props.isSelected &&
             <HOCDots object={props.object} pos={pos} physicalParams={physicalParams} callbackSize={setNewPhysicalParams}
                      callbackPosition={setNewPos}
@@ -62,3 +65,5 @@ export default function Image(props: SlideObjects)
         </div>
     );
 }
+
+export default connect(null, mapDispatch)(Image)

@@ -44,28 +44,6 @@ export const useNewPresentation = () =>
         setNewPresentation(newPresentation)
     }
 
-    function changeSlide(newSlide: type.Slide)
-    {
-        dispatch<SelectSlidePayload>(createAction(selectSlide, false, true), {slide: newSlide})
-        setNewPresentation(getState())
-    }
-
-    function changeSelectedPresentation(selectedObject: type.SlideObject)
-    {
-        dispatch<{}>(createAction(deleteAllObjectsFromSelection, true, true), {})
-        dispatch<SelectObjectPayload>(createAction(selectObject, true, true), {objectId: selectedObject.id})
-        setNewPresentation(getState())
-    }
-
-    function removeAllSelectedObjects(event: any)
-    {
-        if (event !== null && event.target.tagName === 'DIV')
-        {
-            dispatch<{}>(createAction(deleteAllObjectsFromSelection, true, true), {})
-            setNewPresentation(getState())
-        }
-    }
-
     function downloadPresentation(event: any)
     {
         const file = event.target.files[0]
@@ -85,71 +63,7 @@ export const useNewPresentation = () =>
         }
     }
 
-    function changePosition(object: type.SlideObject, position: type.Anchor): void
-    {
-        let selectedObjects: Array<type.SlideObject> = getSelectedObjects(getState());
-        if (selectedObjects.length !== 0)
-        {
-            dispatch<{}>(createAction(deleteAllObjectsFromSelection, true, true), {})
-        }
-        dispatch<SelectObjectPayload>(createAction(selectObject, true, true), {objectId: object.id})
-        dispatch<ChangeObjectPositionPayload>(createAction(changeObjectPosition, true, true), {newPosition: position})
-
-        changePresentation(getState())
-    }
-
-    function changeSize(position: type.Anchor, height: number, width: number): void
-    {
-        dispatch<ChangeObjectSizePayload>(createAction(changeObjectSize, true, true), {
-            newPosition: position,
-            newHeight: height,
-            newWidth: width
-        })
-        changePresentation(getState())
-        changePresentation(getState())
-    }
-
-    function changeText(content: string): void
-    {
-        dispatch<ChangeTextContentPayload>(createAction(changeTextContent, true, true), {newContent: content})
-        changePresentation(getState())
-    }
-
-    function changeSlidePosition(estimatedSlideId: string, currentSlideId: string, position: 'bottom' | 'top'): void
-    {
-        const slidesId: Array<string> = getState().slides.map((slide) =>
-        {
-            return slide.id
-        })
-        const indexOfEstimatedSlideId: number = slidesId.indexOf(estimatedSlideId)
-        const indexOfCurrentSlideId: number = slidesId.indexOf(currentSlideId)
-
-        let additionalCoef: number = 0
-
-        if (indexOfEstimatedSlideId > indexOfCurrentSlideId)
-        {
-            additionalCoef = position === 'bottom' ? 0 : -1
-        }
-        if (indexOfEstimatedSlideId < indexOfCurrentSlideId)
-        {
-            additionalCoef = position === 'bottom' ? 1 : 0
-        }
-        const newSlidePlacement: number = indexOfEstimatedSlideId + additionalCoef;
-
-        dispatch<ChangeOrderOfSlidePayload>(createAction(changeOrderOfSlide, true, true), {place: newSlidePlacement, currentSlideId: currentSlideId})
-        changePresentation(getState())
-    }
-
     return {
-        presentation,
-        changePresentation,
         downloadPresentation,
-        changePosition,
-        changeSelectedPresentation,
-        removeAllSelectedObjects,
-        changeSlide,
-        changeSize,
-        changeText,
-        changeSlidePosition
     }
 }

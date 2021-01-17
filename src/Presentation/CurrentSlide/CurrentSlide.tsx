@@ -2,46 +2,40 @@ import React  from 'react';
 import * as type from '../../core/types';
 import style from './CurrentSlide.module.css'
 import SlideObject from './SlideObject/SlideObject'
+import {connect} from "react-redux";
+import {RootState} from "../../store/store";
+import {changeOrderOfSlide, unselectObject} from "../../store/presentation/actions";
 
-interface Slide
-{
-    currentSlide: type.Slide | null
-    presentation: type.Presentation
-    changeSelectedPresentation: Function
-    removeAllSelectedObjects: Function
-    changeSize: Function
-    changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
-    changeText: (content: string) => void
-}
+const mapState = (state: RootState) => ({ slideId: state.presentation.selection.slide, slides: state.presentation.slides, selectedObjects: state.presentation.selection.objects })
+const mapDispatch = { changeOrderOfSlide: changeOrderOfSlide, unselectObject: unselectObject }
+type DispatchProps = typeof mapDispatch
+type StateProps = ReturnType<typeof mapState>
+type CurrentSlideProps = StateProps & DispatchProps
 
-export default function CurrentSlide(props: Slide)
+function CurrentSlide(props: CurrentSlideProps)
 {
+    const currentSlide: type.Slide | undefined = props.slides.find((slide) => slide.id === props.slideId)
     let mapList;
-    const selectedObjects: Array<string> | [] = props.presentation.selection.objects;
+    const selectedObjects: Array<string> | [] = props.selectedObjects;
     let background = '#ffffff';
-    if (props.currentSlide && props.currentSlide.objects !== [])
+    if (currentSlide && currentSlide !== undefined && currentSlide.objects !== [])
     {
-        mapList = props.currentSlide.objects.map((slideObjects) =>
+        mapList = currentSlide.objects.map((slideObjects) =>
             <SlideObject
                 key={slideObjects.id}
                 object={slideObjects}
                 coef={1}
-                presentation={props.presentation}
-                changeSelectedPresentation={props.changeSelectedPresentation}
-                changePosition={props.changePosition}
-                changeSize={props.changeSize}
-                changeText={props.changeText}
                 isSelected={selectedObjects.find((objectID) => objectID === slideObjects.id) !== undefined ? true : false}
                 isLock={false}/>
         );
 
-        background = defineBackground(props.currentSlide.background);
+        background = defineBackground(currentSlide.background);
     }
 
     return (
-        <div className={style.wrapper} onClick={(e) => props.removeAllSelectedObjects(e)}>
+        <div className={style.wrapper} onClick={(event) => {if (event !== null && (event.target as Element).tagName === 'DIV') props.unselectObject()}}>
             <div className={style.content} style={{background: background, backgroundSize: 'cover'}}>
-                {(props.currentSlide !== null) && (props.currentSlide.objects !== []) &&
+                {currentSlide && (currentSlide !== undefined) && (currentSlide.objects !== []) &&
                 mapList
                 }
             </div>
@@ -60,3 +54,5 @@ function defineBackground(unknownBackground: type.Picture | type.Color): string
 
     return background;
 }
+
+export default connect(mapState, mapDispatch)(CurrentSlide)

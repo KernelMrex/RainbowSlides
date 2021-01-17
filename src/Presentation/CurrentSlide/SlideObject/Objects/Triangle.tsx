@@ -4,24 +4,27 @@ import style from './Objects.module.css';
 import {useDragAndDropElement} from '../../../../CustomHooks/DragAndDropElement';
 import HOCDots from "./Resizers/HOCDots";
 import { PointerType } from '../SlideObject';
+import {connect} from "react-redux";
+import {changePosition, changeSize, selectObject} from '../../../../store/presentation/actions';
 
+const mapDispatch = { selectObject: selectObject, changeSize: changeSize, changePosition: changePosition }
+
+type DispatchProps = typeof mapDispatch
+type TriangleProps = DispatchProps
 interface SlideObjects
 {
     object: type.TriangleBlock
     coef: number
-    selectObject: Function
-    changeSize: Function
-    changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
     isSelected: boolean
     isLock: boolean
 }
 
-export default function Triangle(props: SlideObjects)
+function Triangle(props: SlideObjects & TriangleProps)
 {
     const [pos, setNewPos] = useState(props.object.position);
     const ref = useRef(null);
     const [physicalParams, setNewPhysicalParams] = useState({height: props.object.height, width: props.object.width});
-    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, pos, props.isLock);
+    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, pos, props.isLock, props.selectObject);
 
     if (props.isLock && pos !== props.object.position)
     {
@@ -57,7 +60,7 @@ export default function Triangle(props: SlideObjects)
                      border: props.isSelected ? '3px solid transparent' : '',
                      outline: props.isSelected ? '2px dashed #d3cde4' : 'none'
                  }}
-                 onClick={(e) => !props.isLock ? props.selectObject(props.object) : e.preventDefault()}>
+                 onClick={(e) => !props.isLock ? props.selectObject(props.object.id) : e.preventDefault()}>
                 <polygon
                     ref={ref}
                     fill={props.object.background.hex}
@@ -67,3 +70,5 @@ export default function Triangle(props: SlideObjects)
         </div>
     );
 }
+
+export default connect(null, mapDispatch)(Triangle)

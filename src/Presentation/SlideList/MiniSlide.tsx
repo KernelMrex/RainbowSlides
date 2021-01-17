@@ -4,27 +4,31 @@ import style from './MiniSlide.module.css'
 import SlideObject from '../CurrentSlide/SlideObject/SlideObject'
 import {useDragAndDropSlides} from '../../CustomHooks/DragAndDropSlides';
 import {HorizontalLineSlides} from './SlideList';
+import { connect } from 'react-redux';
+import {RootState} from "../../store/store";
+import { changeOrderOfSlide } from '../../store/presentation/actions';
 
 interface Slide
 {
     slide: type.Slide,
-    presentation: type.Presentation
-    changeSelectedPresentation: Function
-    changeSize: Function
-    changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
-    changeText: (content: string) => void
-    changeSlidePosition: (estimateSlideId: string, currentSlideId: string, position: 'bottom' | 'top') => void
 }
 
 const defaultValue: HorizontalLineSlides = {id: '', position: ''}
 
-export default function MiniSlide(props: Slide)
+const mapState = (state: RootState) => ({ presentation: state.presentation })
+const mapDispatch = { changeOrderOfSlide: changeOrderOfSlide }
+
+type StateProps = ReturnType<typeof mapState>
+type DispatchProps = typeof mapDispatch
+type MiniSlideProps = StateProps & DispatchProps
+
+function MiniSlide(props: Slide & MiniSlideProps)
 {
     const slides: Array<string> = getAllIdSlides(props.presentation.slides)
     const ref = useRef(null)
     const [estimatedNextSlide, changeEstimatedNextSlide] = useState(defaultValue);
 
-    useDragAndDropSlides(ref, props.slide.id, changeEstimatedNextSlide, props.changeSlidePosition)
+    useDragAndDropSlides(ref, props.slide.id, changeEstimatedNextSlide, props.changeOrderOfSlide, props.presentation)
 
     let mapList: Array<JSX.Element> = [];
     let background: string = '#ffffff';
@@ -35,11 +39,6 @@ export default function MiniSlide(props: Slide)
                 key={slideObjects.id}
                 object={slideObjects}
                 coef={5.6}
-                presentation={props.presentation}
-                changePosition={props.changePosition}
-                changeSelectedPresentation={props.changeSelectedPresentation}
-                changeSize={props.changeSize}
-                changeText={props.changeText}
                 isSelected={false}
                 isLock={true}/>
         );
@@ -88,3 +87,5 @@ function getAllIdSlides(slides: Array<type.Slide>): Array<string>
 
     return slidesId
 }
+
+export default connect(mapState, mapDispatch)(MiniSlide)

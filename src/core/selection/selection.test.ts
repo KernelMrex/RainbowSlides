@@ -12,12 +12,15 @@ const picture: ImageBlock = {
     },
     height: 213,
     width: 321,
-    source: 'url'
+    source: 'url',
+    background: {
+        hex: '123123'
+    }
 }
 
 const simpleCircle: CircleBlock = {
     id: 'f124',
-    type: 'image',
+    type: 'circle',
     name: 'Sasha',
     position: {
         x: 12,
@@ -25,7 +28,9 @@ const simpleCircle: CircleBlock = {
     },
     height: 213,
     width: 321,
-    radius: 12
+    background: {
+        hex: '123123'
+    }
 }
 
 const slide1: Slide = {
@@ -148,7 +153,7 @@ describe('test module "Selection"', () => {
             ...presentationWithSelectedSlide,
             selection: {
                 ...presentationWithSelectedSlide.selection,
-                objects: [ ...presentationWithSelectedSlide.selection.objects, newSelectedObjectId ]
+                objects: [ newSelectedObjectId ]
             }
         })
     })

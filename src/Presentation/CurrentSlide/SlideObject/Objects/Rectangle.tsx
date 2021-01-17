@@ -4,19 +4,23 @@ import style from './Objects.module.css';
 import {useDragAndDropElement} from '../../../../CustomHooks/DragAndDropElement';
 import HOCDots from './Resizers/HOCDots';
 import {PointerType} from "../SlideObject";
+import {connect} from "react-redux";
+import {selectObject, changeSize, changePosition} from '../../../../store/presentation/actions';
+
+const mapDispatch = { selectObject: selectObject, changeSize: changeSize, changePosition: changePosition }
+
+type DispatchProps = typeof mapDispatch
+type RectangleProps = DispatchProps
 
 interface SlideObjects
 {
     object: type.RectangleBlock
     coef: number
-    selectObject: Function
-    changeSize: Function
-    changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
     isSelected: boolean
     isLock: boolean
 }
 
-export default function Rectangle(props: SlideObjects)
+function Rectangle(props: SlideObjects & RectangleProps)
 {
     const [pos, setNewPos] = useState(props.object.position);
     const [physicalParams, setNewPhysicalParams] = useState({height: props.object.height, width: props.object.width});
@@ -27,7 +31,7 @@ export default function Rectangle(props: SlideObjects)
         setNewPos(props.object.position)
     }
 
-    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, pos, props.isLock);
+    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, pos, props.isLock, props.selectObject);
 
     if (props.isLock && (physicalParams.width !== props.object.width || physicalParams.height !== props.object.height))
     {
@@ -45,7 +49,10 @@ export default function Rectangle(props: SlideObjects)
         <div className={style.wrapper}
              style={{width: width, height: height, top: '' + y + 'px', left: '' + x + 'px', pointerEvents: pointerLock}}>
             {!props.isLock && props.isSelected &&
-            <HOCDots object={props.object} pos={pos} physicalParams={physicalParams} callbackSize={setNewPhysicalParams}
+            <HOCDots object={props.object}
+                     pos={pos}
+                     physicalParams={physicalParams}
+                     callbackSize={setNewPhysicalParams}
                      callbackPosition={setNewPos}
                      changeSize={props.changeSize}/>
             }
@@ -58,7 +65,7 @@ export default function Rectangle(props: SlideObjects)
                     border: props.isSelected ? '3px solid transparent' : '',
                     outline: props.isSelected ? '2px dashed #d3cde4' : 'none',
                 }}
-                onClick={(e) => !props.isLock ? props.selectObject(props.object) : e.preventDefault()}>
+                onClick={(e) => !props.isLock ? props.selectObject(props.object.id) : e.preventDefault()}>
                 <rect
                     ref={ref}
                     width={width}
@@ -69,3 +76,5 @@ export default function Rectangle(props: SlideObjects)
         </div>
     )
 }
+
+export default connect(null, mapDispatch)(Rectangle)

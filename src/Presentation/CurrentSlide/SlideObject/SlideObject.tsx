@@ -8,14 +8,8 @@ import Text from './Objects/Text';
 
 interface SlideObjects
 {
-    key: string
     object: type.SlideObject
     coef: number
-    presentation: type.Presentation
-    changeSelectedPresentation: Function
-    changeSize: Function
-    changePosition: (obj: type.SlideObject, pos: type.Anchor) => void
-    changeText: (content: string) => void
     isSelected: boolean
     isLock: boolean
 }
@@ -29,23 +23,23 @@ export default function SlideObject(props: SlideObjects)
     switch (object.type)
     {
         case 'rectangle':
-            render = <Rectangle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock} changePosition={props.changePosition} changeSize={props.changeSize}/>
+            render = <Rectangle object={object} coef={props.coef} isSelected={props.isSelected} isLock={props.isLock}/>
             break;
 
         case 'circle':
-            render = <Circle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock} changePosition={props.changePosition} changeSize={props.changeSize}/>
+            render = <Circle object={object} coef={props.coef} isSelected={props.isSelected} isLock={props.isLock}/>
             break;
 
         case 'triangle':
-            render = <Triangle object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock} changePosition={props.changePosition} changeSize={props.changeSize}/>
+            render = <Triangle object={object} coef={props.coef} isSelected={props.isSelected} isLock={props.isLock}/>
             break;
 
         case 'image':
-            render = <Image object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} isLock={props.isLock} changePosition={props.changePosition} changeSize={props.changeSize}/>
+            render = <Image object={object} coef={props.coef} isSelected={props.isSelected} isLock={props.isLock}/>
             break;
 
         case 'text':
-            render = <Text object={object} coef={props.coef} isSelected={props.isSelected} selectObject={props.changeSelectedPresentation} changeText={props.changeText} isLock={props.isLock} changePosition={props.changePosition} changeSize={props.changeSize}/>
+            render = <Text object={object} coef={props.coef} isSelected={props.isSelected} isLock={props.isLock}/>
             break;
 
         default:

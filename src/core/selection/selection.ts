@@ -1,7 +1,7 @@
 import { Presentation, Slide, SlideObject } from '../types'
 
 export type SelectSlidePayload = {
-    slide: Slide
+    slide: string
 }
 
 export function selectSlide(presentation: Presentation, payload: SelectSlidePayload): Presentation
@@ -9,7 +9,7 @@ export function selectSlide(presentation: Presentation, payload: SelectSlidePayl
     return {
         ...presentation,
         selection: {
-            slide: payload.slide.id,
+            slide: payload.slide,
             objects: []
         }
     }
@@ -38,35 +38,12 @@ export function selectObject(presentation: Presentation, payload: SelectObjectPa
         return presentation
     }
 
-    if (presentation.selection.slide !== null)
-    {
-        let objects: Array<string>
-        let currentSlide: Slide = presentation.slides.filter(slide => slide.id === presentation.selection.slide)[0]
-
-        if (presentation.selection.objects !== [])
-        {
-            objects = [...presentation.selection.objects]
-        } else
-        {
-            objects = []
+    return {
+        ...presentation,
+        selection: {
+            ...presentation.selection,
+            objects: [payload.objectId]
         }
-
-        if (payload.objectId === currentSlide.objects.filter(object => object.id === payload.objectId)[0].id)
-        {
-            objects.push(payload.objectId)
-        }
-
-        return {
-            ...presentation,
-            selection: {
-                ...presentation.selection,
-                objects: objects
-            }
-        }
-    }
-    else
-    {
-        return presentation
     }
 }
 
