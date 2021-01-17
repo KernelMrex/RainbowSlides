@@ -1,17 +1,24 @@
 .wrapper
 {
-    width: 86%;
+    /*width: 86%;*/
+    /*height: 100%;*/
+    /*margin-left: 15%;*/
+    /*margin-top: 1.2%;*/
     height: 100%;
-    margin-left: 15%;
-    margin-top: 1.2%;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .content
 {
+    box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.25);
     position: relative;
     width: 1360px;
     height: 768px;
-    margin: 20px auto;
+    margin: 20px 0 0 13%;
     border: 1px solid;
     overflow: hidden;
 }

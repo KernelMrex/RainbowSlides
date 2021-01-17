@@ -1,0 +1,15 @@
+.submenu
+{
+    display: flex;
+}
+
+.submenu__item
+{
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 19px;
+    color: #ffffff;
+    cursor: pointer;
+}
