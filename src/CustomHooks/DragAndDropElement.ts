@@ -24,7 +24,6 @@ export const useDragAndDropElement = (
         {
             if (deltaPos !== object.position)
             {
-                console.log(pos)
                 changePosition(pos)
                 setPos(pos)
             }
