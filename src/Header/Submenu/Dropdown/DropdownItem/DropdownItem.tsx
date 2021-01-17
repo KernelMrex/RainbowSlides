@@ -1,5 +1,4 @@
 import React from 'react'
-import './DropdownItem.css'
 
 interface DropdownItemProps
 {

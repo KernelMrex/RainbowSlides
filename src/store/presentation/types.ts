@@ -5,6 +5,7 @@ import {
     ChangeObjectSizePayload,
     ChangeTextContentPayload
 } from "../../core/objects/objects";
+import {Presentation} from "../../core/types";
 
 export const CHANGE_SLIDE = 'CHANGE_SLIDE'
 export const RENAME_PRESENTATION = 'RENAME_PRESENTATION'
@@ -14,6 +15,7 @@ export const UNSELECT_OBJECT = 'UNSELECT_OBJECT'
 export const CHANGE_SIZE = 'CHANGE_SIZE'
 export const CHANGE_POSITION = 'CHANGE_POSITION'
 export const CHANGE_TEXT = 'CHANGE_TEXT'
+export const DOWNLOAD_PRESENTATION = 'DOWNLOAD_PRESENTATION'
 
 interface RenamePresentationAction {
     type: typeof RENAME_PRESENTATION
@@ -54,6 +56,11 @@ interface ChangeTextAction {
     payload: ChangeTextContentPayload
 }
 
+interface DownloadPresentationAction {
+    type: typeof DOWNLOAD_PRESENTATION
+    payload: Presentation
+}
+
 export type PresentationActionType =
     RenamePresentationAction |
     ChangeSlideAction |
@@ -62,4 +69,5 @@ export type PresentationActionType =
     SelectSlideAction |
     ChangeSizeAction |
     ChangePositionAction |
-    ChangeTextAction
+    ChangeTextAction |
+    DownloadPresentationAction

@@ -1,7 +1,7 @@
 import React, {useState, RefObject} from 'react';
 import * as type from '../core/types';
 import {useDragAndDrop} from './DragAndDrop';
-import {PhysicalParams, Size} from '../Presentation/CurrentSlide/SlideObject/Objects/Resizers/HOCDots';
+import {PhysicalParams, Size} from '../CurrentSlide/SlideObject/Objects/Resizers/HOCDots';
 
 export const useDragAndDropResize = (
     element: RefObject<HTMLElement>,
@@ -11,13 +11,15 @@ export const useDragAndDropResize = (
     changeSize: Function,
     createParamsToModel: (newPos: type.Anchor) => PhysicalParams,
     createPosition: (newPos: type.Anchor) => type.Anchor,
-    createSize: (newPos: type.Anchor) => Size) =>
+    createSize: (newPos: type.Anchor) => Size,
+    setStatusResize: (status: boolean) => void) =>
 {
     const [pos, setNewPos] = useState({x: 0, y: 0})
     useDragAndDrop(element, setModelParams, setViewParams)
 
     function setModelParams()
     {
+        setStatusResize(false)
         let newPosition: type.Anchor = {
             x: pos.x,
             y: pos.y
@@ -33,6 +35,7 @@ export const useDragAndDropResize = (
 
     function setViewParams(delta: type.Anchor)
     {
+        setStatusResize(true)
         const newPos: type.Anchor = {
             x: delta.x + pos.x,
             y: delta.y + pos.y

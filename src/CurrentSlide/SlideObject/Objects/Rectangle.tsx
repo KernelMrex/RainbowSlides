@@ -1,11 +1,11 @@
 import React, {useRef, useState} from 'react';
-import * as type from '../../../../core/types';
+import * as type from '../../../core/types';
 import style from './Objects.module.css';
-import {useDragAndDropElement} from '../../../../CustomHooks/DragAndDropElement';
+import {useDragAndDropElement} from '../../../CustomHooks/DragAndDropElement';
 import HOCDots from './Resizers/HOCDots';
 import {PointerType} from "../SlideObject";
 import {connect} from "react-redux";
-import {selectObject, changeSize, changePosition} from '../../../../store/presentation/actions';
+import {selectObject, changeSize, changePosition} from '../../../store/presentation/actions';
 
 const mapDispatch = { selectObject: selectObject, changeSize: changeSize, changePosition: changePosition }
 
@@ -25,15 +25,17 @@ function Rectangle(props: SlideObjects & RectangleProps)
     const [pos, setNewPos] = useState(props.object.position);
     const [physicalParams, setNewPhysicalParams] = useState({height: props.object.height, width: props.object.width});
     const ref = useRef(null);
+    const [isDragAndDrop, setStatusDragAndDrop] = useState(false)
+    const [isResize, setStatusResize] = useState(false)
 
-    if (props.isLock && pos !== props.object.position)
+    if ((props.isLock || !isDragAndDrop) && !isResize && pos !== props.object.position)
     {
         setNewPos(props.object.position)
     }
 
-    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, pos, props.isLock, props.selectObject);
+    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, pos, props.isLock, props.selectObject, setStatusDragAndDrop);
 
-    if (props.isLock && (physicalParams.width !== props.object.width || physicalParams.height !== props.object.height))
+    if ((props.isLock || !isResize) && (physicalParams.width !== props.object.width || physicalParams.height !== props.object.height))
     {
         setNewPhysicalParams({height: props.object.height, width: props.object.width})
     }
@@ -54,7 +56,8 @@ function Rectangle(props: SlideObjects & RectangleProps)
                      physicalParams={physicalParams}
                      callbackSize={setNewPhysicalParams}
                      callbackPosition={setNewPos}
-                     changeSize={props.changeSize}/>
+                     changeSize={props.changeSize}
+                     setStatusResize={setStatusResize}/>
             }
             <svg
                 width={width}

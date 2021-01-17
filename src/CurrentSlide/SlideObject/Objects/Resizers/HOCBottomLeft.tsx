@@ -1,8 +1,8 @@
 import React, {RefObject, useRef} from 'react';
-import * as type from '../../../../../core/types';
+import * as type from '../../../../core/types';
 import ResizerDot from "./ResizerDot";
 import {HOCDotsInterface, PhysicalParams, Size} from "./HOCDots";
-import {useDragAndDropResize} from "../../../../../CustomHooks/DragAndDropResizer";
+import {useDragAndDropResize} from "../../../../CustomHooks/DragAndDropResizer";
 
 export default function HOCBottomLeft(props: HOCDotsInterface)
 {
@@ -33,7 +33,7 @@ export default function HOCBottomLeft(props: HOCDotsInterface)
 
     const childRef: RefObject<HTMLElement> = useRef(null);
 
-    useDragAndDropResize(childRef, props.object, props.callbackSize, props.callbackPosition, props.changeSize, createParamsToModel, createPosition, createSize)
+    useDragAndDropResize(childRef, props.object, props.callbackSize, props.callbackPosition, props.changeSize, createParamsToModel, createPosition, createSize, props.setStatusResize)
     const position: type.Anchor = {x: -7, y: props.physicalParams.height + 3};
     return (
         <ResizerDot position={position} innerRef={childRef}/>

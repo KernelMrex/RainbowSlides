@@ -1,11 +1,11 @@
 import React, {useState, useRef, DOMElement} from 'react'
-import * as type from '../../../../core/types'
+import * as type from '../../../core/types'
 import style from './Objects.module.css'
-import {useDragAndDropElement} from '../../../../CustomHooks/DragAndDropElement'
+import {useDragAndDropElement} from '../../../CustomHooks/DragAndDropElement'
 import HOCDots from "./Resizers/HOCDots"
 import {PointerType} from "../SlideObject"
 import {connect} from "react-redux"
-import {changePosition, changeSize, changeText, selectObject} from '../../../../store/presentation/actions'
+import {changePosition, changeSize, changeText, selectObject} from '../../../store/presentation/actions'
 
 const mapDispatch = {
     selectObject: selectObject,
@@ -27,19 +27,21 @@ interface SlideObjects
 
 function Text(props: SlideObjects & TextProps)
 {
+    const [isDragAndDrop, setStatusDragAndDrop] = useState(false)
+    const [isResize, setStatusResize] = useState(false)
     const [pos, setNewPos] = useState(props.object.position)
     const ref = useRef(null)
     const [physicalParams, setNewPhysicalParams] = useState({height: props.object.height, width: props.object.width})
     const [textStyle, toggleTextStyle] = useState(style.notSelectedText)
 
-    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, pos, props.isLock, props.selectObject)
+    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, pos, props.isLock, props.selectObject, setStatusDragAndDrop)
 
-    if ((props.isLock && pos !== props.object.position))
+    if ((props.isLock || !isDragAndDrop) && !isResize && pos !== props.object.position)
     {
         setNewPos(props.object.position)
     }
 
-    if (props.isLock && (physicalParams.width !== props.object.width || physicalParams.height !== props.object.height))
+    if ((props.isLock || !isResize) && (physicalParams.width !== props.object.width || physicalParams.height !== props.object.height))
     {
         setNewPhysicalParams({height: props.object.height, width: props.object.width})
     }
@@ -75,7 +77,8 @@ function Text(props: SlideObjects & TextProps)
                 physicalParams={{width: physicalParams.width + 13, height: physicalParams.height}}
                 callbackSize={setNewPhysicalParams}
                 callbackPosition={setNewPos}
-                changeSize={props.changeSize}/>
+                changeSize={props.changeSize}
+                setStatusResize={setStatusResize}/>
             }
             <textarea
                 onClick={(e) => !props.isLock ? props.selectObject(props.object.id) : e.preventDefault()}

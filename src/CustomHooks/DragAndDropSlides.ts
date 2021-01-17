@@ -1,6 +1,6 @@
 import React, {useState, RefObject} from 'react';
 import { useDragAndDropFake } from './DragAndDropFake';
-import { HorizontalLineSlides } from '../Presentation/SlideList/SlideList';
+import { HorizontalLineSlides } from '../SlideList/SlideList';
 import { getPayloadForChangeSlidePosition } from '../common/createPayloads';
 import { Presentation } from '../core/types';
 import {PresentationActionType} from "../store/presentation/types";

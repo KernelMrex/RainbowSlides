@@ -1,4 +1,4 @@
-import * as type from "../../../../../core/types";
+import * as type from "../../../../core/types";
 import {PhysicalParams, Size} from "./HOCDots";
 
 export function createParamsToModel(newPos: type.Anchor, object: type.SlideObject, type: string): PhysicalParams

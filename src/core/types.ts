@@ -7,6 +7,10 @@ export type StateHistory<StateType> = {
     redo: Array<StateType>
 }
 
+export type Popup = {
+    state: 'close' | 'importImage' | 'importPresentation'
+}
+
 export type Presentation = {
     name: string
     slides: Array<Slide>

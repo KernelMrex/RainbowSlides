@@ -1,7 +1,7 @@
 import React, {useState, RefObject} from 'react';
 import * as type from '../core/types';
 import {useDragAndDrop} from './DragAndDrop'
-import { PresentationActionType } from '../store/presentation/types';
+import {PresentationActionType} from '../store/presentation/types';
 
 export const useDragAndDropElement = (
     element: RefObject<HTMLElement>,
@@ -10,7 +10,8 @@ export const useDragAndDropElement = (
     object: type.SlideObject,
     pos: type.Anchor,
     isLock: boolean,
-    selectObject: (objectId: string) => PresentationActionType) =>
+    selectObject: (objectId: string) => PresentationActionType,
+    setStatusDragAndDrop: (status: boolean) => void) =>
 {
     const [deltaPos, setPos] = useState(pos)
 
@@ -18,14 +19,18 @@ export const useDragAndDropElement = (
 
     function setModelPos()
     {
+        setStatusDragAndDrop(false)
         if (!isLock)
         {
-            changePosition(pos)
-            setPos(pos)
+            if (deltaPos !== object.position)
+            {
+                console.log(pos)
+                changePosition(pos)
+                setPos(pos)
+            }
         } else
         {
             setNewPos(deltaPos)
-            setPos(deltaPos)
         }
     }
 
@@ -38,7 +43,7 @@ export const useDragAndDropElement = (
                 x: delta.x + pos.x,
                 y: delta.y + pos.y
             }
-
+            setStatusDragAndDrop(true)
             setNewPos(newPos)
             setPos(newPos)
         }

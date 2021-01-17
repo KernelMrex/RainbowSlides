@@ -14,7 +14,6 @@ function Subheader(props: SubheaderProps)
 {
     const currentSlide: Slide | undefined = props.slides.find((slide) => slide.id === props.selectedSlideId)
     const currentIndex: number = currentSlide === undefined ? 0 : props.slides.indexOf(currentSlide) + 1
-    console.log(currentIndex)
     return (
         <div className={ 'subheader' }>
             <div className={ 'subheader__column subheader__column_content_center' }>

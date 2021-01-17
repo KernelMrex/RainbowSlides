@@ -1,17 +1,18 @@
 import React from 'react';
 import * as type from '../../core/types';
+import { getPayloadForDownloadPresentation } from '../../common/createPayloads';
+import {Presentation} from "../../core/types";
 
 interface Popup
 {
-    presentation: type.Presentation
-    setNewPresentation: Function
+    setNewPresentation: (presentation: Presentation) => void
 }
 
 export default function ImportPresentation(props: Popup)
 {
     return (
         <div>
-            <input type='file' onChange={(e) => props.setNewPresentation(e)}
+            <input type='file' onChange={(e: any) => console.log(getPayloadForDownloadPresentation(e).then((presentation) => props.setNewPresentation(presentation as Presentation)))}
                    accept={'application/json'}/>
         </div>
     )

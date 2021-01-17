@@ -7,9 +7,12 @@ import {
     SELECT_SLIDE,
     CHANGE_SIZE,
     CHANGE_POSITION,
-    CHANGE_TEXT
+    CHANGE_TEXT,
+    DOWNLOAD_PRESENTATION
 } from './types'
-import {Anchor} from "../../core/types";
+import {Anchor, Presentation} from "../../core/types";
+import * as type from "../../core/types";
+import {createPresentation, getPresentationFromJSON} from "../../core/presentation/presentation";
 
 export function renamePresentation(name: string): PresentationActionType
 {
@@ -97,5 +100,13 @@ export function changeText(newContent: string): PresentationActionType
         payload: {
             newContent: newContent
         }
+    }
+}
+
+export function downloadPresentation(newPresentation: Presentation): PresentationActionType
+{
+    return {
+        type: DOWNLOAD_PRESENTATION,
+        payload: newPresentation
     }
 }

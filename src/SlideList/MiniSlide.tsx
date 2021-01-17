@@ -1,12 +1,12 @@
 import React, {RefObject, useRef, useState} from 'react';
-import * as type from '../../core/types';
+import * as type from '../core/types';
 import style from './MiniSlide.module.css'
 import SlideObject from '../CurrentSlide/SlideObject/SlideObject'
-import {useDragAndDropSlides} from '../../CustomHooks/DragAndDropSlides';
+import {useDragAndDropSlides} from '../CustomHooks/DragAndDropSlides';
 import {HorizontalLineSlides} from './SlideList';
 import { connect } from 'react-redux';
-import {RootState} from "../../store/store";
-import { changeOrderOfSlide } from '../../store/presentation/actions';
+import {RootState} from "../store/store";
+import { changeOrderOfSlide } from '../store/presentation/actions';
 
 interface Slide
 {

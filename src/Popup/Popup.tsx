@@ -3,34 +3,36 @@ import style from './Popup.module.css'
 import * as type from '../core/types';
 import {getPresentationFromJSON, createPresentation} from '../core/presentation/presentation';
 import ImportPresentation from './ImportPresentation/ImportPresentation';
-import { PopupState } from './PopupState';
+import {RootState} from "../store/store";
+import {closePopup} from "../store/popup/actions";
+import {connect} from "react-redux";
+import { downloadPresentation } from '../store/presentation/actions';
 
-interface Popup
-{
-    presentation: type.Presentation
-    hidePopup: Function
-    setNewPresentation: Function
-    popupState: PopupState
-}
+const mapState = (state: RootState) => ({ popupState: state.popup.state })
+const mapDispatch = { closePopup: closePopup, downloadPresentation: downloadPresentation }
 
-export default function Popup(props: Popup)
+type StateProps = ReturnType<typeof mapState>
+type DispatchProps = typeof mapDispatch
+type PopupProps = StateProps & DispatchProps
+
+function Popup(props: PopupProps)
 {
     let render = <></>;
     let content;
     switch (props.popupState)
     {
-        case PopupState.ImportPresentation:
-            content = <ImportPresentation presentation={props.presentation} setNewPresentation={props.setNewPresentation}/>;
+        case 'importPresentation':
+            content = <ImportPresentation setNewPresentation={props.downloadPresentation}/>;
     }
 
     let presentation: type.Presentation = createPresentation({});
-    if (props.popupState !== PopupState.Closed)
+    if (props.popupState !== 'close')
     {
         render = <div className={style.wrapper}>
             <div className={style.modal}>
                 <div className={style.header}>
                     <button type="button" className={style.close_button} data-dismiss="modal" aria-label="Close"
-                            onClick={(e) => props.hidePopup(PopupState.Closed)}>
+                            onClick={(e) => props.closePopup()}>
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -43,4 +45,6 @@ export default function Popup(props: Popup)
     return (
         render
     )
-};
+}
+
+export default connect(mapState, mapDispatch)(Popup)

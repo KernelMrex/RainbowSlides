@@ -6,6 +6,7 @@ import * as type from "../../core/types";
 import src from "../../src";
 import {selectObject, deleteAllObjectsFromSelection, selectSlide} from "../../core/selection/selection";
 import {changeObjectPosition, changeObjectSize, changeTextContent} from "../../core/objects/objects";
+import {act} from "react-dom/test-utils";
 
 const textFor1: type.TextBlock = {
     id: 'f134',
@@ -180,7 +181,6 @@ export const initialState: Presentation = {
 
 export function presentationReducer(state: Presentation = initialState, action: PresentationActionType): Presentation
 {
-    console.log(state)
     switch (action.type)
     {
         case 'RENAME_PRESENTATION':
@@ -206,6 +206,9 @@ export function presentationReducer(state: Presentation = initialState, action: 
             break
         case 'CHANGE_TEXT':
             return changeTextContent(state, {newContent: action.payload.newContent})
+            break
+        case 'DOWNLOAD_PRESENTATION':
+            return action.payload
             break
         default:
             return state

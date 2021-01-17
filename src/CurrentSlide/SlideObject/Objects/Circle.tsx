@@ -1,13 +1,13 @@
 import React, {useState, useRef} from 'react';
-import * as type from '../../../../core/types';
+import * as type from '../../../core/types';
 import style from './Objects.module.css';
-import {useDragAndDropElement} from '../../../../CustomHooks/DragAndDropElement';
+import {useDragAndDropElement} from '../../../CustomHooks/DragAndDropElement';
 import HOCDots from "./Resizers/HOCDots";
-import { PointerType } from '../SlideObject';
+import {PointerType} from '../SlideObject';
 import {connect} from "react-redux";
-import {changePosition, changeSize, selectObject} from '../../../../store/presentation/actions';
+import {changePosition, changeSize, selectObject} from '../../../store/presentation/actions';
 
-const mapDispatch = { selectObject: selectObject, changeSize: changeSize, changePosition: changePosition }
+const mapDispatch = {selectObject: selectObject, changeSize: changeSize, changePosition: changePosition}
 
 type DispatchProps = typeof mapDispatch
 type CircleProps = DispatchProps
@@ -25,14 +25,16 @@ function Circle(props: SlideObjects & CircleProps)
     const [pos, setNewPos] = useState(props.object.position);
     const ref = useRef(null);
     const [physicalParams, setNewPhysicalParams] = useState({height: props.object.height, width: props.object.width});
-    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, pos, props.isLock, props.selectObject);
+    const [isDragAndDrop, setStatusDragAndDrop] = useState(false)
+    const [isResize, setStatusResize] = useState(false)
+    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, pos, props.isLock, props.selectObject, setStatusDragAndDrop);
 
-    if (props.isLock && pos !== props.object.position)
+    if ((props.isLock || !isDragAndDrop) && !isResize && pos !== props.object.position)
     {
         setNewPos(props.object.position)
     }
 
-    if (props.isLock && (physicalParams.width !== props.object.width || physicalParams.height !== props.object.height))
+    if ((props.isLock || !isResize) && (physicalParams.width !== props.object.width || physicalParams.height !== props.object.height))
     {
         setNewPhysicalParams({height: props.object.height, width: props.object.width})
     }
@@ -56,7 +58,8 @@ function Circle(props: SlideObjects & CircleProps)
             {!props.isLock && props.isSelected &&
             <HOCDots object={props.object} pos={pos} physicalParams={physicalParams} callbackSize={setNewPhysicalParams}
                      callbackPosition={setNewPos}
-                     changeSize={props.changeSize}/>
+                     changeSize={props.changeSize}
+                     setStatusResize={setStatusResize}/>
             }
             <svg
                 width={width}

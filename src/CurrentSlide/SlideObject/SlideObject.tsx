@@ -1,5 +1,5 @@
 import React from 'react';
-import * as type from '../../../core/types';
+import * as type from '../../core/types';
 import Rectangle from './Objects/Rectangle'
 import Circle from './Objects/Circle';
 import Triangle from './Objects/Triangle';

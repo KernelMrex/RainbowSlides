@@ -13,6 +13,11 @@ export function Input(props: InputProps)
 {
     const [ value, setValue ] = useState(props.text !== undefined ? props.text : '')
 
+    if (value !== props.text)
+    {
+        setValue(props.text as string)
+    }
+
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         props.onUpdate(e.target.value)
         setValue(e.target.value)

@@ -1,10 +1,10 @@
 import React, {useRef, useState} from 'react';
-import * as type from '../../core/types';
+import * as type from '../core/types';
 import style from './SlideList.module.css';
 import MiniSlide from './MiniSlide';
-import {RootState, store} from "../../store/store";
+import {RootState, store} from "../store/store";
 import {connect} from "react-redux";
-import {changeOrderOfSlide, unselectObject, selectSlide} from "../../store/presentation/actions";
+import {changeOrderOfSlide, unselectObject, selectSlide} from "../store/presentation/actions";
 
 export type HorizontalLineSlides = {
     id: string,

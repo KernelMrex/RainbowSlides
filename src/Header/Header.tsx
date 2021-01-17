@@ -8,9 +8,11 @@ import './Header.css'
 import Submenu from './Submenu/Submenu'
 import { Input } from '../Input/Input'
 import Button from '../Button/Button'
+import downloadPresentation from '../core/exportJSON/exportJSON'
+import {closePopup, importPresentationPopup} from '../store/popup/actions'
 
-const mapState = (state: RootState) => ({ name: state.presentation.name })
-const mapDispatch = { renamePresentation: renamePresentation }
+const mapState = (state: RootState) => ({ presentation: state.presentation })
+const mapDispatch = { renamePresentation: renamePresentation, importPresentationPopup: importPresentationPopup }
 
 type StateProps = ReturnType<typeof mapState>
 type DispatchProps = typeof mapDispatch
@@ -24,7 +26,7 @@ function Header(props: HeaderProps)
                 <Logo/>
             </div>
             <div className={ 'header__title-wrapper' }>
-                <Input text={ props.name } className={ 'header__title' }
+                <Input text={ props.presentation.name } className={ 'header__title' }
                        onUpdate={ (value: string) => props.renamePresentation(value) }/>
                 <div className={ 'header__submenu' }>
                     <Submenu items={ [
@@ -32,13 +34,21 @@ function Header(props: HeaderProps)
                             type: 'dropdown',
                             text: 'Файл',
                             items: [
-                                { text: 'Открыть' },
-                                { text: 'Сохранить' },
                                 {
-                                    text: 'Экспорт',
-                                    onClick: () => console.log('Export pdf'),
-                                    stayOpenAfterClick: false,
+                                    text: 'Открыть',
+                                    onClick: (event) => props.importPresentationPopup(),
+                                    stayOpenAfterClick: false
                                 },
+                                {
+                                    text: 'Сохранить',
+                                    onClick: (event) => downloadPresentation(props.presentation),
+                                    stayOpenAfterClick: false
+                                },
+                                {
+                                    text: 'Экспорт в PDF',
+                                    onClick: () => console.log('Export pdf'),
+                                    stayOpenAfterClick: false
+                                }
                             ],
                         },
                         {

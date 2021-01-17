@@ -1,10 +1,10 @@
 import React  from 'react';
-import * as type from '../../core/types';
+import * as type from '../core/types';
 import style from './CurrentSlide.module.css'
 import SlideObject from './SlideObject/SlideObject'
 import {connect} from "react-redux";
-import {RootState} from "../../store/store";
-import {changeOrderOfSlide, unselectObject} from "../../store/presentation/actions";
+import {RootState} from "../store/store";
+import {changeOrderOfSlide, unselectObject} from "../store/presentation/actions";
 
 const mapState = (state: RootState) => ({ slideId: state.presentation.selection.slide, slides: state.presentation.slides, selectedObjects: state.presentation.selection.objects })
 const mapDispatch = { changeOrderOfSlide: changeOrderOfSlide, unselectObject: unselectObject }

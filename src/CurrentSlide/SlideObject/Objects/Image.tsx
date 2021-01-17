@@ -1,13 +1,13 @@
-import React, { useState, useRef } from 'react';
-import * as type from '../../../../core/types';
+import React, {useState, useRef} from 'react';
+import * as type from '../../../core/types';
 import style from './Objects.module.css';
-import { useDragAndDropElement } from '../../../../CustomHooks/DragAndDropElement';
+import {useDragAndDropElement} from '../../../CustomHooks/DragAndDropElement';
 import HOCDots from './Resizers/HOCDots';
 import {PointerType} from "../SlideObject";
 import {connect} from "react-redux";
-import {changeSize, selectObject, changePosition} from '../../../../store/presentation/actions';
+import {changeSize, selectObject, changePosition} from '../../../store/presentation/actions';
 
-const mapDispatch = { selectObject: selectObject, changeSize: changeSize, changePosition: changePosition }
+const mapDispatch = {selectObject: selectObject, changeSize: changeSize, changePosition: changePosition}
 
 type DispatchProps = typeof mapDispatch
 type ImageProps = DispatchProps
@@ -25,14 +25,16 @@ function Image(props: SlideObjects & ImageProps)
     const [pos, setNewPos] = useState(props.object.position);
     const ref = useRef(null);
     const [physicalParams, setNewPhysicalParams] = useState({height: props.object.height, width: props.object.width});
-    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, pos, props.isLock, props.selectObject);
+    const [isDragAndDrop, setStatusDragAndDrop] = useState(false)
+    const [isResize, setStatusResize] = useState(false)
+    useDragAndDropElement(ref, props.changePosition, setNewPos, props.object, pos, props.isLock, props.selectObject, setStatusDragAndDrop);
 
-    if (props.isLock && pos !== props.object.position)
+    if ((props.isLock || !isDragAndDrop) && !isResize && pos !== props.object.position)
     {
         setNewPos(props.object.position)
     }
 
-    if (props.isLock && (physicalParams.width !== props.object.width || physicalParams.height !== props.object.height))
+    if ((props.isLock || !isResize) && (physicalParams.width !== props.object.width || physicalParams.height !== props.object.height))
     {
         setNewPhysicalParams({height: props.object.height, width: props.object.width})
     }
@@ -55,13 +57,19 @@ function Image(props: SlideObjects & ImageProps)
     };
 
     return (
-        <div className={style.wrapper} style={objectStyle} onClick={(e) => !props.isLock ? props.selectObject(props.object.id) : e.preventDefault()}>
+        <div className={style.wrapper} style={objectStyle}
+             onClick={(e) => !props.isLock ? props.selectObject(props.object.id) : e.preventDefault()}>
             {!props.isLock && props.isSelected &&
-            <HOCDots object={props.object} pos={pos} physicalParams={physicalParams} callbackSize={setNewPhysicalParams}
-                     callbackPosition={setNewPos}
-                     changeSize={props.changeSize}/>
+            <HOCDots
+                object={props.object}
+                pos={pos}
+                physicalParams={physicalParams}
+                callbackSize={setNewPhysicalParams}
+                callbackPosition={setNewPos}
+                changeSize={props.changeSize}
+                setStatusResize={setStatusResize}/>
             }
-            <img ref={ref}  src={props.object.source} className={style.media}/>
+            <img ref={ref} src={props.object.source} className={style.media}/>
         </div>
     );
 }

@@ -1,5 +1,5 @@
 import React, {RefObject} from 'react';
-import * as type from '../../../../../core/types';
+import * as type from '../../../../core/types';
 import style from '../Objects.module.css'
 
 interface ResizerDot
