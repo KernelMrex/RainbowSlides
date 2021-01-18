@@ -27,3 +27,12 @@
     justify-content: center;
     align-items: center;
 }
+
+.subheader__figure_tool
+{
+    margin-left: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

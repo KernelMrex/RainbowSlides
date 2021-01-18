@@ -1,8 +1,6 @@
 import React from 'react';
-import * as type from './core/types';
 import style from './App.module.css'
 import Popup from './Popup/Popup'
-import {bindKeys} from "./common/bindKeys";
 import Header from "./Header/Header";
 import Subheader from "./Header/Subheader/Subheader";
 import SlideList from "./SlideList/SlideList";
@@ -23,4 +21,4 @@ export default function App()
             </div>
         </div>
     )
-};
+}

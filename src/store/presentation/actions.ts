@@ -1,17 +1,21 @@
 import {
     ADD_OBJECT,
     ADD_SLIDE,
+    CHANGE_COLOR,
     CHANGE_POSITION,
     CHANGE_SIZE,
     CHANGE_SLIDE,
     CHANGE_TEXT,
+    DELETE_OBJECT,
     DELETE_SLIDE,
     DOWNLOAD_PRESENTATION,
     PresentationActionType,
     RENAME_PRESENTATION,
     SELECT_OBJECT,
     SELECT_SLIDE,
-    UNSELECT_OBJECT
+    UNSELECT_OBJECT,
+    CHANGE_COLOR_SLIDE,
+    REMOVE_COLOR
 } from './types'
 import {Anchor, Presentation, SlideObject} from "../../core/types";
 
@@ -131,5 +135,35 @@ export function addObject(object: SlideObject): PresentationActionType
     return {
         type: ADD_OBJECT,
         payload: object
+    }
+}
+
+export function deleteObject(): PresentationActionType
+{
+    return {
+        type: DELETE_OBJECT
+    }
+}
+
+export function changeColor(hex: string): PresentationActionType
+{
+    return {
+        type: CHANGE_COLOR,
+        payload: hex
+    }
+}
+
+export function changeColorSlide(hex: string): PresentationActionType
+{
+    return {
+        type: CHANGE_COLOR_SLIDE,
+        payload: hex
+    }
+}
+
+export function removeColor(): PresentationActionType
+{
+    return {
+        type: REMOVE_COLOR,
     }
 }

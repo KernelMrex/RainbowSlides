@@ -44,7 +44,6 @@ function Rectangle(props: SlideObjects & RectangleProps)
     const height: number = physicalParams.height / props.coef;
     const x: number = props.isSelected ? pos.x - 3 / props.coef : pos.x / props.coef;
     const y: number = props.isSelected ? pos.y - 3 / props.coef : pos.y / props.coef;
-
     const pointerLock: PointerType = props.isLock ? "none" : undefined
 
     return (
@@ -70,6 +69,7 @@ function Rectangle(props: SlideObjects & RectangleProps)
                 }}
                 onClick={(e) => !props.isLock ? props.selectObject(props.object.id) : e.preventDefault()}>
                 <rect
+                    fill={props.object.background.hex}
                     ref={ref}
                     width={width}
                     height={height}

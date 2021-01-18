@@ -5,7 +5,7 @@ import {getSelectedObjects, selectSlide} from "../core/selection/selection";
 import {Presentation} from "../core/types";
 import {getBufferElement} from "../buffer/buffer";
 
-export function bindKeys(): void
+export function bindKeys(deleteObject: () => void): void
 {
     window.addEventListener('keydown', keydownHandler)
     console.log('s')
@@ -25,6 +25,11 @@ export function bindKeys(): void
                     //changePresentation(getState())
                     break;
             }
+        }
+
+        if (event.key === 'Delete')
+        {
+            deleteObject()
         }
     }
 }

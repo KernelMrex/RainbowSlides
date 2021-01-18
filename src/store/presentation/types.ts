@@ -20,6 +20,10 @@ export const DOWNLOAD_PRESENTATION = 'DOWNLOAD_PRESENTATION'
 export const ADD_SLIDE = 'ADD_SLIDE'
 export const DELETE_SLIDE = 'DELETE_SLIDE'
 export const ADD_OBJECT = 'ADD_OBJECT'
+export const DELETE_OBJECT = 'DELETE_OBJECT'
+export const CHANGE_COLOR = 'CHANGE_COLOR'
+export const CHANGE_COLOR_SLIDE = 'CHANGE_COLOR_SLIDE'
+export const REMOVE_COLOR = 'REMOVE_COLOR'
 
 interface RenamePresentationAction {
     type: typeof RENAME_PRESENTATION
@@ -78,6 +82,24 @@ interface AddObjectAction {
     payload: SlideObject
 }
 
+interface DeleteObjectAction {
+    type: typeof DELETE_OBJECT,
+}
+
+interface ChangeColorAction {
+    type: typeof CHANGE_COLOR,
+    payload: string
+}
+
+interface ChangeColorSlideAction {
+    type: typeof CHANGE_COLOR_SLIDE,
+    payload: string
+}
+
+interface RemoveColorAction {
+    type: typeof REMOVE_COLOR,
+}
+
 export type PresentationActionType =
     RenamePresentationAction |
     ChangeSlideAction |
@@ -90,4 +112,8 @@ export type PresentationActionType =
     DownloadPresentationAction |
     AddSlideAction |
     DeleteSlideAction |
-    AddObjectAction
+    AddObjectAction |
+    DeleteObjectAction |
+    ChangeColorAction |
+    ChangeColorSlideAction |
+    RemoveColorAction

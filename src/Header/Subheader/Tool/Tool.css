@@ -53,6 +53,26 @@
     background: url('./icons/undo.svg') no-repeat center;
 }
 
+.tool__color-fill
+{
+    background: url('./icons/color-fill.svg') no-repeat center;
+}
+
+.tool__paint-brush
+{
+    background: url('./icons/paint-brush.svg') no-repeat center;
+}
+
+.tool__border
+{
+    background: url('./icons/border.svg') no-repeat center;
+}
+
+.tool__no-color
+{
+    background: url('./icons/no-color.svg') no-repeat center;
+}
+
 .tool:hover
 {
     background-color: #d5d5d5;

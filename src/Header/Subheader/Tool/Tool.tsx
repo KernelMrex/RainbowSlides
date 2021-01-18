@@ -1,12 +1,11 @@
 import React from 'react'
 import './Tool.css'
-import {PresentationActionType} from '../../../store/presentation/types'
-import SlideObject from '../../../CurrentSlide/SlideObject/SlideObject'
 
 interface Tool
 {
     content: string,
-    onClick: (event?: React.MouseEvent<HTMLElement>) => void
+    onClick: (event?: React.MouseEvent<HTMLElement>) => void,
+    colorPick?: boolean
 }
 
 export default function Tool(props: Tool)

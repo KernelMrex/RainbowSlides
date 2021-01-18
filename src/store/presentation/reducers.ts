@@ -1,11 +1,11 @@
 import { changePresentationName } from '../../core/presentation/presentation'
 import { Presentation } from '../../core/types'
 import { PresentationActionType } from './types'
-import {addSlide, changeOrderOfSlide, deleteSlide} from "../../core/slides/slides";
+import {addSlide, changeOrderOfSlide, deleteSlide, changesSlidesBackground} from "../../core/slides/slides";
 import * as type from "../../core/types";
 import src from "../../src";
 import {selectObject, deleteAllObjectsFromSelection, selectSlide} from "../../core/selection/selection";
-import {addObjectToSlide, changeObjectPosition, changeObjectSize, changeTextContent} from "../../core/objects/objects";
+import {addObjectToSlide, changeObjectPosition, changeObjectSize, changeTextContent, deleteObject, changeColor, removeColor} from "../../core/objects/objects";
 import {act} from "react-dom/test-utils";
 
 const textFor1: type.TextBlock = {
@@ -253,6 +253,18 @@ export function presentationReducer(state: Presentation = initialState, action: 
             break
         case 'ADD_OBJECT':
             return addObjectToSlide(state, {object: action.payload})
+            break
+        case 'DELETE_OBJECT':
+            return deleteObject(state)
+            break
+        case 'CHANGE_COLOR':
+            return changeColor(state, {hex: action.payload})
+            break
+        case 'CHANGE_COLOR_SLIDE':
+            return changesSlidesBackground(state, {background: {hex: action.payload}})
+            break
+        case 'REMOVE_COLOR':
+            return removeColor(state)
             break
         default:
             return state

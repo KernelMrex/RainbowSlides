@@ -128,6 +128,22 @@ export function changeTextContent(presentation: Presentation, payload: ChangeTex
     }))
 }
 
+export function removeColor(presentation: Presentation): Presentation
+{
+    const [slide, [selectedObject]] = getSelected(presentation)
+    if (!slide || !selectedObject)
+    {
+        return presentation
+    }
+
+    return updateSlide(presentation, updateObject(slide, {
+        ...selectedObject,
+        background: {
+            hex: 'none'
+        }
+    }))
+}
+
 export type ChangeMediaSourcePayload = {
     newSource: string
 }
@@ -145,6 +161,44 @@ export function changeMediaSource(presentation: Presentation, payload: ChangeMed
         ...selectedObject,
         source: payload.newSource,
     } as SlideObject))
+}
+
+export function deleteObject(presentation: Presentation): Presentation
+{
+    const selectedObject: SlideObject = getSelectedObjects(presentation)[0]
+    const selectedSlide: Slide | null = getSelectedSlide(presentation)
+
+    if (!selectedObject || !selectedSlide)
+    {
+        return presentation
+    }
+
+    const newSlide = {...selectedSlide}
+    newSlide.objects.splice(newSlide.objects.indexOf(selectedObject), 1)
+    return updateSlide(presentation, newSlide)
+}
+
+export type ChangeColorPayload = {
+    hex: string
+}
+
+export function changeColor(presentation: Presentation, payload: ChangeColorPayload): Presentation
+{
+    const selectedObject: SlideObject = getSelectedObjects(presentation)[0]
+    const selectedSlide: Slide | null = getSelectedSlide(presentation)
+
+    if (!selectedObject || !selectedSlide)
+    {
+        return presentation
+    }
+
+    const newSlide = {...selectedSlide}
+    return updateSlide(presentation, updateObject(newSlide, {
+        ...selectedObject,
+        background: {
+            hex: payload.hex
+        }
+    }))
 }
 
 export type ChangeObjectSizePayload = {
