@@ -35,7 +35,11 @@ export function deleteSlide(presentation: Presentation): Presentation
 
         return {
             ...newPresentation,
-            slides: newSlidesList
+            slides: newSlidesList,
+            selection: {
+                ...newPresentation.selection,
+                slide: newPresentation.slides[0].id
+            }
         }
     }
 

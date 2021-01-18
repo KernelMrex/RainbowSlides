@@ -1,7 +1,7 @@
 import { changePresentationName } from '../../core/presentation/presentation'
 import { Presentation } from '../../core/types'
 import { PresentationActionType } from './types'
-import {changeOrderOfSlide} from "../../core/slides/slides";
+import {addSlide, changeOrderOfSlide, deleteSlide} from "../../core/slides/slides";
 import * as type from "../../core/types";
 import src from "../../src";
 import {selectObject, deleteAllObjectsFromSelection, selectSlide} from "../../core/selection/selection";
@@ -209,6 +209,12 @@ export function presentationReducer(state: Presentation = initialState, action: 
             break
         case 'DOWNLOAD_PRESENTATION':
             return action.payload
+            break
+        case 'ADD_SLIDE':
+            return addSlide(state)
+            break
+        case 'DELETE_SLIDE':
+            return deleteSlide(state)
             break
         default:
             return state

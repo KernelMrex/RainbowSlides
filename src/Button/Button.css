@@ -10,6 +10,18 @@
     outline: none;
 }
 
+.button_size_s
+{
+    padding: 10px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    border-radius: 4px;
+    outline: 0;
+    text-decoration: none;
+    border: 0;
+}
+
 .button_size_m
 {
     padding: 10px;

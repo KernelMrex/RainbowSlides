@@ -1,0 +1,24 @@
+.tool
+{
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    transition: all 0.3ms;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.tool__plus
+{
+    background: url('./icons/plus.svg');
+}
+
+.tool__minus
+{
+    background: url('./icons/minus.svg');
+}
+
+.tool:hover
+{
+    background-color: #d5d5d5;
+}

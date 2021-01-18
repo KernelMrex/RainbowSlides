@@ -16,6 +16,8 @@ export const CHANGE_SIZE = 'CHANGE_SIZE'
 export const CHANGE_POSITION = 'CHANGE_POSITION'
 export const CHANGE_TEXT = 'CHANGE_TEXT'
 export const DOWNLOAD_PRESENTATION = 'DOWNLOAD_PRESENTATION'
+export const ADD_SLIDE = 'ADD_SLIDE'
+export const DELETE_SLIDE = 'DELETE_SLIDE'
 
 interface RenamePresentationAction {
     type: typeof RENAME_PRESENTATION
@@ -61,6 +63,14 @@ interface DownloadPresentationAction {
     payload: Presentation
 }
 
+interface AddSlideAction {
+    type: typeof ADD_SLIDE
+}
+
+interface DeleteSlideAction {
+    type: typeof DELETE_SLIDE
+}
+
 export type PresentationActionType =
     RenamePresentationAction |
     ChangeSlideAction |
@@ -70,4 +80,6 @@ export type PresentationActionType =
     ChangeSizeAction |
     ChangePositionAction |
     ChangeTextAction |
-    DownloadPresentationAction
+    DownloadPresentationAction |
+    AddSlideAction |
+    DeleteSlideAction

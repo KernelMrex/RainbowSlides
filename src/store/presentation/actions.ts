@@ -1,18 +1,18 @@
 import {
+    ADD_SLIDE,
+    CHANGE_POSITION,
+    CHANGE_SIZE,
     CHANGE_SLIDE,
+    CHANGE_TEXT,
+    DOWNLOAD_PRESENTATION,
     PresentationActionType,
     RENAME_PRESENTATION,
     SELECT_OBJECT,
-    UNSELECT_OBJECT,
     SELECT_SLIDE,
-    CHANGE_SIZE,
-    CHANGE_POSITION,
-    CHANGE_TEXT,
-    DOWNLOAD_PRESENTATION
+    UNSELECT_OBJECT,
+    DELETE_SLIDE
 } from './types'
 import {Anchor, Presentation} from "../../core/types";
-import * as type from "../../core/types";
-import {createPresentation, getPresentationFromJSON} from "../../core/presentation/presentation";
 
 export function renamePresentation(name: string): PresentationActionType
 {
@@ -108,5 +108,19 @@ export function downloadPresentation(newPresentation: Presentation): Presentatio
     return {
         type: DOWNLOAD_PRESENTATION,
         payload: newPresentation
+    }
+}
+
+export function addSlide(): PresentationActionType
+{
+    return {
+        type: ADD_SLIDE
+    }
+}
+
+export function deleteSlide(): PresentationActionType
+{
+    return {
+        type: DELETE_SLIDE
     }
 }
