@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {RootState} from "../../store/store";
 import {Slide, SlideObject} from '../../core/types';
 import Tool from './Tool/Tool';
-import {addObject, addSlide, deleteSlide, changeColor, changeColorSlide, removeColor} from "../../store/presentation/actions";
+import {addObject, addSlide, deleteSlide, changeColor, changeColorSlide, removeColor, upItem, downItem} from "../../store/presentation/actions";
 import {getPayloadForAddObject} from "../../common/createPayloads";
 import {importImagePopup} from "../../store/popup/actions";
 import ToolInput from "./Tool/ToolInput";
@@ -23,6 +23,8 @@ const mapDispatch = {
     changeColor: changeColor,
     changeColorSlide: changeColorSlide,
     removeColor: removeColor,
+    upItem: upItem,
+    downItem: downItem,
 }
 
 type DispatchProps = typeof mapDispatch
@@ -34,11 +36,13 @@ function Subheader(props: SubheaderProps)
     const currentSlide: Slide | undefined = props.slides.find((slide) => slide.id === props.selectedSlideId)
     const currentIndex: number = currentSlide === undefined ? 0 : props.slides.indexOf(currentSlide) + 1
     const selectedObject: SlideObject | undefined = currentSlide?.objects.find((object) => object.id === props.selectedObjectId[0])
+    let isImage: boolean = false;
     let isFigure: boolean = false;
 
     if (selectedObject)
     {
         isFigure = selectedObject.type === 'rectangle' || selectedObject.type === 'circle' || selectedObject.type === 'triangle' || selectedObject.type === 'text'
+        isImage = selectedObject.type === 'image'
     }
     return (
         <div className={'subheader'}>
@@ -57,12 +61,18 @@ function Subheader(props: SubheaderProps)
                 <Tool content={'circle'} onClick={(e) => props.addObject(getPayloadForAddObject('circle'))}/>
                 <ToolInput content={''} onClick={props.changeColorSlide}/>
             </div>
-            {isFigure &&
+            {(isFigure || isImage) &&
             <div className={'subheader__figure_tool'}>
-                <ToolInput content={''} onClick={props.changeColor}/>
-                <Tool content={'no-color'} onClick={props.removeColor}/>
-                <Tool content={'color-fill'} onClick={(e) => props.addObject(getPayloadForAddObject('triangle'))}/>
-                <Tool content={'paint-brush'} onClick={(e) => props.addObject(getPayloadForAddObject('rectangle'))}/>
+                {isFigure &&
+                    <>
+                        <ToolInput content={''} onClick={props.changeColor}/>
+                        <Tool content={'no-color'} onClick={props.removeColor}/>
+                        <Tool content={'border'} onClick={(e) => props.addObject(getPayloadForAddObject('triangle'))}/>
+                        <Tool content={'paint-brush'} onClick={(e) => props.addObject(getPayloadForAddObject('rectangle'))}/>
+                    </>
+                }
+                <Tool content={'item-down'} onClick={props.downItem}/>
+                <Tool content={'item-up'} onClick={props.upItem}/>
             </div>
             }
         </div>

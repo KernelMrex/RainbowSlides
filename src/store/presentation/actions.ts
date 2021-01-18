@@ -2,6 +2,7 @@ import {
     ADD_OBJECT,
     ADD_SLIDE,
     CHANGE_COLOR,
+    CHANGE_COLOR_SLIDE,
     CHANGE_POSITION,
     CHANGE_SIZE,
     CHANGE_SLIDE,
@@ -10,12 +11,13 @@ import {
     DELETE_SLIDE,
     DOWNLOAD_PRESENTATION,
     PresentationActionType,
+    REMOVE_COLOR,
     RENAME_PRESENTATION,
     SELECT_OBJECT,
     SELECT_SLIDE,
     UNSELECT_OBJECT,
-    CHANGE_COLOR_SLIDE,
-    REMOVE_COLOR
+    UP_ITEM,
+    DOWN_ITEM
 } from './types'
 import {Anchor, Presentation, SlideObject} from "../../core/types";
 
@@ -165,5 +167,19 @@ export function removeColor(): PresentationActionType
 {
     return {
         type: REMOVE_COLOR,
+    }
+}
+
+export function upItem(): PresentationActionType
+{
+    return {
+        type: UP_ITEM,
+    }
+}
+
+export function downItem(): PresentationActionType
+{
+    return {
+        type: DOWN_ITEM,
     }
 }

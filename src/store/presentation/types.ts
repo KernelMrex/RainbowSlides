@@ -24,6 +24,8 @@ export const DELETE_OBJECT = 'DELETE_OBJECT'
 export const CHANGE_COLOR = 'CHANGE_COLOR'
 export const CHANGE_COLOR_SLIDE = 'CHANGE_COLOR_SLIDE'
 export const REMOVE_COLOR = 'REMOVE_COLOR'
+export const UP_ITEM = 'UP_ITEM'
+export const DOWN_ITEM = 'DOWN_ITEM'
 
 interface RenamePresentationAction {
     type: typeof RENAME_PRESENTATION
@@ -100,6 +102,14 @@ interface RemoveColorAction {
     type: typeof REMOVE_COLOR,
 }
 
+interface UpItemAction {
+    type: typeof UP_ITEM,
+}
+
+interface DownItemAction {
+    type: typeof DOWN_ITEM,
+}
+
 export type PresentationActionType =
     RenamePresentationAction |
     ChangeSlideAction |
@@ -116,4 +126,6 @@ export type PresentationActionType =
     DeleteObjectAction |
     ChangeColorAction |
     ChangeColorSlideAction |
-    RemoveColorAction
+    RemoveColorAction |
+    UpItemAction |
+    DownItemAction

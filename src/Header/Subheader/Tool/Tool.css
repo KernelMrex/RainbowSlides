@@ -73,6 +73,16 @@
     background: url('./icons/no-color.svg') no-repeat center;
 }
 
+.tool__item-down
+{
+    background: url('./icons/item-down.svg') no-repeat center;
+}
+
+.tool__item-up
+{
+    background: url('./icons/item-up.svg') no-repeat center;
+}
+
 .tool:hover
 {
     background-color: #d5d5d5;

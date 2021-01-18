@@ -144,6 +144,38 @@ export function removeColor(presentation: Presentation): Presentation
     }))
 }
 
+export function upItem(presentation: Presentation): Presentation
+{
+    const [slide, [selectedObject]] = getSelected(presentation)
+    if (!slide || !selectedObject || slide.objects.indexOf(selectedObject) === slide.objects.length)
+    {
+        return presentation
+    }
+
+    const indexOfSelectedObject: number = slide.objects.indexOf(selectedObject)
+
+    slide.objects.splice(indexOfSelectedObject, 1)
+    slide.objects.splice(indexOfSelectedObject + 1, 0, selectedObject)
+
+    return updateSlide(presentation, slide)
+}
+
+export function downItem(presentation: Presentation): Presentation
+{
+    const [slide, [selectedObject]] = getSelected(presentation)
+    if (!slide || !selectedObject || slide.objects.indexOf(selectedObject) === 0)
+    {
+        return presentation
+    }
+
+    const indexOfSelectedObject: number = slide.objects.indexOf(selectedObject)
+
+    slide.objects.splice(indexOfSelectedObject, 1)
+    slide.objects.splice(indexOfSelectedObject - 1, 0, selectedObject)
+
+    return updateSlide(presentation, slide)
+}
+
 export type ChangeMediaSourcePayload = {
     newSource: string
 }
