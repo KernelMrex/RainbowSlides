@@ -1,16 +1,25 @@
-import {Anchor, Font, Presentation, Slide, SlideObject, CommonBlock} from '../types'
+import {
+    Anchor,
+    Font,
+    Presentation,
+    Slide,
+    SlideObject,
+    CommonBlock,
+    TriangleBlock,
+    Color,
+    RectangleBlock, CircleBlock, TextBlock
+} from '../types'
 import {getSelected, getSelectedObjects, getSelectedSlide} from '../selection/selection'
 import {getBufferElement, setBufferElement} from '../../buffer/buffer';
 import {getNewId} from "../slides/slides";
 
 export type AddObjectToSlidePayload = {
-    slideID: string
     object: SlideObject
 }
 
 export function addObjectToSlide(presentation: Presentation, payload: AddObjectToSlidePayload): Presentation
 {
-    const slide = presentation.slides.find((slide: Slide) => slide.id === payload.slideID)
+    const slide = presentation.slides.find((slide: Slide) => slide.id === presentation.selection.slide)
     if (!slide)
     {
         return presentation
@@ -196,7 +205,7 @@ export function pasteElement(presentation: Presentation): Presentation
     }
 
     return addObjectToSlide(presentation, {
-        slideID: selectedSlide.id, object: {
+        object: {
             ...pastedElement,
             id: getNewId(),
             position: getPastedElementPosition(pastedElement, selectedSlide)
@@ -222,4 +231,72 @@ function isClone(parent: SlideObject, clone: SlideObject): boolean
         parent.height === clone.height &&
         parent.type === clone.type &&
         parent.background === clone.background
+}
+
+export function getDefaultTriangle(): TriangleBlock
+{
+    const id: string = getNewId()
+    return {
+        id: id,
+        name: 'triangle-' + id,
+        position: {x: 200, y: 200},
+        height: 200,
+        width: 200,
+        background: {hex: '#000000'},
+        type: 'triangle',
+        stroke: {style: 'solid', color: {hex: '#123123'}, width: 0}
+    }
+}
+
+export function getDefaultRectangle(): RectangleBlock
+{
+    const id: string = getNewId()
+    return {
+        id: id,
+        name: 'rectangle-' + id,
+        position: {x: 200, y: 200},
+        height: 200,
+        width: 200,
+        background: {hex: '#000000'},
+        type: 'rectangle',
+        stroke: {style: 'solid', color: {hex: '#123123'}, width: 0}
+    }
+}
+
+export function getDefaultCircle(): CircleBlock
+{
+    const id: string = getNewId()
+    return {
+        id: id,
+        name: 'circle-' + id,
+        position: {x: 200, y: 200},
+        height: 200,
+        width: 200,
+        background: {hex: '#123321'},
+        type: 'circle',
+        stroke: {style: 'solid', color: {hex: '#123123'}, width: 0}
+    }
+}
+
+export function getDefaultText(): TextBlock
+{
+    const id: string = getNewId()
+    return {
+        id: id,
+        name: 'circle-' + id,
+        position: {x: 200, y: 200},
+        height: 200,
+        width: 200,
+        background: {hex: 'none'},
+        type: 'text',
+        stroke: {style: 'solid', color: {hex: '#123123'}, width: 0},
+        font: {
+            family: 'Comic Sans MS',
+            size: 13,
+            weight: 500,
+            style: 'none'
+        },
+        content: 'Пример текста',
+        color: {hex: '000000'}
+    }
 }

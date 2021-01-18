@@ -1,7 +1,8 @@
-import {Presentation} from "../core/types"
+import {Presentation, SlideObject} from "../core/types"
 import * as type from "../core/types";
 import {createPresentation, getPresentationFromJSON} from "../core/presentation/presentation";
 import {DOWNLOAD_PRESENTATION} from "../store/presentation/types";
+import {AddObjectToSlidePayload, getDefaultTriangle, getDefaultRectangle, getDefaultCircle, getDefaultText} from "../core/objects/objects";
 
 export function getPayloadForChangeSlidePosition(presentation: Presentation, estimatedSlideId: string, currentSlideId: string, position: string)
 {
@@ -57,4 +58,34 @@ function getPresentationFromFile(fileReader: FileReader)
             }
         }
     })
+}
+
+export function getPayloadForAddObject(objectType: 'image' | 'triangle' | 'rectangle' | 'circle' | 'text'): SlideObject
+{
+    switch (objectType)
+    {
+        case 'triangle':
+        {
+            return getDefaultTriangle()
+            break
+        }
+        case 'rectangle':
+        {
+            return getDefaultRectangle()
+            break
+        }
+        case 'circle':
+        {
+            return getDefaultCircle()
+            break
+        }
+        case 'text':
+        {
+            return getDefaultText()
+            break
+        }
+        default: {
+            return getDefaultRectangle()
+        }
+    }
 }

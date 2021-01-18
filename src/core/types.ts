@@ -43,6 +43,13 @@ export type CommonBlock = {
     height: number
     width: number
     background: Color
+    stroke: Stroke
+}
+
+export type Stroke = {
+    style: 'solid' | 'dashed'
+    color: Color
+    width: number
 }
 
 export type RectangleBlock = CommonBlock & {

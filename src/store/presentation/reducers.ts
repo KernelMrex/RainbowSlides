@@ -5,7 +5,7 @@ import {addSlide, changeOrderOfSlide, deleteSlide} from "../../core/slides/slide
 import * as type from "../../core/types";
 import src from "../../src";
 import {selectObject, deleteAllObjectsFromSelection, selectSlide} from "../../core/selection/selection";
-import {changeObjectPosition, changeObjectSize, changeTextContent} from "../../core/objects/objects";
+import {addObjectToSlide, changeObjectPosition, changeObjectSize, changeTextContent} from "../../core/objects/objects";
 import {act} from "react-dom/test-utils";
 
 const textFor1: type.TextBlock = {
@@ -31,6 +31,11 @@ const textFor1: type.TextBlock = {
     },
     background: {
         hex: '#00004f'
+    },
+    stroke: {
+        style: "dashed",
+        width: 0,
+        color: {hex: '#000000'}
     }
 }
 
@@ -56,6 +61,11 @@ const textFor2: type.TextBlock = {
     },
     background: {
         hex: 'none'
+    },
+    stroke: {
+        style: "dashed",
+        width: 0,
+        color: {hex: '#000000'}
     }
 }
 
@@ -72,6 +82,11 @@ const picture: type.ImageBlock = {
     source: src,
     background: {
         hex: '#ffffff'
+    },
+    stroke: {
+        style: "dashed",
+        width: 0,
+        color: {hex: '#000000'}
     }
 }
 
@@ -88,6 +103,11 @@ const picture2: type.ImageBlock = {
     source: 'https://at-cdn-s02.audiotool.com/2018/12/12/documents/n1f68tt0/0/cover256x256-3b54774168b54f3ead1d00ea2cc0908a.jpg',
     background: {
         hex: '#ffffff'
+    },
+    stroke: {
+        style: "dashed",
+        width: 0,
+        color: {hex: '#000000'}
     }
 }
 
@@ -103,6 +123,11 @@ const simpleRectangle: type.RectangleBlock = {
     width: 321,
     background: {
         hex: '#fa71d3'
+    },
+    stroke: {
+        style: "dashed",
+        width: 0,
+        color: {hex: '#000000'}
     }
 }
 
@@ -118,6 +143,11 @@ const simpleCircle: type.CircleBlock = {
     width: 200,
     background: {
         hex: '#f2331b'
+    },
+    stroke: {
+        style: "dashed",
+        width: 0,
+        color: {hex: '#000000'}
     }
 }
 
@@ -133,6 +163,11 @@ const simpleTriangle: type.TriangleBlock = {
     width: 200,
     background: {
         hex: '#046d06'
+    },
+    stroke: {
+        style: "dashed",
+        width: 0,
+        color: {hex: '#000000'}
     }
 }
 
@@ -215,6 +250,9 @@ export function presentationReducer(state: Presentation = initialState, action: 
             break
         case 'DELETE_SLIDE':
             return deleteSlide(state)
+            break
+        case 'ADD_OBJECT':
+            return addObjectToSlide(state, {object: action.payload})
             break
         default:
             return state

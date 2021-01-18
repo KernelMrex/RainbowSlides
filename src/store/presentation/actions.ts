@@ -1,18 +1,19 @@
 import {
+    ADD_OBJECT,
     ADD_SLIDE,
     CHANGE_POSITION,
     CHANGE_SIZE,
     CHANGE_SLIDE,
     CHANGE_TEXT,
+    DELETE_SLIDE,
     DOWNLOAD_PRESENTATION,
     PresentationActionType,
     RENAME_PRESENTATION,
     SELECT_OBJECT,
     SELECT_SLIDE,
-    UNSELECT_OBJECT,
-    DELETE_SLIDE
+    UNSELECT_OBJECT
 } from './types'
-import {Anchor, Presentation} from "../../core/types";
+import {Anchor, Presentation, SlideObject} from "../../core/types";
 
 export function renamePresentation(name: string): PresentationActionType
 {
@@ -122,5 +123,13 @@ export function deleteSlide(): PresentationActionType
 {
     return {
         type: DELETE_SLIDE
+    }
+}
+
+export function addObject(object: SlideObject): PresentationActionType
+{
+    return {
+        type: ADD_OBJECT,
+        payload: object
     }
 }

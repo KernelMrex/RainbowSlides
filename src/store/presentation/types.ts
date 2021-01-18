@@ -1,11 +1,12 @@
 import {ChangeOrderOfSlidePayload} from "../../core/slides/slides";
 import { SelectObjectPayload, SelectSlidePayload } from "../../core/selection/selection";
 import {
+    AddObjectToSlidePayload,
     ChangeObjectPositionPayload,
     ChangeObjectSizePayload,
     ChangeTextContentPayload
 } from "../../core/objects/objects";
-import {Presentation} from "../../core/types";
+import {Presentation, Slide, SlideObject} from "../../core/types";
 
 export const CHANGE_SLIDE = 'CHANGE_SLIDE'
 export const RENAME_PRESENTATION = 'RENAME_PRESENTATION'
@@ -18,6 +19,7 @@ export const CHANGE_TEXT = 'CHANGE_TEXT'
 export const DOWNLOAD_PRESENTATION = 'DOWNLOAD_PRESENTATION'
 export const ADD_SLIDE = 'ADD_SLIDE'
 export const DELETE_SLIDE = 'DELETE_SLIDE'
+export const ADD_OBJECT = 'ADD_OBJECT'
 
 interface RenamePresentationAction {
     type: typeof RENAME_PRESENTATION
@@ -71,6 +73,11 @@ interface DeleteSlideAction {
     type: typeof DELETE_SLIDE
 }
 
+interface AddObjectAction {
+    type: typeof ADD_OBJECT,
+    payload: SlideObject
+}
+
 export type PresentationActionType =
     RenamePresentationAction |
     ChangeSlideAction |
@@ -82,4 +89,5 @@ export type PresentationActionType =
     ChangeTextAction |
     DownloadPresentationAction |
     AddSlideAction |
-    DeleteSlideAction
+    DeleteSlideAction |
+    AddObjectAction

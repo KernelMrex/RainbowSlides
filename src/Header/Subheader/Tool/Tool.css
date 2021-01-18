@@ -10,12 +10,47 @@
 
 .tool__plus
 {
-    background: url('./icons/plus.svg');
+    background: url('./icons/plus.svg') no-repeat center;
 }
 
 .tool__minus
 {
-    background: url('./icons/minus.svg');
+    background: url('./icons/minus.svg') no-repeat center;
+}
+
+.tool__text
+{
+    background: url('./icons/text.svg') no-repeat center;
+}
+
+.tool__rectangle
+{
+    background: url('./icons/rectangle.svg') no-repeat center;
+}
+
+.tool__triangle
+{
+    background: url('./icons/triangle.svg') no-repeat center;
+}
+
+.tool__circle
+{
+    background: url('./icons/circle.svg') no-repeat center;
+}
+
+.tool__image
+{
+    background: url('./icons/image.svg') no-repeat center;
+}
+
+.tool__redo
+{
+    background: url('./icons/redo.svg') no-repeat center;
+}
+
+.tool__undo
+{
+    background: url('./icons/undo.svg') no-repeat center;
 }
 
 .tool:hover
