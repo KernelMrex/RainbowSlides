@@ -3,19 +3,17 @@ import './Tool.css'
 
 interface Tool
 {
-    content: string,
+    content?: string,
     onClick: (event?: React.MouseEvent<HTMLElement>) => void,
     colorPick?: boolean
 }
 
 export default function Tool(props: Tool)
 {
-    const onClick = (event: React.MouseEvent<HTMLElement>) =>
-    {
-        props.onClick(event)
-    }
+    const onClick = (event: React.MouseEvent<HTMLElement>) => props.onClick(event)
+    const contentClassName = props.content ?  `tool__${ props.content }` : ''
+
     return (
-        <div className={`tool tool__${props.content}`} onClick={onClick}>
-        </div>
+        <div className={ `tool ${contentClassName}` } onClick={ onClick }/>
     )
 }
