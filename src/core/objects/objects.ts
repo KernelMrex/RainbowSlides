@@ -7,7 +7,7 @@ import {
     CommonBlock,
     TriangleBlock,
     Color,
-    RectangleBlock, CircleBlock, TextBlock
+    RectangleBlock, CircleBlock, TextBlock, ImageBlock
 } from '../types'
 import {getSelected, getSelectedObjects, getSelectedSlide} from '../selection/selection'
 import {getBufferElement, setBufferElement} from '../../buffer/buffer';
@@ -174,6 +174,37 @@ export function downItem(presentation: Presentation): Presentation
     slide.objects.splice(indexOfSelectedObject - 1, 0, selectedObject)
 
     return updateSlide(presentation, slide)
+}
+
+export type AddImagePayload = {
+    source: string
+}
+
+export function addImage(presentation: Presentation, payload: AddImagePayload): Presentation
+{
+    const slide = getSelectedSlide(presentation)
+    if (!slide)
+    {
+        return presentation
+    }
+
+    return addObjectToSlide(presentation, {object: getDefaultImage(payload.source)})
+}
+
+export function addBackgroundImage(presentation: Presentation, payload: AddImagePayload): Presentation
+{
+    const slide = getSelectedSlide(presentation)
+    if (!slide)
+    {
+        return presentation
+    }
+
+    return updateSlide(presentation, {
+        ...slide,
+        background: {
+            source: payload.source
+        }
+    })
 }
 
 export type ChangeMediaSourcePayload = {
@@ -384,5 +415,21 @@ export function getDefaultText(): TextBlock
         },
         content: 'Пример текста',
         color: {hex: '000000'}
+    }
+}
+
+export function getDefaultImage(source: string): ImageBlock
+{
+    const id: string = getNewId()
+    return {
+        id: id,
+        name: 'image-' + id,
+        position: {x: 200, y: 200},
+        height: 200,
+        width: 200,
+        background: {hex: 'none'},
+        type: 'image',
+        stroke: {style: 'solid', color: {hex: '#123123'}, width: 0},
+        source: source,
     }
 }

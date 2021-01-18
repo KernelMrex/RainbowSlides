@@ -8,7 +8,7 @@ export type StateHistory<StateType> = {
 }
 
 export type Popup = {
-    state: 'close' | 'importImage' | 'importPresentation'
+    state: 'close' | 'importImage' | 'importPresentation' | 'importBackgroundImage'
 }
 
 export type Presentation = {

@@ -18,6 +18,9 @@ export function popupReducer(state: Popup = initialState, action: PopupActionTyp
         case 'IMPORT_IMAGE':
             return {state: 'importImage'}
             break
+        case 'IMPORT_BACKGROUND_IMAGE':
+            return {state: 'importBackgroundImage'}
+            break
         default:
             return state
     }

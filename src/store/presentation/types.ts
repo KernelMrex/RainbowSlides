@@ -26,6 +26,8 @@ export const CHANGE_COLOR_SLIDE = 'CHANGE_COLOR_SLIDE'
 export const REMOVE_COLOR = 'REMOVE_COLOR'
 export const UP_ITEM = 'UP_ITEM'
 export const DOWN_ITEM = 'DOWN_ITEM'
+export const ADD_IMAGE = 'ADD_IMAGE'
+export const ADD_BACKGROUND_IMAGE = 'ADD_BACKGROUND_IMAGE'
 
 interface RenamePresentationAction {
     type: typeof RENAME_PRESENTATION
@@ -110,6 +112,16 @@ interface DownItemAction {
     type: typeof DOWN_ITEM,
 }
 
+interface AddImageAction {
+    type: typeof ADD_IMAGE,
+    payload: string
+}
+
+interface AddBackgroundImageAction {
+    type: typeof ADD_BACKGROUND_IMAGE,
+    payload: string
+}
+
 export type PresentationActionType =
     RenamePresentationAction |
     ChangeSlideAction |
@@ -128,4 +140,6 @@ export type PresentationActionType =
     ChangeColorSlideAction |
     RemoveColorAction |
     UpItemAction |
-    DownItemAction
+    DownItemAction |
+    AddImageAction |
+    AddBackgroundImageAction

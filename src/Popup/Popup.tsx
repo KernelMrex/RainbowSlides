@@ -6,10 +6,11 @@ import ImportPresentation from './ImportPresentation/ImportPresentation';
 import {RootState} from "../store/store";
 import {closePopup} from "../store/popup/actions";
 import {connect} from "react-redux";
-import { downloadPresentation } from '../store/presentation/actions';
+import { downloadPresentation, addImage, addBackgroundImage } from '../store/presentation/actions';
+import ImportImage from './ImportImage/ImportImage';
 
 const mapState = (state: RootState) => ({ popupState: state.popup.state })
-const mapDispatch = { closePopup: closePopup, downloadPresentation: downloadPresentation }
+const mapDispatch = { closePopup: closePopup, downloadPresentation: downloadPresentation, addImage: addImage, addBackgroundImage: addBackgroundImage }
 
 type StateProps = ReturnType<typeof mapState>
 type DispatchProps = typeof mapDispatch
@@ -23,6 +24,10 @@ function Popup(props: PopupProps)
     {
         case 'importPresentation':
             content = <ImportPresentation setNewPresentation={props.downloadPresentation}/>;
+        case 'importImage':
+            content = <ImportImage getNewImage={props.addImage}/>;
+        case 'importBackgroundImage':
+            content = <ImportImage getNewImage={props.addBackgroundImage}/>;
     }
 
     let presentation: type.Presentation = createPresentation({});

@@ -5,7 +5,7 @@ import {addSlide, changeOrderOfSlide, deleteSlide, changesSlidesBackground} from
 import * as type from "../../core/types";
 import src from "../../src";
 import {selectObject, deleteAllObjectsFromSelection, selectSlide} from "../../core/selection/selection";
-import {addObjectToSlide, changeObjectPosition, changeObjectSize, changeTextContent, deleteObject, changeColor, removeColor, upItem, downItem} from "../../core/objects/objects";
+import {addObjectToSlide, changeObjectPosition, changeObjectSize, changeTextContent, deleteObject, changeColor, removeColor, upItem, downItem, addImage, addBackgroundImage} from "../../core/objects/objects";
 import {act} from "react-dom/test-utils";
 
 const textFor1: type.TextBlock = {
@@ -272,6 +272,12 @@ export function presentationReducer(state: Presentation = initialState, action: 
             break
         case 'DOWN_ITEM':
             return downItem(state)
+            break
+        case 'ADD_IMAGE':
+            return addImage(state, {source: action.payload})
+            break
+        case 'ADD_BACKGROUND_IMAGE':
+            return addBackgroundImage(state, {source: action.payload})
             break
         default:
             return state

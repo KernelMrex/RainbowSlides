@@ -17,7 +17,7 @@ import {
     SELECT_SLIDE,
     UNSELECT_OBJECT,
     UP_ITEM,
-    DOWN_ITEM
+    DOWN_ITEM, ADD_IMAGE, ADD_BACKGROUND_IMAGE
 } from './types'
 import {Anchor, Presentation, SlideObject} from "../../core/types";
 
@@ -181,5 +181,21 @@ export function downItem(): PresentationActionType
 {
     return {
         type: DOWN_ITEM,
+    }
+}
+
+export function addImage(source: string): PresentationActionType
+{
+    return {
+        type: ADD_IMAGE,
+        payload: source
+    }
+}
+
+export function addBackgroundImage(source: string): PresentationActionType
+{
+    return {
+        type: ADD_BACKGROUND_IMAGE,
+        payload: source
     }
 }

@@ -7,7 +7,7 @@ import {Slide, SlideObject} from '../../core/types';
 import Tool from './Tool/Tool';
 import {addObject, addSlide, deleteSlide, changeColor, changeColorSlide, removeColor, upItem, downItem} from "../../store/presentation/actions";
 import {getPayloadForAddObject} from "../../common/createPayloads";
-import {importImagePopup} from "../../store/popup/actions";
+import {importBackgroundImagePopup, importImagePopup, importPresentationPopup} from "../../store/popup/actions";
 import ToolInput from "./Tool/ToolInput";
 
 const mapState = (state: RootState) => ({
@@ -25,6 +25,8 @@ const mapDispatch = {
     removeColor: removeColor,
     upItem: upItem,
     downItem: downItem,
+    importImagePopup: importImagePopup,
+    importBackgroundImagePopup: importBackgroundImagePopup,
 }
 
 type DispatchProps = typeof mapDispatch
@@ -44,6 +46,7 @@ function Subheader(props: SubheaderProps)
         isFigure = selectedObject.type === 'rectangle' || selectedObject.type === 'circle' || selectedObject.type === 'triangle' || selectedObject.type === 'text'
         isImage = selectedObject.type === 'image'
     }
+
     return (
         <div className={'subheader'}>
             <div className={'subheader__column subheader__column_content_center'}>
@@ -52,14 +55,15 @@ function Subheader(props: SubheaderProps)
                 <Tool content={'minus'} onClick={props.deleteSlide}/>
                 <Tool content={'undo'} onClick={props.deleteSlide}/>
                 <Tool content={'redo'} onClick={props.deleteSlide}/>
+                <ToolInput content={''} onClick={props.changeColorSlide}/>
+                <Tool content={'slide-bck'} onClick={props.importBackgroundImagePopup}/>
             </div>
             <div className={'subheader__object-tool'}>
                 <Tool content={'triangle'} onClick={(e) => props.addObject(getPayloadForAddObject('triangle'))}/>
-                <Tool content={'image'} onClick={(e) => props.addObject(getPayloadForAddObject('triangle'))}/>
+                <Tool content={'image'} onClick={props.importImagePopup}/>
                 <Tool content={'rectangle'} onClick={(e) => props.addObject(getPayloadForAddObject('rectangle'))}/>
                 <Tool content={'text'} onClick={(e) => props.addObject(getPayloadForAddObject('text'))}/>
                 <Tool content={'circle'} onClick={(e) => props.addObject(getPayloadForAddObject('circle'))}/>
-                <ToolInput content={''} onClick={props.changeColorSlide}/>
             </div>
             {(isFigure || isImage) &&
             <div className={'subheader__figure_tool'}>

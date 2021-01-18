@@ -83,6 +83,11 @@
     background: url('./icons/item-up.svg') no-repeat center;
 }
 
+.tool__slide-bck
+{
+    background: url('./icons/slide-bck.svg') no-repeat center;
+}
+
 .tool:hover
 {
     background-color: #d5d5d5;

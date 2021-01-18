@@ -12,7 +12,7 @@ export default function ImportPresentation(props: Popup)
 {
     return (
         <div>
-            <input type='file' onChange={(e: any) => console.log(getPayloadForDownloadPresentation(e).then((presentation) => props.setNewPresentation(presentation as Presentation)))}
+            <input type='file' onChange={(e: any) => getPayloadForDownloadPresentation(e).then((presentation) => props.setNewPresentation(presentation as Presentation))}
                    accept={'application/json'}/>
         </div>
     )

@@ -1,4 +1,4 @@
-import {CLOSE_POPUP, IMPORT_IMAGE, IMPORT_PRESENTATION, PopupActionType} from "./types";
+import {CLOSE_POPUP, IMPORT_IMAGE, IMPORT_PRESENTATION, PopupActionType, IMPORT_BACKGROUND_IMAGE} from "./types";
 
 export function closePopup(): PopupActionType
 {
@@ -18,5 +18,12 @@ export function importImagePopup(): PopupActionType
 {
     return {
         type: IMPORT_IMAGE
+    }
+}
+
+export function importBackgroundImagePopup(): PopupActionType
+{
+    return {
+        type: IMPORT_BACKGROUND_IMAGE
     }
 }

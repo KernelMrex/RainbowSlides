@@ -2,7 +2,13 @@ import {Presentation, SlideObject} from "../core/types"
 import * as type from "../core/types";
 import {createPresentation, getPresentationFromJSON} from "../core/presentation/presentation";
 import {DOWNLOAD_PRESENTATION} from "../store/presentation/types";
-import {AddObjectToSlidePayload, getDefaultTriangle, getDefaultRectangle, getDefaultCircle, getDefaultText} from "../core/objects/objects";
+import {
+    AddObjectToSlidePayload,
+    getDefaultTriangle,
+    getDefaultRectangle,
+    getDefaultCircle,
+    getDefaultText
+} from "../core/objects/objects";
 
 export function getPayloadForChangeSlidePosition(presentation: Presentation, estimatedSlideId: string, currentSlideId: string, position: string)
 {
@@ -31,7 +37,8 @@ export function getPayloadForChangeSlidePosition(presentation: Presentation, est
     return {place: newSlidePlacement, currentSlideId: currentSlideId}
 }
 
-interface HTMLInputEvent extends Event {
+interface HTMLInputEvent extends Event
+{
     target: HTMLInputElement & EventTarget;
 }
 
@@ -39,7 +46,6 @@ export async function getPayloadForDownloadPresentation(event: HTMLInputEvent)
 {
     const file = event.target.files ? event.target.files[0] : ''
     const fileReader = new FileReader()
-    let newPresentation: type.Presentation = createPresentation({})
     fileReader.readAsText(file as File)
     const presentation = await getPresentationFromFile(fileReader)
     return presentation
@@ -84,8 +90,30 @@ export function getPayloadForAddObject(objectType: 'image' | 'triangle' | 'recta
             return getDefaultText()
             break
         }
-        default: {
+        default:
+        {
             return getDefaultRectangle()
         }
     }
+}
+
+export async function getPayloadForDownloadImage(event: HTMLInputEvent)
+{
+    const file = event.target.files ? event.target.files[0] : ''
+    const fileReader = new FileReader()
+    fileReader.readAsDataURL(file as File)
+    const source = await getSourceFromFile(fileReader)
+    return source
+}
+
+function getSourceFromFile(fileReader: FileReader)
+{
+    return new Promise(resolve =>
+    {
+        fileReader.onload = () =>
+        {
+            const JSONString = fileReader.result
+            resolve(JSONString)
+        }
+    })
 }
