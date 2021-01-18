@@ -1,14 +1,6 @@
-import {Presentation, SlideObject} from "../core/types"
-import * as type from "../core/types";
-import {createPresentation, getPresentationFromJSON} from "../core/presentation/presentation";
-import {DOWNLOAD_PRESENTATION} from "../store/presentation/types";
-import {
-    AddObjectToSlidePayload,
-    getDefaultTriangle,
-    getDefaultRectangle,
-    getDefaultCircle,
-    getDefaultText
-} from "../core/objects/objects";
+import { getDefaultCircle, getDefaultRectangle, getDefaultText, getDefaultTriangle } from '../core/objects/objects'
+import { getPresentationFromJSON } from '../core/presentation/presentation'
+import { Presentation, SlideObject } from '../core/types'
 
 export function getPayloadForChangeSlidePosition(presentation: Presentation, estimatedSlideId: string, currentSlideId: string, position: string)
 {
@@ -47,8 +39,7 @@ export async function getPayloadForDownloadPresentation(event: HTMLInputEvent)
     const file = event.target.files ? event.target.files[0] : ''
     const fileReader = new FileReader()
     fileReader.readAsText(file as File)
-    const presentation = await getPresentationFromFile(fileReader)
-    return presentation
+    return await getPresentationFromFile(fileReader)
 }
 
 function getPresentationFromFile(fileReader: FileReader)
@@ -71,29 +62,15 @@ export function getPayloadForAddObject(objectType: 'image' | 'triangle' | 'recta
     switch (objectType)
     {
         case 'triangle':
-        {
             return getDefaultTriangle()
-            break
-        }
         case 'rectangle':
-        {
             return getDefaultRectangle()
-            break
-        }
         case 'circle':
-        {
             return getDefaultCircle()
-            break
-        }
         case 'text':
-        {
             return getDefaultText()
-            break
-        }
         default:
-        {
             return getDefaultRectangle()
-        }
     }
 }
 
@@ -102,18 +79,10 @@ export async function getPayloadForDownloadImage(event: HTMLInputEvent)
     const file = event.target.files ? event.target.files[0] : ''
     const fileReader = new FileReader()
     fileReader.readAsDataURL(file as File)
-    const source = await getSourceFromFile(fileReader)
-    return source
+    return await getSourceFromFile(fileReader)
 }
 
 function getSourceFromFile(fileReader: FileReader)
 {
-    return new Promise(resolve =>
-    {
-        fileReader.onload = () =>
-        {
-            const JSONString = fileReader.result
-            resolve(JSONString)
-        }
-    })
+    return new Promise(resolve => fileReader.onload = () => resolve(fileReader.result))
 }

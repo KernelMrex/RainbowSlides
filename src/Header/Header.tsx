@@ -1,15 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { renamePresentation } from '../store/presentation/actions'
-import { RootState } from '../store/store'
-
-import Logo from './Logo/Logo'
-import './Header.css'
-import Submenu from './Submenu/Submenu'
-import { Input } from '../Input/Input'
 import Button from '../Button/Button'
 import downloadPresentation from '../core/exportJSON/exportJSON'
-import {closePopup, importPresentationPopup} from '../store/popup/actions'
+import { Input } from '../Input/Input'
+import { importPresentationPopup } from '../store/popup/actions'
+import { renamePresentation } from '../store/presentation/actions'
+import { RootState } from '../store/store'
+import './Header.css'
+
+import Logo from './Logo/Logo'
+import Submenu from './Submenu/Submenu'
 
 const mapState = (state: RootState) => ({ presentation: state.presentation })
 const mapDispatch = { renamePresentation: renamePresentation, importPresentationPopup: importPresentationPopup }
@@ -36,19 +36,19 @@ function Header(props: HeaderProps)
                             items: [
                                 {
                                     text: 'Открыть',
-                                    onClick: (event) => props.importPresentationPopup(),
-                                    stayOpenAfterClick: false
+                                    onClick: () => props.importPresentationPopup(),
+                                    stayOpenAfterClick: false,
                                 },
                                 {
                                     text: 'Сохранить',
-                                    onClick: (event) => downloadPresentation(props.presentation),
-                                    stayOpenAfterClick: false
+                                    onClick: () => downloadPresentation(props.presentation),
+                                    stayOpenAfterClick: false,
                                 },
                                 {
                                     text: 'Экспорт в PDF',
                                     onClick: () => console.log('Export pdf'),
-                                    stayOpenAfterClick: false
-                                }
+                                    stayOpenAfterClick: false,
+                                },
                             ],
                         },
                         {
