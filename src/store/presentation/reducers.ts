@@ -10,6 +10,7 @@ import {
     downItem,
     removeColor,
     upItem,
+    pasteElement,
 } from '../../core/objects/objects'
 import { changePresentationName } from '../../core/presentation/presentation'
 import { deleteAllObjectsFromSelection, selectObject, selectSlide } from '../../core/selection/selection'
@@ -227,7 +228,6 @@ export const initialState: Presentation = {
 
 export function presentationReducer(state: Presentation = initialState, action: PresentationActionType): Presentation
 {
-    console.log(state, action)
     switch (action.type)
     {
         case 'RENAME_PRESENTATION':
@@ -277,6 +277,8 @@ export function presentationReducer(state: Presentation = initialState, action: 
             return addImage(state, { source: action.payload })
         case 'ADD_BACKGROUND_IMAGE':
             return addBackgroundImage(state, { source: action.payload })
+        case 'PASTE_ELEMENT':
+            return pasteElement(state, {object: action.payload})
         default:
             return state
     }

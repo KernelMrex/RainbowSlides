@@ -302,20 +302,14 @@ function updateObject(slide: Slide, newObject: SlideObject): Slide
     }
 }
 
-export type CopyElementPayload = {
-    copiedElement: SlideObject | undefined
+export type PasteElementPayload = {
+    object: SlideObject | undefined
 }
 
-export function copyElement(presentation: Presentation, payload: CopyElementPayload): void
-{
-    const selectedObjects: Array<SlideObject> = getSelectedObjects(presentation);
-    setBufferElement((selectedObjects[0] === payload.copiedElement) ? payload.copiedElement : undefined)
-}
-
-export function pasteElement(presentation: Presentation): Presentation
+export function pasteElement(presentation: Presentation, object: PasteElementPayload): Presentation
 {
     const selectedSlide: Slide | null = getSelectedSlide(presentation)
-    let pastedElement: SlideObject | undefined = getBufferElement()
+    let pastedElement: SlideObject | undefined = object.object
     if (pastedElement === undefined || selectedSlide === null)
     {
         return presentation
