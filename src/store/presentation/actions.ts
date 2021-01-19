@@ -17,9 +17,9 @@ import {
     SELECT_SLIDE,
     UNSELECT_OBJECT,
     UP_ITEM,
-    DOWN_ITEM, ADD_IMAGE, ADD_BACKGROUND_IMAGE
+    DOWN_ITEM, ADD_IMAGE, ADD_BACKGROUND_IMAGE, PASTE_ELEMENT
 } from './types'
-import {Anchor, Presentation, SlideObject} from "../../core/types";
+import {Anchor, Presentation, Slide, SlideObject} from "../../core/types";
 
 export function renamePresentation(name: string): PresentationActionType
 {
@@ -197,5 +197,13 @@ export function addBackgroundImage(source: string): PresentationActionType
     return {
         type: ADD_BACKGROUND_IMAGE,
         payload: source
+    }
+}
+
+export function pasteElement(object: SlideObject | undefined): PresentationActionType
+{
+    return {
+        type: PASTE_ELEMENT,
+        payload: object
     }
 }

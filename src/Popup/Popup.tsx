@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './Popup.module.css'
 import * as type from '../core/types';
-import {getPresentationFromJSON, createPresentation} from '../core/presentation/presentation';
+import {createPresentation} from '../core/presentation/presentation';
 import ImportPresentation from './ImportPresentation/ImportPresentation';
 import {RootState} from "../store/store";
 import {closePopup} from "../store/popup/actions";
@@ -24,10 +24,13 @@ function Popup(props: PopupProps)
     {
         case 'importPresentation':
             content = <ImportPresentation setNewPresentation={props.downloadPresentation}/>;
+            break;
         case 'importImage':
             content = <ImportImage getNewImage={props.addImage}/>;
+            break;
         case 'importBackgroundImage':
             content = <ImportImage getNewImage={props.addBackgroundImage}/>;
+            break;
     }
 
     let presentation: type.Presentation = createPresentation({});
