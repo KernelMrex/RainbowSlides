@@ -11,16 +11,12 @@ export function popupReducer(state: Popup = initialState, action: PopupActionTyp
     {
         case 'CLOSE_POPUP':
             return {state: 'close'}
-            break
         case 'IMPORT_PRESENTATION':
             return {state: 'importPresentation'}
-            break
         case 'IMPORT_IMAGE':
             return {state: 'importImage'}
-            break
         case 'IMPORT_BACKGROUND_IMAGE':
             return {state: 'importBackgroundImage'}
-            break
         default:
             return state
     }

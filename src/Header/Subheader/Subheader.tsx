@@ -12,6 +12,11 @@ import {
     downItem,
     removeColor,
     upItem,
+    undo,
+    redo,
+    changeTextSize,
+    changeTextColor,
+    changeTextFamily,
 } from '../../store/presentation/actions'
 import { RootState } from '../../store/store'
 import Counter from './Counter/Counter'
@@ -20,10 +25,11 @@ import Tool from './Tool/Tool'
 import ToolInput from './Tool/ToolInput'
 
 const mapState = (state: RootState) => ({
-    selectedSlideId: state.presentation.selection.slide,
-    slides: state.presentation.slides,
-    selectedObjectId: state.presentation.selection.objects,
+    selectedSlideId: state.presentation.presentation.selection.slide,
+    slides: state.presentation.presentation.slides,
+    selectedObjectId: state.presentation.presentation.selection.objects,
 })
+
 const mapDispatch = {
     addSlide: addSlide,
     deleteSlide: deleteSlide,
@@ -36,6 +42,11 @@ const mapDispatch = {
     downItem: downItem,
     importImagePopup: importImagePopup,
     importBackgroundImagePopup: importBackgroundImagePopup,
+    undo: undo,
+    redo: redo,
+    changeTextSize: changeTextSize,
+    changeTextColor: changeTextColor,
+    changeTextFamily: changeTextFamily,
 }
 
 type DispatchProps = typeof mapDispatch
@@ -49,11 +60,13 @@ function Subheader(props: SubheaderProps)
     const selectedObject: SlideObject | undefined = currentSlide?.objects.find((object) => object.id === props.selectedObjectId[0])
     let isImage: boolean = false
     let isFigure: boolean = false
+    let isText: boolean = false
 
     if (selectedObject)
     {
         isFigure = selectedObject.type === 'rectangle' || selectedObject.type === 'circle' || selectedObject.type === 'triangle' || selectedObject.type === 'text'
         isImage = selectedObject.type === 'image'
+        isText = selectedObject.type === 'text'
     }
 
     return (
@@ -62,9 +75,9 @@ function Subheader(props: SubheaderProps)
                 <Counter current={ currentIndex } max={ props.slides.length }/>
                 <Tool content={ 'plus' } onClick={ props.addSlide }/>
                 <Tool content={ 'minus' } onClick={ props.deleteSlide }/>
-                <Tool content={ 'undo' } onClick={ props.deleteSlide }/>
-                <Tool content={ 'redo' } onClick={ props.deleteSlide }/>
-                <ToolInput onClick={ props.changeColorSlide }/>
+                <Tool content={ 'undo' } onClick={ props.undo }/>
+                <Tool content={ 'redo' } onClick={ props.redo }/>
+                <ToolInput type={'color'} onClick={ props.changeColorSlide }/>
                 <Tool content={ 'slide-bck' } onClick={ props.importBackgroundImagePopup }/>
             </div>
             <div className={ 'subheader__object-tool' }>
@@ -81,14 +94,19 @@ function Subheader(props: SubheaderProps)
             <div className={ 'subheader__figure_tool' }>
                 { isFigure &&
                 <>
-                    <ToolInput onClick={ props.changeColor }/>
+                    <ToolInput type={'color'} onClick={ props.changeColor }/>
                     <Tool content={ 'no-color' } onClick={ props.removeColor }/>
-                    <Tool content={ 'border' } onClick={ () => props.addObject(getPayloadForAddObject('triangle')) }/>
-                    <Tool content={ 'paint-brush' } onClick={ () => props.addObject(getPayloadForAddObject('rectangle')) }/>
                 </>
                 }
                 <Tool content={ 'item-down' } onClick={ props.downItem }/>
                 <Tool content={ 'item-up' } onClick={ props.upItem }/>
+                { isText &&
+                <>
+                    <ToolInput type={ 'color' } onClick={ props.changeTextColor }/>
+                    <ToolInput type={ 'select' } content={ 'font-family' } onClick={ props.changeTextFamily } items={['Open Sans', 'Roboto']}/>
+                    <ToolInput type={ 'select' } content={ 'font-size' } onClick={ props.changeTextSize } items={[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 24, 36, 48, 56, 66, 78, 102]}/>
+                </>
+                }
             </div>
             }
         </div>

@@ -10,14 +10,18 @@ import {
     downItem,
     removeColor,
     upItem,
+    pasteElement,
+    changeTextSize,
+    changeTextColor,
+    changeTextFamily,
 } from '../../core/objects/objects'
-import { changePresentationName } from '../../core/presentation/presentation'
-import { deleteAllObjectsFromSelection, selectObject, selectSlide } from '../../core/selection/selection'
-import { addSlide, changeOrderOfSlide, changesSlidesBackground, deleteSlide } from '../../core/slides/slides'
+import {changePresentationName} from '../../core/presentation/presentation'
+import {deleteAllObjectsFromSelection, selectObject, selectSlide} from '../../core/selection/selection'
+import {addSlide, changeOrderOfSlide, changesSlidesBackground, deleteSlide} from '../../core/slides/slides'
 import * as type from '../../core/types'
-import { Presentation } from '../../core/types'
+import {AppState, Presentation} from '../../core/types'
 import src from '../../src'
-import { PresentationActionType } from './types'
+import {PresentationActionType} from './types'
 
 const textFor1: type.TextBlock = {
     id: 'f134',
@@ -46,7 +50,7 @@ const textFor1: type.TextBlock = {
     stroke: {
         style: 'dashed',
         width: 0,
-        color: { hex: '#000000' },
+        color: {hex: '#000000'},
     },
 }
 
@@ -76,7 +80,7 @@ const textFor2: type.TextBlock = {
     stroke: {
         style: 'dashed',
         width: 0,
-        color: { hex: '#000000' },
+        color: {hex: '#000000'},
     },
 }
 
@@ -97,7 +101,7 @@ const picture: type.ImageBlock = {
     stroke: {
         style: 'dashed',
         width: 0,
-        color: { hex: '#000000' },
+        color: {hex: '#000000'},
     },
 }
 
@@ -118,7 +122,7 @@ const picture2: type.ImageBlock = {
     stroke: {
         style: 'dashed',
         width: 0,
-        color: { hex: '#000000' },
+        color: {hex: '#000000'},
     },
 }
 
@@ -138,7 +142,7 @@ const simpleRectangle: type.RectangleBlock = {
     stroke: {
         style: 'dashed',
         width: 0,
-        color: { hex: '#000000' },
+        color: {hex: '#000000'},
     },
 }
 
@@ -158,7 +162,7 @@ const simpleCircle: type.CircleBlock = {
     stroke: {
         style: 'dashed',
         width: 0,
-        color: { hex: '#000000' },
+        color: {hex: '#000000'},
     },
 }
 
@@ -178,13 +182,13 @@ const simpleTriangle: type.TriangleBlock = {
     stroke: {
         style: 'dashed',
         width: 0,
-        color: { hex: '#000000' },
+        color: {hex: '#000000'},
     },
 }
 
 const slide1: type.Slide = {
     id: 'f321',
-    objects: [ picture, simpleRectangle, simpleCircle, simpleTriangle, textFor1 ],
+    objects: [picture, simpleRectangle, simpleCircle, simpleTriangle, textFor1],
     background: {
         hex: '#d2508b',
     },
@@ -192,7 +196,7 @@ const slide1: type.Slide = {
 
 const slide2: type.Slide = {
     id: 'f421',
-    objects: [ picture2, textFor2 ],
+    objects: [picture2, textFor2],
     background: {
         hex: '#a2ee9a',
     },
@@ -214,66 +218,232 @@ const slide4: type.Slide = {
     },
 }
 
-export const initialState: Presentation = {
+const initialPresentation: Presentation = {
     name: 'my first presentation',
-    slides: [ slide1, slide2, slide3, slide4 ],
+    slides: [],
     selection: {
-        slide: slide1.id,
+        slide: null,
         objects: [],
     },
 }
 
-export function presentationReducer(state: Presentation = initialState, action: PresentationActionType): Presentation
+export const initialState: AppState<Presentation> = {
+    presentation: {
+        name: 'my first presentation',
+        slides: [slide1, slide2, slide3, slide4],
+        selection: {
+        slide: slide1.id,
+            objects: [],
+        }
+    },
+    history: {
+        undo: [],
+        redo: []
+    }
+}
+
+export function presentationReducer(state: AppState<Presentation> = initialState, action: PresentationActionType): AppState<Presentation>
 {
     switch (action.type)
     {
         case 'RENAME_PRESENTATION':
-            return changePresentationName(state, { name: action.payload })
+            return {
+                presentation: changePresentationName(state.presentation, {name: action.payload}),
+                history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         case 'CHANGE_SLIDE':
-            return changeOrderOfSlide(state, {
-                place: action.payload.place,
-                currentSlideId: action.payload.currentSlideId,
-            })
+            return {
+                presentation: changeOrderOfSlide(state.presentation, {
+                    place: action.payload.place,
+                    currentSlideId: action.payload.currentSlideId,
+                }), history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         case 'SELECT_OBJECT':
-            return selectObject(state, { objectId: action.payload.objectId })
+            return {
+                presentation: selectObject(state.presentation, {objectId: action.payload.objectId}),
+                history: state.history
+            }
         case 'UNSELECT_OBJECT':
-            return deleteAllObjectsFromSelection(state)
+            return {presentation: deleteAllObjectsFromSelection(state.presentation), history: state.history}
         case 'SELECT_SLIDE':
-            return selectSlide(state, { slide: action.payload.slide })
+            return {
+                presentation: selectSlide(state.presentation, {slide: action.payload.slide}),
+                history: state.history
+            }
         case 'CHANGE_SIZE':
-            return changeObjectSize(state, {
-                newPosition: action.payload.newPosition,
-                newHeight: action.payload.newHeight,
-                newWidth: action.payload.newWidth,
-            })
+            return {
+                presentation: changeObjectSize(state.presentation, {
+                    newPosition: action.payload.newPosition,
+                    newHeight: action.payload.newHeight,
+                    newWidth: action.payload.newWidth,
+                }), history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         case 'CHANGE_POSITION':
-            return changeObjectPosition(state, { newPosition: action.payload.newPosition })
+            return {
+                presentation: changeObjectPosition(state.presentation, {newPosition: action.payload.newPosition}),
+                history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         case 'CHANGE_TEXT':
-            return changeTextContent(state, { newContent: action.payload.newContent })
+            return {
+                presentation: changeTextContent(state.presentation, {newContent: action.payload.newContent}), history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         case 'DOWNLOAD_PRESENTATION':
-            return action.payload
+            return {presentation: action.payload, history: state.history}
         case 'ADD_SLIDE':
-            return addSlide(state)
+            return {
+                presentation: addSlide(state.presentation), history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         case 'DELETE_SLIDE':
-            return deleteSlide(state)
+            return {
+                presentation: deleteSlide(state.presentation),
+                history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         case 'ADD_OBJECT':
-            return addObjectToSlide(state, { object: action.payload })
+            return {
+                presentation: addObjectToSlide(state.presentation, {object: action.payload}),
+                history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         case 'DELETE_OBJECT':
-            return deleteObject(state)
+            return {
+                presentation: deleteObject(state.presentation),
+                history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         case 'CHANGE_COLOR':
-            return changeColor(state, { hex: action.payload })
+            return {
+                presentation: changeColor(state.presentation, {hex: action.payload}),
+                history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         case 'CHANGE_COLOR_SLIDE':
-            return changesSlidesBackground(state, { background: { hex: action.payload } })
+            return {
+                presentation: changesSlidesBackground(state.presentation, {background: {hex: action.payload}}),
+                history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         case 'REMOVE_COLOR':
-            return removeColor(state)
+            return {
+                presentation: removeColor(state.presentation), history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         case 'UP_ITEM':
-            return upItem(state)
+            return {
+                presentation: upItem(state.presentation), history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         case 'DOWN_ITEM':
-            return downItem(state)
+            return {
+                presentation: downItem(state.presentation), history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         case 'ADD_IMAGE':
-            return addImage(state, { source: action.payload })
+            return {
+                presentation: addImage(state.presentation, {source: action.payload}), history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         case 'ADD_BACKGROUND_IMAGE':
-            return addBackgroundImage(state, { source: action.payload })
+            return {
+                presentation: addBackgroundImage(state.presentation, {source: action.payload}),
+                history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
+        case 'PASTE_ELEMENT':
+            return {
+                presentation: pasteElement(state.presentation, {object: action.payload}), history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
+        case 'UNDO':
+            if (!state.history.undo[0])
+            {
+                return state
+            }
+
+            const previous: Presentation = state.history.undo[state.history.undo.length - 1]
+            const newPast: Array<Presentation> = state.history.undo.slice(0, state.history.undo.length - 1)
+            return {
+                presentation: previous,
+                history: {
+                    undo: newPast,
+                    redo: [state.presentation, ...state.history.redo]
+                }
+            }
+        case 'REDO':
+            if (!state.history.redo[0])
+            {
+                return state
+            }
+                const next: Presentation = state.history.redo[0]
+                const newFuture: Array<Presentation> = state.history.redo.slice(1)
+                return {
+                    presentation: next,
+                    history: {
+                        undo: [...state.history.undo, state.presentation],
+                        redo: newFuture
+                    }
+                }
+        case 'CHANGE_TEXT_SIZE':
+            return {
+                presentation: changeTextSize(state.presentation, {size: action.payload}), history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
+        case 'CHANGE_TEXT_COLOR':
+            return {
+                presentation: changeTextColor(state.presentation, {hex: action.payload}), history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
+        case 'CHANGE_TEXT_FAMILY':
+            return {
+                presentation: changeTextFamily(state.presentation, {family: action.payload}), history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         default:
             return state
     }

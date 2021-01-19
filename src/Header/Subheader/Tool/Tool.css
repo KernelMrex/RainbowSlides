@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,600;1,400&display=swap');
+
 .tool
 {
     width: 32px;
@@ -87,6 +90,57 @@
 .tool__slide-bck
 {
     background: url('./icons/slide-bck.svg') no-repeat center;
+}
+
+.tool__image_font-family-color
+{
+    content: ' ';
+    background: white;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    margin-left: 172px;
+    pointer-events: none;
+}
+
+.tool__image_font-family
+{
+    content: ' ';
+    background: url('./icons/font-family.svg') no-repeat center;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    margin-left: 172px;
+    pointer-events: none;
+}
+
+.tool__font-size,
+.tool__font-family
+{
+    border: none;
+    appearance: none;
+}
+
+.tool__image_font-size
+{
+    content: ' ';
+    background: url('./icons/font-size.svg') no-repeat center;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    margin-left: 255px;
+    pointer-events: none;
+}
+
+.tool__image_font-size-color
+{
+    content: ' ';
+    background: white;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    margin-left: 255px;
+    pointer-events: none;
 }
 
 .tool:hover

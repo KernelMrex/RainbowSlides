@@ -11,9 +11,9 @@ export type HorizontalLineSlides = {
 }
 
 const mapState = (state: RootState) => ({
-    slideId: state.presentation.selection.slide,
-    slides: state.presentation.slides,
-    selectedSlide: state.presentation.selection.slide,
+    slideId: state.presentation.presentation.selection.slide,
+    slides: state.presentation.presentation.slides,
+    selectedSlide: state.presentation.presentation.selection.slide,
 })
 const mapDispatch = { selectSlide: selectSlide }
 type DispatchProps = typeof mapDispatch

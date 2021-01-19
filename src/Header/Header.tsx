@@ -12,7 +12,7 @@ import './Header.css'
 import Logo from './Logo/Logo'
 import Submenu from './Submenu/Submenu'
 
-const mapState = (state: RootState) => ({ presentation: state.presentation })
+const mapState = (state: RootState) => ({ presentation: state.presentation.presentation })
 const mapDispatch = { renamePresentation: renamePresentation, importPresentationPopup: importPresentationPopup }
 
 type StateProps = ReturnType<typeof mapState>
