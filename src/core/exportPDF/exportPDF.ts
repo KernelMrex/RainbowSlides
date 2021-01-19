@@ -124,19 +124,16 @@ function prepareToRender(doc: jsPDF, object: SlideObject): void
 {
     if ('background' in object)
     {
-        console.log('figure background', object.id, ...hexToRGB(object.background.hex))
         doc.setFillColor(...hexToRGB(object.background.hex))
     }
 
     if ('color' in object)
     {
-        console.log('figure color', object.id, ...hexToRGB(object.color.hex))
         doc.setTextColor(...hexToRGB(object.color.hex))
     }
 
     if ('stroke' in object && typeof object.stroke === 'object')
     {
-        console.log('figure stroke', object.id, ...hexToRGB(object.stroke.color.hex))
         doc.setDrawColor(...hexToRGB(object.stroke.color.hex))
     }
 }
