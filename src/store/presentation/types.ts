@@ -32,6 +32,7 @@ export const PASTE_ELEMENT = 'PASTE_ELEMENT'
 export const UNDO = 'UNDO'
 export const REDO = 'REDO'
 export const CHANGE_TEXT_SIZE = 'CHANGE_TEXT_SIZE'
+export const CHANGE_TEXT_COLOR = 'CHANGE_TEXT_COLOR'
 
 interface RenamePresentationAction {
     type: typeof RENAME_PRESENTATION
@@ -144,6 +145,11 @@ interface ChangeTextSizeAction {
     payload: number
 }
 
+interface ChangeTextColorAction {
+    type: typeof CHANGE_TEXT_COLOR,
+    payload: string
+}
+
 export type PresentationActionType =
     RenamePresentationAction |
     ChangeSlideAction |
@@ -168,4 +174,5 @@ export type PresentationActionType =
     PasteElementAction |
     UndoAction |
     RedoAction |
-    ChangeTextSizeAction
+    ChangeTextSizeAction |
+    ChangeTextColorAction

@@ -12,6 +12,7 @@ import {
     upItem,
     pasteElement,
     changeTextSize,
+    changeTextColor,
 } from '../../core/objects/objects'
 import {changePresentationName} from '../../core/presentation/presentation'
 import {deleteAllObjectsFromSelection, selectObject, selectSlide} from '../../core/selection/selection'
@@ -426,6 +427,13 @@ export function presentationReducer(state: AppState<Presentation> = initialState
         case 'CHANGE_TEXT_SIZE':
             return {
                 presentation: changeTextSize(state.presentation, {size: action.payload}), history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
+        case 'CHANGE_TEXT_COLOR':
+            return {
+                presentation: changeTextColor(state.presentation, {hex: action.payload}), history: {
                     ...state.history,
                     undo: [...state.history.undo, state.presentation],
                 }

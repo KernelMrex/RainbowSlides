@@ -4,7 +4,7 @@ import './Tool.css'
 interface ToolInput
 {
     content?: string,
-    items?: Array<number>,
+    items?: Array<number | string>,
     onClick: (color: any) => void,
     colorPick?: boolean,
     type: 'color' | 'select'
@@ -23,7 +23,7 @@ export default function ToolInput(props: ToolInput)
                 <span className={`tool__image_${props.content}`}></span>
                 <select className={`tool ${contentClassName}`} onChange={(event) => props.onClick(event.target.value)}>
                     <option>--</option>
-                    {(props.items as Array<number>).map((item, index) =>
+                    {(props.items as Array<number | string>).map((item, index) =>
                     {
                         return <option key={index} value={item}>{item}</option>
                     })}

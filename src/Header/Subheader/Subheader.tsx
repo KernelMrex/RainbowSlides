@@ -15,6 +15,7 @@ import {
     undo,
     redo,
     changeTextSize,
+    changeTextColor,
 } from '../../store/presentation/actions'
 import { RootState } from '../../store/store'
 import Counter from './Counter/Counter'
@@ -43,6 +44,7 @@ const mapDispatch = {
     undo: undo,
     redo: redo,
     changeTextSize: changeTextSize,
+    changeTextColor: changeTextColor,
 }
 
 type DispatchProps = typeof mapDispatch
@@ -98,8 +100,8 @@ function Subheader(props: SubheaderProps)
                 <Tool content={ 'item-up' } onClick={ props.upItem }/>
                 { isText &&
                 <>
-                    <ToolInput type={ 'color' } onClick={ props.changeColor }/>
-                    <Tool content={ 'font-family' } onClick={ props.removeColor }/>
+                    <ToolInput type={ 'color' } onClick={ props.changeTextColor }/>
+                    <Tool content={ 'font-family' } onClick={ console.log }/>
                     <ToolInput type={ 'select' } content={ 'font-size' } onClick={ props.changeTextSize } items={[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 24, 36, 48, 56, 66, 78, 102]}/>
                 </>
                 }

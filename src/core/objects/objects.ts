@@ -227,7 +227,7 @@ export function changeMediaSource(presentation: Presentation, payload: ChangeMed
 
 export function deleteObject(presentation: Presentation): Presentation
 {
-    let newPresentation: Presentation = { ...presentation }
+    let newPresentation: Presentation = {...presentation}
 
     const selectedObject: SlideObject = getSelectedObjects(newPresentation)[0]
     const selectedSlide: Slide | null = getSelectedSlide(newPresentation)
@@ -282,6 +282,26 @@ export function changeTextSize(presentation: Presentation, payload: ChangeTextSi
         font: {
             ...selectedObject.font,
             size: payload.size
+        }
+    }))
+}
+
+export type ChangeTextColorPayload = {
+    hex: string
+}
+
+export function changeTextColor(presentation: Presentation, payload: ChangeTextColorPayload): Presentation
+{
+    const [slide, [selectedObject]] = getSelected(presentation)
+    if (!slide || !selectedObject || selectedObject.type !== 'text')
+    {
+        return presentation
+    }
+
+    return updateSlide(presentation, updateObject(slide, {
+        ...selectedObject,
+        color: {
+            hex: payload.hex
         }
     }))
 }
@@ -349,8 +369,10 @@ export function pasteElement(presentation: Presentation, object: PasteElementPay
 function getPastedElementPosition(pastedElement: SlideObject, selectedSlide: Slide): Anchor
 {
     let newPosition: Anchor = {x: pastedElement.position.x - 25, y: pastedElement.position.y - 25};
-    selectedSlide.objects.map((object) => {
-        if (isClone(object, pastedElement) && (object.position.x === newPosition.x && object.position.y === newPosition.y)) {
+    selectedSlide.objects.map((object) =>
+    {
+        if (isClone(object, pastedElement) && (object.position.x === newPosition.x && object.position.y === newPosition.y))
+        {
             newPosition = {x: newPosition.x - 25, y: newPosition.y - 25}
         }
     })
