@@ -65,14 +65,12 @@ async function renderObjectOnPDF(doc: jsPDF, object: SlideObject): Promise<void>
 
 function renderRectangleOnPDF(doc: jsPDF, rectangle: RectangleBlock): void
 {
-    const params = (rectangle.stroke !== undefined) ? 'FD' : 'F'
-    doc.rect(rectangle.position.x, rectangle.position.y, rectangle.width, rectangle.height, params)
+    doc.rect(rectangle.position.x, rectangle.position.y, rectangle.width, rectangle.height, 'F')
 }
 
 function renderCircleOnPDF(doc: jsPDF, circle: CircleBlock): void
 {
-    const params = (circle.stroke !== undefined) ? 'FD' : 'F'
-    doc.ellipse(circle.position.x + circle.width / 2, circle.position.y + circle.height / 2, circle.width / 2, circle.height / 2, params)
+    doc.ellipse(circle.position.x + circle.width / 2, circle.position.y + circle.height / 2, circle.width / 2, circle.height / 2, 'F')
 }
 
 function renderTextOnPDF(doc: jsPDF, text: TextBlock): void
@@ -84,7 +82,6 @@ function renderTextOnPDF(doc: jsPDF, text: TextBlock): void
 
 function renderTriangleOnPDF(doc: jsPDF, triangle: TriangleBlock): void
 {
-    const params = (triangle.stroke !== undefined) ? 'FD' : 'F'
     doc.triangle(
         triangle.position.x,
         triangle.position.y + triangle.height,
@@ -92,7 +89,7 @@ function renderTriangleOnPDF(doc: jsPDF, triangle: TriangleBlock): void
         triangle.position.y,
         triangle.position.x + triangle.width,
         triangle.position.y + triangle.height,
-        params,
+        'F',
     )
 }
 
