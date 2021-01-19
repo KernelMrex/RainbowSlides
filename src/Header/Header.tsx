@@ -67,7 +67,10 @@ function Header(props: HeaderProps)
                 </div>
             </div>
             <div className={ 'header__buttons-wrapper' }>
-                <Button color={ 'white' } size={ 'm' }>Предпросмотр</Button>
+                <Button color={ 'white' } size={ 'm' } onClick={async () => {
+                    const builtPDF = await exportPDF(props.presentation)
+                    builtPDF.output('dataurlnewwindow');
+                }}>Предпросмотр</Button>
             </div>
         </div>
     )

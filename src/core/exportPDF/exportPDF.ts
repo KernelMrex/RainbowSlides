@@ -21,6 +21,10 @@ export async function exportPDF(model: Presentation): Promise<jsPDF>
         unit: 'px',
     })
 
+    doc.setProperties({
+        title: model.name,
+    })
+
     doc.addFileToVFS('Roboto.ttf', roboto)
     doc.addFont('Roboto.ttf', 'Roboto', 'normal')
     doc.addFileToVFS('OpenSans.ttf', openSans)
