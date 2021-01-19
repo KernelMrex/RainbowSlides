@@ -24,7 +24,7 @@ export async function exportPDF(model: Presentation): Promise<jsPDF>
     doc.addFileToVFS('Roboto.ttf', roboto)
     doc.addFont('Roboto.ttf', 'Roboto', 'normal')
     doc.addFileToVFS('OpenSans.ttf', openSans)
-    doc.addFont('OpenSans.ttf', 'OpenSans', 'normal')
+    doc.addFont('OpenSans.ttf', 'Open Sans', 'normal')
 
     for (const [ index, slide ] of model.slides.entries())
     {
@@ -39,6 +39,12 @@ async function renderSlideOnPDF(doc: jsPDF, slide: Slide, index: number): Promis
     if (index !== 0)
     {
         doc.addPage()
+    }
+
+    if ('hex' in slide.background)
+    {
+        doc.setFillColor(slide.background.hex)
+        doc.rect(0, 0, PDF_EXPORT_SIZE.X, PDF_EXPORT_SIZE.Y, 'F')
     }
 
     for (const object of slide.objects)
