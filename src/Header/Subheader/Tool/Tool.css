@@ -96,9 +96,30 @@
 
 .tool__font-size
 {
-    background: url('./icons/font-size.svg') no-repeat center;
     border: none;
     appearance: none;
+}
+
+.tool__image_font-size
+{
+    content: ' ';
+    background: url('./icons/font-size.svg') no-repeat center;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    margin-left: 255px;
+    pointer-events: none;
+}
+
+.tool__image_font-size-color
+{
+    content: ' ';
+    background: white;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    margin-left: 255px;
+    pointer-events: none;
 }
 
 .tool:hover

@@ -18,13 +18,17 @@ export default function ToolInput(props: ToolInput)
     if (props.type === 'select' || props.items || props.items !== undefined)
     {
         render =
-            <select className={`tool ${contentClassName}`} onChange={(event) => props.onClick(event.target.value)}>
-                <option>--</option>
-                {(props.items as Array<number>).map((item, index) =>
-                {
-                    return <option key={index} value={ item }>{ item }</option>
-                })}
-            </select>
+            <>
+                <span className={`tool__image_${props.content}-color`}></span>
+                <span className={`tool__image_${props.content}`}></span>
+                <select className={`tool ${contentClassName}`} onChange={(event) => props.onClick(event.target.value)}>
+                    <option>--</option>
+                    {(props.items as Array<number>).map((item, index) =>
+                    {
+                        return <option key={index} value={item}>{item}</option>
+                    })}
+                </select>
+            </>
     } else
     {
         render = <input type={'color'} className={`tool ${contentClassName}`} onChange={onChange}/>
