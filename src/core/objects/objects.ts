@@ -306,6 +306,27 @@ export function changeTextColor(presentation: Presentation, payload: ChangeTextC
     }))
 }
 
+export type ChangeTextFamilyPayload = {
+    family: string
+}
+
+export function changeTextFamily(presentation: Presentation, payload: ChangeTextFamilyPayload): Presentation
+{
+    const [slide, [selectedObject]] = getSelected(presentation)
+    if (!slide || !selectedObject || selectedObject.type !== 'text')
+    {
+        return presentation
+    }
+
+    return updateSlide(presentation, updateObject(slide, {
+        ...selectedObject,
+        font: {
+            ...selectedObject.font,
+            family: payload.family
+        }
+    }))
+}
+
 export type ChangeObjectSizePayload = {
     newPosition: Anchor
     newWidth: number | null

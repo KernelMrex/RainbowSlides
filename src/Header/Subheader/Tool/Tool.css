@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,600;1,400&display=swap');
+
 .tool
 {
     width: 32px;
@@ -89,12 +92,30 @@
     background: url('./icons/slide-bck.svg') no-repeat center;
 }
 
-.tool__font-family
+.tool__image_font-family-color
 {
-    background: url('./icons/font-family.svg') no-repeat center;
+    content: ' ';
+    background: white;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    margin-left: 172px;
+    pointer-events: none;
 }
 
-.tool__font-size
+.tool__image_font-family
+{
+    content: ' ';
+    background: url('./icons/font-family.svg') no-repeat center;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    margin-left: 172px;
+    pointer-events: none;
+}
+
+.tool__font-size,
+.tool__font-family
 {
     border: none;
     appearance: none;

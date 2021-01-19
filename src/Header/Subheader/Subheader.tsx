@@ -16,6 +16,7 @@ import {
     redo,
     changeTextSize,
     changeTextColor,
+    changeTextFamily,
 } from '../../store/presentation/actions'
 import { RootState } from '../../store/store'
 import Counter from './Counter/Counter'
@@ -45,6 +46,7 @@ const mapDispatch = {
     redo: redo,
     changeTextSize: changeTextSize,
     changeTextColor: changeTextColor,
+    changeTextFamily: changeTextFamily,
 }
 
 type DispatchProps = typeof mapDispatch
@@ -101,7 +103,7 @@ function Subheader(props: SubheaderProps)
                 { isText &&
                 <>
                     <ToolInput type={ 'color' } onClick={ props.changeTextColor }/>
-                    <Tool content={ 'font-family' } onClick={ console.log }/>
+                    <ToolInput type={ 'select' } content={ 'font-family' } onClick={ props.changeTextFamily } items={['Open Sans', 'Roboto']}/>
                     <ToolInput type={ 'select' } content={ 'font-size' } onClick={ props.changeTextSize } items={[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 24, 36, 48, 56, 66, 78, 102]}/>
                 </>
                 }

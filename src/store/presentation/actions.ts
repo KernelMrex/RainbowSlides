@@ -24,7 +24,8 @@ import {
     SELECT_SLIDE,
     UNDO,
     UNSELECT_OBJECT,
-    UP_ITEM
+    UP_ITEM,
+    CHANGE_TEXT_FAMILY
 } from './types'
 import {Anchor, Presentation, SlideObject} from "../../core/types";
 
@@ -242,5 +243,13 @@ export function changeTextColor(color: string): PresentationActionType
     return {
         type: CHANGE_TEXT_COLOR,
         payload: color
+    }
+}
+
+export function changeTextFamily(family: string): PresentationActionType
+{
+    return {
+        type: CHANGE_TEXT_FAMILY,
+        payload: family
     }
 }

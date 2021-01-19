@@ -33,6 +33,7 @@ export const UNDO = 'UNDO'
 export const REDO = 'REDO'
 export const CHANGE_TEXT_SIZE = 'CHANGE_TEXT_SIZE'
 export const CHANGE_TEXT_COLOR = 'CHANGE_TEXT_COLOR'
+export const CHANGE_TEXT_FAMILY = 'CHANGE_TEXT_FAMILY'
 
 interface RenamePresentationAction {
     type: typeof RENAME_PRESENTATION
@@ -150,6 +151,11 @@ interface ChangeTextColorAction {
     payload: string
 }
 
+interface ChangeTextFamilyAction {
+    type: typeof CHANGE_TEXT_FAMILY,
+    payload: string
+}
+
 export type PresentationActionType =
     RenamePresentationAction |
     ChangeSlideAction |
@@ -175,4 +181,5 @@ export type PresentationActionType =
     UndoAction |
     RedoAction |
     ChangeTextSizeAction |
-    ChangeTextColorAction
+    ChangeTextColorAction |
+    ChangeTextFamilyAction
