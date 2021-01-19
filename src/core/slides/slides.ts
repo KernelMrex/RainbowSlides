@@ -25,7 +25,7 @@ function getDefaultSlide(): Slide
 export function deleteSlide(presentation: Presentation): Presentation
 {
     const currentSlideId: string | null = presentation.selection.slide;
-    if (currentSlideId !== null)
+    if (currentSlideId !== null && presentation.slides.length !== 0)
     {
         let newPresentation: Presentation = { ...presentation };
         newPresentation = deleteSlideFromSelection(newPresentation);

@@ -1,4 +1,6 @@
 import {
+    ADD_BACKGROUND_IMAGE,
+    ADD_IMAGE,
     ADD_OBJECT,
     ADD_SLIDE,
     CHANGE_COLOR,
@@ -7,19 +9,25 @@ import {
     CHANGE_SIZE,
     CHANGE_SLIDE,
     CHANGE_TEXT,
+    CHANGE_TEXT_COLOR,
+    CHANGE_TEXT_SIZE,
     DELETE_OBJECT,
     DELETE_SLIDE,
+    DOWN_ITEM,
     DOWNLOAD_PRESENTATION,
+    PASTE_ELEMENT,
     PresentationActionType,
+    REDO,
     REMOVE_COLOR,
     RENAME_PRESENTATION,
     SELECT_OBJECT,
     SELECT_SLIDE,
+    UNDO,
     UNSELECT_OBJECT,
     UP_ITEM,
-    DOWN_ITEM, ADD_IMAGE, ADD_BACKGROUND_IMAGE, PASTE_ELEMENT
+    CHANGE_TEXT_FAMILY
 } from './types'
-import {Anchor, Presentation, Slide, SlideObject} from "../../core/types";
+import {Anchor, Presentation, SlideObject} from "../../core/types";
 
 export function renamePresentation(name: string): PresentationActionType
 {
@@ -205,5 +213,43 @@ export function pasteElement(object: SlideObject | undefined): PresentationActio
     return {
         type: PASTE_ELEMENT,
         payload: object
+    }
+}
+
+export function undo(): PresentationActionType
+{
+    return {
+        type: UNDO,
+    }
+}
+
+export function redo(): PresentationActionType
+{
+    return {
+        type: REDO,
+    }
+}
+
+export function changeTextSize(size: number): PresentationActionType
+{
+    return {
+        type: CHANGE_TEXT_SIZE,
+        payload: size
+    }
+}
+
+export function changeTextColor(color: string): PresentationActionType
+{
+    return {
+        type: CHANGE_TEXT_COLOR,
+        payload: color
+    }
+}
+
+export function changeTextFamily(family: string): PresentationActionType
+{
+    return {
+        type: CHANGE_TEXT_FAMILY,
+        payload: family
     }
 }

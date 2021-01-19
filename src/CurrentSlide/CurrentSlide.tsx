@@ -4,13 +4,20 @@ import style from './CurrentSlide.module.css'
 import SlideObject from './SlideObject/SlideObject'
 import {connect} from "react-redux";
 import {RootState} from "../store/store";
-import {changeOrderOfSlide, unselectObject, deleteObject, pasteElement} from "../store/presentation/actions";
+import {
+    changeOrderOfSlide,
+    unselectObject,
+    deleteObject,
+    pasteElement,
+    undo,
+    redo
+} from "../store/presentation/actions";
 import {copyElement} from "../store/buffer/actions";
 
 const mapState = (state: RootState) => ({
-    slideId: state.presentation.selection.slide,
-    slides: state.presentation.slides,
-    selectedObjects: state.presentation.selection.objects,
+    slideId: state.presentation.presentation.selection.slide,
+    slides: state.presentation.presentation.slides,
+    selectedObjects: state.presentation.presentation.selection.objects,
     object: state.buffer.object,
 })
 const mapDispatch = {
@@ -19,6 +26,8 @@ const mapDispatch = {
     deleteObject: deleteObject,
     copyElement: copyElement,
     pasteElement: pasteElement,
+    undo: undo,
+    redo: redo,
 }
 type DispatchProps = typeof mapDispatch
 type StateProps = ReturnType<typeof mapState>
@@ -82,11 +91,18 @@ function CurrentSlide(props: CurrentSlideProps)
                 case 'v':
                     props.pasteElement(props.object)
                     break;
+                case 'z':
+                    props.undo()
+                    break;
+                case 'y':
+                    props.redo()
+                    break;
             }
         }
 
         if (event.key === 'Delete')
         {
+            event.preventDefault()
             props.deleteObject()
         }
     }
