@@ -1,19 +1,28 @@
 import React from 'react'
-import Counter from './Counter/Counter';
+import { connect } from 'react-redux'
+import { getPayloadForAddObject } from '../../common/createPayloads'
+import { Slide, SlideObject } from '../../core/types'
+import { importBackgroundImagePopup, importImagePopup } from '../../store/popup/actions'
+import {
+    addObject,
+    addSlide,
+    changeColor,
+    changeColorSlide,
+    deleteSlide,
+    downItem,
+    removeColor,
+    upItem,
+} from '../../store/presentation/actions'
+import { RootState } from '../../store/store'
+import Counter from './Counter/Counter'
 import './Subheader.css'
-import {connect} from "react-redux";
-import {RootState} from "../../store/store";
-import {Slide, SlideObject} from '../../core/types';
-import Tool from './Tool/Tool';
-import {addObject, addSlide, deleteSlide, changeColor, changeColorSlide, removeColor, upItem, downItem} from "../../store/presentation/actions";
-import {getPayloadForAddObject} from "../../common/createPayloads";
-import {importBackgroundImagePopup, importImagePopup, importPresentationPopup} from "../../store/popup/actions";
-import ToolInput from "./Tool/ToolInput";
+import Tool from './Tool/Tool'
+import ToolInput from './Tool/ToolInput'
 
 const mapState = (state: RootState) => ({
     selectedSlideId: state.presentation.selection.slide,
     slides: state.presentation.slides,
-    selectedObjectId: state.presentation.selection.objects
+    selectedObjectId: state.presentation.selection.objects,
 })
 const mapDispatch = {
     addSlide: addSlide,
@@ -38,8 +47,8 @@ function Subheader(props: SubheaderProps)
     const currentSlide: Slide | undefined = props.slides.find((slide) => slide.id === props.selectedSlideId)
     const currentIndex: number = currentSlide === undefined ? 0 : props.slides.indexOf(currentSlide) + 1
     const selectedObject: SlideObject | undefined = currentSlide?.objects.find((object) => object.id === props.selectedObjectId[0])
-    let isImage: boolean = false;
-    let isFigure: boolean = false;
+    let isImage: boolean = false
+    let isFigure: boolean = false
 
     if (selectedObject)
     {
@@ -48,35 +57,38 @@ function Subheader(props: SubheaderProps)
     }
 
     return (
-        <div className={'subheader'}>
-            <div className={'subheader__column subheader__column_content_center'}>
-                <Counter current={currentIndex} max={props.slides.length}/>
-                <Tool content={'plus'} onClick={props.addSlide}/>
-                <Tool content={'minus'} onClick={props.deleteSlide}/>
-                <Tool content={'undo'} onClick={props.deleteSlide}/>
-                <Tool content={'redo'} onClick={props.deleteSlide}/>
-                <ToolInput content={''} onClick={props.changeColorSlide}/>
-                <Tool content={'slide-bck'} onClick={props.importBackgroundImagePopup}/>
+        <div className={ 'subheader' }>
+            <div className={ 'subheader__column subheader__column_content_center' }>
+                <Counter current={ currentIndex } max={ props.slides.length }/>
+                <Tool content={ 'plus' } onClick={ props.addSlide }/>
+                <Tool content={ 'minus' } onClick={ props.deleteSlide }/>
+                <Tool content={ 'undo' } onClick={ props.deleteSlide }/>
+                <Tool content={ 'redo' } onClick={ props.deleteSlide }/>
+                <ToolInput onClick={ props.changeColorSlide }/>
+                <Tool content={ 'slide-bck' } onClick={ props.importBackgroundImagePopup }/>
             </div>
-            <div className={'subheader__object-tool'}>
-                <Tool content={'triangle'} onClick={(e) => props.addObject(getPayloadForAddObject('triangle'))}/>
-                <Tool content={'image'} onClick={props.importImagePopup}/>
-                <Tool content={'rectangle'} onClick={(e) => props.addObject(getPayloadForAddObject('rectangle'))}/>
-                <Tool content={'text'} onClick={(e) => props.addObject(getPayloadForAddObject('text'))}/>
-                <Tool content={'circle'} onClick={(e) => props.addObject(getPayloadForAddObject('circle'))}/>
+            <div className={ 'subheader__object-tool' }>
+                <Tool content={ 'triangle' } onClick={ () => props.addObject(getPayloadForAddObject('triangle')) }/>
+                <Tool content={ 'image' } onClick={ props.importImagePopup }/>
+                <Tool content={ 'rectangle' } onClick={ () => props.addObject(getPayloadForAddObject('rectangle')) }/>
+                <Tool content={ 'text' } onClick={ () => props.addObject(getPayloadForAddObject('text')) }/>
+                <Tool content={ 'circle' } onClick={ () => props.addObject(getPayloadForAddObject('circle')) }/>
             </div>
-            {(isFigure || isImage) &&
-            <div className={'subheader__figure_tool'}>
-                {isFigure &&
-                    <>
-                        <ToolInput content={''} onClick={props.changeColor}/>
-                        <Tool content={'no-color'} onClick={props.removeColor}/>
-                        <Tool content={'border'} onClick={(e) => props.addObject(getPayloadForAddObject('triangle'))}/>
-                        <Tool content={'paint-brush'} onClick={(e) => props.addObject(getPayloadForAddObject('rectangle'))}/>
-                    </>
+            <div className={ 'subheader__separator-wrapper' }>
+                <div className={ 'subheader__separator' }/>
+            </div>
+            { (isFigure || isImage) &&
+            <div className={ 'subheader__figure_tool' }>
+                { isFigure &&
+                <>
+                    <ToolInput onClick={ props.changeColor }/>
+                    <Tool content={ 'no-color' } onClick={ props.removeColor }/>
+                    <Tool content={ 'border' } onClick={ () => props.addObject(getPayloadForAddObject('triangle')) }/>
+                    <Tool content={ 'paint-brush' } onClick={ () => props.addObject(getPayloadForAddObject('rectangle')) }/>
+                </>
                 }
-                <Tool content={'item-down'} onClick={props.downItem}/>
-                <Tool content={'item-up'} onClick={props.upItem}/>
+                <Tool content={ 'item-down' } onClick={ props.downItem }/>
+                <Tool content={ 'item-up' } onClick={ props.upItem }/>
             </div>
             }
         </div>

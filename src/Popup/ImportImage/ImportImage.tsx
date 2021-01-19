@@ -1,5 +1,5 @@
-import React from 'react';
-import {getPayloadForDownloadImage} from '../../common/createPayloads';
+import React from 'react'
+import { getPayloadForDownloadImage } from '../../common/createPayloads'
 
 interface Popup
 {
@@ -18,7 +18,7 @@ export default function ImportImage(props: Popup)
                 }
             }}/>
             <input type={'file'}
-                   onChange={(e: any) => console.log(getPayloadForDownloadImage(e).then((image) => props.getNewImage(image as string)))}
+                   onChange={(e: any) => getPayloadForDownloadImage(e).then(image => props.getNewImage(image as string))}
                    accept={'image/jpeg,image/png'}/>
         </div>
     )

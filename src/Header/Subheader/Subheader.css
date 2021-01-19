@@ -1,7 +1,7 @@
 .subheader
 {
     height: 40px;
-    border-bottom: 1px solid #d5d5d5;
+    border-bottom: 1px solid #D5D5D5;
     display: flex;
 }
 
@@ -21,16 +21,31 @@
 
 .subheader__object-tool
 {
-    margin-left: 30px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
 
+.subheader__separator-wrapper
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 25px;
+}
+
+.subheader__separator
+{
+    height: 8px;
+    width: 8px;
+    border-radius: 100%;
+    background: #D5D5D5;
+}
+
 .subheader__figure_tool
 {
-    margin-left: 30px;
     display: flex;
     flex-direction: row;
     justify-content: center;

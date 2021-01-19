@@ -8,11 +8,10 @@
 {
     position: absolute;
     display: flex;
-    width: 15%;
+    width: 288px;
     height: 87%;
-    border: 1px;
-    border-style: none solid none none;
-    border-color: #d5d5d5;
+    border: 1px none #d5d5d5;
+    border-right-style: solid;
 }
 
 .content

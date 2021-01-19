@@ -5,7 +5,6 @@ import SlideObject from './SlideObject/SlideObject'
 import {connect} from "react-redux";
 import {RootState} from "../store/store";
 import {changeOrderOfSlide, unselectObject, deleteObject, pasteElement} from "../store/presentation/actions";
-import {bindKeys} from "../common/bindKeys";
 import {copyElement} from "../store/buffer/actions";
 
 const mapState = (state: RootState) => ({
