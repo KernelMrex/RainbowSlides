@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Button from '../Button/Button'
 import downloadPresentation from '../core/exportJSON/exportJSON'
+import { exportPDF } from '../core/exportPDF/exportPDF'
 import { Input } from '../Input/Input'
 import { importPresentationPopup } from '../store/popup/actions'
 import { renamePresentation } from '../store/presentation/actions'
@@ -46,7 +47,10 @@ function Header(props: HeaderProps)
                                 },
                                 {
                                     text: 'Экспорт в PDF',
-                                    onClick: () => console.log('Export pdf'),
+                                    onClick: async () => {
+                                        const builtPDF = await exportPDF(props.presentation)
+                                        builtPDF.save(props.presentation.name + '.pdf')
+                                    },
                                     stayOpenAfterClick: false,
                                 },
                             ],
