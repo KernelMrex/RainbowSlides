@@ -35,7 +35,7 @@ const textFor1: type.TextBlock = {
     content: 'Смотрите, кто тут у нас спрятался. ' +
         'А, это же пример текста. Круто!',
     font: {
-        family: 'Comic Sans MS',
+        family: 'OpenSans',
         size: 30,
         weight: 500,
         style: 'none',
@@ -65,7 +65,7 @@ const textFor2: type.TextBlock = {
     },
     content: 'ААА, выпустите их этого маленького прямоугольника. Контрл зет, контрл зеет!!!! Почему не работает?!!',
     font: {
-        family: 'Comic Sans MS',
+        family: 'Arial',
         size: 60,
         weight: 500,
         style: 'none',
@@ -217,17 +217,14 @@ const slide4: type.Slide = {
 export const initialState: Presentation = {
     name: 'my first presentation',
     slides: [ slide1, slide2, slide3, slide4 ],
-    //slides: [],
     selection: {
         slide: slide1.id,
-        //slide: null,
         objects: [],
     },
 }
 
 export function presentationReducer(state: Presentation = initialState, action: PresentationActionType): Presentation
 {
-    console.log(state, action)
     switch (action.type)
     {
         case 'RENAME_PRESENTATION':

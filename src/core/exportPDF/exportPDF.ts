@@ -1,5 +1,7 @@
 import { jsPDF } from 'jspdf'
 import { PDF_EXPORT_SIZE } from '../../common/config/config'
+import { openSans } from '../../common/fonts/OpenSans'
+import { roboto } from '../../common/fonts/Roboto'
 import {
     CircleBlock,
     ImageBlock,
@@ -18,6 +20,11 @@ export async function exportPDF(model: Presentation): Promise<jsPDF>
         format: [ PDF_EXPORT_SIZE.X, PDF_EXPORT_SIZE.Y ],
         unit: 'px',
     })
+
+    doc.addFileToVFS('Roboto.ttf', roboto)
+    doc.addFont('Roboto.ttf', 'Roboto', 'normal')
+    doc.addFileToVFS('OpenSans.ttf', openSans)
+    doc.addFont('OpenSans.ttf', 'OpenSans', 'normal')
 
     for (const [ index, slide ] of model.slides.entries())
     {
@@ -75,9 +82,18 @@ function renderCircleOnPDF(doc: jsPDF, circle: CircleBlock): void
 
 function renderTextOnPDF(doc: jsPDF, text: TextBlock): void
 {
+    if (text.background.hex !== 'none')
+    {
+        doc.rect(text.position.x, text.position.y, text.width, text.height, 'F')
+    }
+
     doc.setFont(text.font.family)
     doc.setFontSize(text.font.size)
-    doc.text(text.content, text.position.x, text.position.y)
+
+    doc.text(text.content, text.position.x, text.position.y, {
+        maxWidth: text.width,
+        baseline: 'top',
+    })
 }
 
 function renderTriangleOnPDF(doc: jsPDF, triangle: TriangleBlock): void
@@ -100,20 +116,21 @@ function renderImageOnPDF(doc: jsPDF, image: ImageBlock): void
 
 function prepareToRender(doc: jsPDF, object: SlideObject): void
 {
-    hexToRGB(object.background.hex)
-
     if ('background' in object)
     {
+        console.log('figure background', object.id, ...hexToRGB(object.background.hex))
         doc.setFillColor(...hexToRGB(object.background.hex))
     }
 
     if ('color' in object)
     {
+        console.log('figure color', object.id, ...hexToRGB(object.color.hex))
         doc.setTextColor(...hexToRGB(object.color.hex))
     }
 
     if ('stroke' in object && typeof object.stroke === 'object')
     {
+        console.log('figure stroke', object.id, ...hexToRGB(object.stroke.color.hex))
         doc.setDrawColor(...hexToRGB(object.stroke.color.hex))
     }
 }

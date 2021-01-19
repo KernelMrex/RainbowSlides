@@ -1,12 +1,11 @@
-import {ChangeOrderOfSlidePayload} from "../../core/slides/slides";
-import { SelectObjectPayload, SelectSlidePayload } from "../../core/selection/selection";
 import {
-    AddObjectToSlidePayload,
     ChangeObjectPositionPayload,
     ChangeObjectSizePayload,
-    ChangeTextContentPayload
-} from "../../core/objects/objects";
-import {Presentation, Slide, SlideObject} from "../../core/types";
+    ChangeTextContentPayload,
+} from '../../core/objects/objects'
+import { SelectObjectPayload, SelectSlidePayload } from '../../core/selection/selection'
+import { ChangeOrderOfSlidePayload } from '../../core/slides/slides'
+import { Presentation, SlideObject } from '../../core/types'
 
 export const CHANGE_SLIDE = 'CHANGE_SLIDE'
 export const RENAME_PRESENTATION = 'RENAME_PRESENTATION'
@@ -29,95 +28,115 @@ export const DOWN_ITEM = 'DOWN_ITEM'
 export const ADD_IMAGE = 'ADD_IMAGE'
 export const ADD_BACKGROUND_IMAGE = 'ADD_BACKGROUND_IMAGE'
 
-interface RenamePresentationAction {
+interface RenamePresentationAction
+{
     type: typeof RENAME_PRESENTATION
     payload: string
 }
 
-interface ChangeSlideAction {
+interface ChangeSlideAction
+{
     type: typeof CHANGE_SLIDE
     payload: ChangeOrderOfSlidePayload
 }
 
-interface SelectObjectAction {
+interface SelectObjectAction
+{
     type: typeof SELECT_OBJECT
     payload: SelectObjectPayload
 }
 
-interface UnselectObjectAction {
+interface UnselectObjectAction
+{
     type: typeof UNSELECT_OBJECT
 }
 
-interface SelectSlideAction {
+interface SelectSlideAction
+{
     type: typeof SELECT_SLIDE
     payload: SelectSlidePayload
 }
 
-interface ChangeSizeAction {
+interface ChangeSizeAction
+{
     type: typeof CHANGE_SIZE
     payload: ChangeObjectSizePayload
 }
 
-interface ChangePositionAction {
+interface ChangePositionAction
+{
     type: typeof CHANGE_POSITION
     payload: ChangeObjectPositionPayload
 }
 
-interface ChangeTextAction {
+interface ChangeTextAction
+{
     type: typeof CHANGE_TEXT
     payload: ChangeTextContentPayload
 }
 
-interface DownloadPresentationAction {
+interface DownloadPresentationAction
+{
     type: typeof DOWNLOAD_PRESENTATION
     payload: Presentation
 }
 
-interface AddSlideAction {
+interface AddSlideAction
+{
     type: typeof ADD_SLIDE
 }
 
-interface DeleteSlideAction {
+interface DeleteSlideAction
+{
     type: typeof DELETE_SLIDE
 }
 
-interface AddObjectAction {
+interface AddObjectAction
+{
     type: typeof ADD_OBJECT,
     payload: SlideObject
 }
 
-interface DeleteObjectAction {
+interface DeleteObjectAction
+{
     type: typeof DELETE_OBJECT,
 }
 
-interface ChangeColorAction {
+interface ChangeColorAction
+{
     type: typeof CHANGE_COLOR,
     payload: string
 }
 
-interface ChangeColorSlideAction {
+interface ChangeColorSlideAction
+{
     type: typeof CHANGE_COLOR_SLIDE,
     payload: string
 }
 
-interface RemoveColorAction {
+interface RemoveColorAction
+{
     type: typeof REMOVE_COLOR,
 }
 
-interface UpItemAction {
+interface UpItemAction
+{
     type: typeof UP_ITEM,
 }
 
-interface DownItemAction {
+interface DownItemAction
+{
     type: typeof DOWN_ITEM,
 }
 
-interface AddImageAction {
+interface AddImageAction
+{
     type: typeof ADD_IMAGE,
     payload: string
 }
 
-interface AddBackgroundImageAction {
+interface AddBackgroundImageAction
+{
     type: typeof ADD_BACKGROUND_IMAGE,
     payload: string
 }
