@@ -467,7 +467,7 @@ export function getDefaultText(): TextBlock
         type: 'text',
         stroke: {style: 'solid', color: {hex: '#123123'}, width: 0},
         font: {
-            family: 'Comic Sans MS',
+            family: 'Roboto',
             size: 13,
             weight: 500,
             style: 'none'
