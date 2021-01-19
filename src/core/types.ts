@@ -1,3 +1,8 @@
+export type AppState<StateType> = {
+    presentation: StateType,
+    history: StateHistory<StateType>
+}
+
 export type Buffer<BufferObject> = {
     object: BufferObject | undefined
 }

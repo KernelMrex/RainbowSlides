@@ -29,6 +29,8 @@ export const DOWN_ITEM = 'DOWN_ITEM'
 export const ADD_IMAGE = 'ADD_IMAGE'
 export const ADD_BACKGROUND_IMAGE = 'ADD_BACKGROUND_IMAGE'
 export const PASTE_ELEMENT = 'PASTE_ELEMENT'
+export const UNDO = 'UNDO'
+export const REDO = 'REDO'
 
 interface RenamePresentationAction {
     type: typeof RENAME_PRESENTATION
@@ -128,6 +130,14 @@ interface PasteElementAction {
     payload: SlideObject | undefined
 }
 
+interface UndoAction {
+    type: typeof UNDO,
+}
+
+interface RedoAction {
+    type: typeof REDO,
+}
+
 export type PresentationActionType =
     RenamePresentationAction |
     ChangeSlideAction |
@@ -149,4 +159,6 @@ export type PresentationActionType =
     DownItemAction |
     AddImageAction |
     AddBackgroundImageAction |
-    PasteElementAction
+    PasteElementAction |
+    UndoAction |
+    RedoAction

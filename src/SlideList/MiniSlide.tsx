@@ -15,7 +15,7 @@ interface Slide
 
 const defaultValue: HorizontalLineSlides = {id: '', position: ''}
 
-const mapState = (state: RootState) => ({ presentation: state.presentation })
+const mapState = (state: RootState) => ({ presentation: state.presentation.presentation })
 const mapDispatch = { changeOrderOfSlide: changeOrderOfSlide }
 
 type StateProps = ReturnType<typeof mapState>

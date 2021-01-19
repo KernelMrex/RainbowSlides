@@ -10,7 +10,6 @@ import {
     RectangleBlock, CircleBlock, TextBlock, ImageBlock
 } from '../types'
 import {getSelected, getSelectedObjects, getSelectedSlide} from '../selection/selection'
-import {getBufferElement, setBufferElement} from '../../buffer/buffer';
 import {getNewId} from "../slides/slides";
 
 export type AddObjectToSlidePayload = {
@@ -228,17 +227,19 @@ export function changeMediaSource(presentation: Presentation, payload: ChangeMed
 
 export function deleteObject(presentation: Presentation): Presentation
 {
-    const selectedObject: SlideObject = getSelectedObjects(presentation)[0]
-    const selectedSlide: Slide | null = getSelectedSlide(presentation)
+    let newPresentation: Presentation = { ...presentation }
+
+    const selectedObject: SlideObject = getSelectedObjects(newPresentation)[0]
+    const selectedSlide: Slide | null = getSelectedSlide(newPresentation)
 
     if (!selectedObject || !selectedSlide)
     {
         return presentation
     }
 
-    const newSlide = {...selectedSlide}
-    newSlide.objects.splice(newSlide.objects.indexOf(selectedObject), 1)
-    return updateSlide(presentation, newSlide)
+    selectedSlide.objects.splice(selectedSlide.objects.indexOf(selectedObject), 1)
+
+    return updateSlide(newPresentation, selectedSlide)
 }
 
 export type ChangeColorPayload = {

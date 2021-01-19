@@ -12,6 +12,8 @@ import {
     downItem,
     removeColor,
     upItem,
+    undo,
+    redo,
 } from '../../store/presentation/actions'
 import { RootState } from '../../store/store'
 import Counter from './Counter/Counter'
@@ -20,10 +22,11 @@ import Tool from './Tool/Tool'
 import ToolInput from './Tool/ToolInput'
 
 const mapState = (state: RootState) => ({
-    selectedSlideId: state.presentation.selection.slide,
-    slides: state.presentation.slides,
-    selectedObjectId: state.presentation.selection.objects,
+    selectedSlideId: state.presentation.presentation.selection.slide,
+    slides: state.presentation.presentation.slides,
+    selectedObjectId: state.presentation.presentation.selection.objects,
 })
+
 const mapDispatch = {
     addSlide: addSlide,
     deleteSlide: deleteSlide,
@@ -36,6 +39,8 @@ const mapDispatch = {
     downItem: downItem,
     importImagePopup: importImagePopup,
     importBackgroundImagePopup: importBackgroundImagePopup,
+    undo: undo,
+    redo: redo,
 }
 
 type DispatchProps = typeof mapDispatch
@@ -62,8 +67,8 @@ function Subheader(props: SubheaderProps)
                 <Counter current={ currentIndex } max={ props.slides.length }/>
                 <Tool content={ 'plus' } onClick={ props.addSlide }/>
                 <Tool content={ 'minus' } onClick={ props.deleteSlide }/>
-                <Tool content={ 'undo' } onClick={ props.deleteSlide }/>
-                <Tool content={ 'redo' } onClick={ props.deleteSlide }/>
+                <Tool content={ 'undo' } onClick={ props.undo }/>
+                <Tool content={ 'redo' } onClick={ props.redo }/>
                 <ToolInput onClick={ props.changeColorSlide }/>
                 <Tool content={ 'slide-bck' } onClick={ props.importBackgroundImagePopup }/>
             </div>
