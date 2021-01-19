@@ -89,6 +89,18 @@
     background: url('./icons/slide-bck.svg') no-repeat center;
 }
 
+.tool__font-family
+{
+    background: url('./icons/font-family.svg') no-repeat center;
+}
+
+.tool__font-size
+{
+    background: url('./icons/font-size.svg') no-repeat center;
+    border: none;
+    appearance: none;
+}
+
 .tool:hover
 {
     background-color: #d5d5d5;

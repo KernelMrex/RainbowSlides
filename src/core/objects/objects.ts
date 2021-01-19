@@ -265,6 +265,27 @@ export function changeColor(presentation: Presentation, payload: ChangeColorPayl
     }))
 }
 
+export type ChangeTextSizePayload = {
+    size: number
+}
+
+export function changeTextSize(presentation: Presentation, payload: ChangeTextSizePayload): Presentation
+{
+    const [slide, [selectedObject]] = getSelected(presentation)
+    if (!slide || !selectedObject || selectedObject.type !== 'text')
+    {
+        return presentation
+    }
+
+    return updateSlide(presentation, updateObject(slide, {
+        ...selectedObject,
+        font: {
+            ...selectedObject.font,
+            size: payload.size
+        }
+    }))
+}
+
 export type ChangeObjectSizePayload = {
     newPosition: Anchor
     newWidth: number | null

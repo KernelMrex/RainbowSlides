@@ -9,6 +9,7 @@ import {
     CHANGE_SIZE,
     CHANGE_SLIDE,
     CHANGE_TEXT,
+    CHANGE_TEXT_SIZE,
     DELETE_OBJECT,
     DELETE_SLIDE,
     DOWN_ITEM,
@@ -224,5 +225,13 @@ export function redo(): PresentationActionType
 {
     return {
         type: REDO,
+    }
+}
+
+export function changeTextSize(size: number): PresentationActionType
+{
+    return {
+        type: CHANGE_TEXT_SIZE,
+        payload: size
     }
 }

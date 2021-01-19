@@ -14,6 +14,7 @@ import {
     upItem,
     undo,
     redo,
+    changeTextSize,
 } from '../../store/presentation/actions'
 import { RootState } from '../../store/store'
 import Counter from './Counter/Counter'
@@ -41,6 +42,7 @@ const mapDispatch = {
     importBackgroundImagePopup: importBackgroundImagePopup,
     undo: undo,
     redo: redo,
+    changeTextSize: changeTextSize,
 }
 
 type DispatchProps = typeof mapDispatch
@@ -54,11 +56,13 @@ function Subheader(props: SubheaderProps)
     const selectedObject: SlideObject | undefined = currentSlide?.objects.find((object) => object.id === props.selectedObjectId[0])
     let isImage: boolean = false
     let isFigure: boolean = false
+    let isText: boolean = false
 
     if (selectedObject)
     {
         isFigure = selectedObject.type === 'rectangle' || selectedObject.type === 'circle' || selectedObject.type === 'triangle' || selectedObject.type === 'text'
         isImage = selectedObject.type === 'image'
+        isText = selectedObject.type === 'text'
     }
 
     return (
@@ -69,7 +73,7 @@ function Subheader(props: SubheaderProps)
                 <Tool content={ 'minus' } onClick={ props.deleteSlide }/>
                 <Tool content={ 'undo' } onClick={ props.undo }/>
                 <Tool content={ 'redo' } onClick={ props.redo }/>
-                <ToolInput onClick={ props.changeColorSlide }/>
+                <ToolInput type={'color'} onClick={ props.changeColorSlide }/>
                 <Tool content={ 'slide-bck' } onClick={ props.importBackgroundImagePopup }/>
             </div>
             <div className={ 'subheader__object-tool' }>
@@ -86,14 +90,19 @@ function Subheader(props: SubheaderProps)
             <div className={ 'subheader__figure_tool' }>
                 { isFigure &&
                 <>
-                    <ToolInput onClick={ props.changeColor }/>
+                    <ToolInput type={'color'} onClick={ props.changeColor }/>
                     <Tool content={ 'no-color' } onClick={ props.removeColor }/>
-                    <Tool content={ 'border' } onClick={ () => props.addObject(getPayloadForAddObject('triangle')) }/>
-                    <Tool content={ 'paint-brush' } onClick={ () => props.addObject(getPayloadForAddObject('rectangle')) }/>
                 </>
                 }
                 <Tool content={ 'item-down' } onClick={ props.downItem }/>
                 <Tool content={ 'item-up' } onClick={ props.upItem }/>
+                { isText &&
+                <>
+                    <ToolInput type={ 'color' } onClick={ props.changeColor }/>
+                    <Tool content={ 'font-family' } onClick={ props.removeColor }/>
+                    <ToolInput type={ 'select' } content={ 'font-size' } onClick={ props.changeTextSize } items={[2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 24, 36, 48, 56, 66, 78, 102]}/>
+                </>
+                }
             </div>
             }
         </div>

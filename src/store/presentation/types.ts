@@ -31,6 +31,7 @@ export const ADD_BACKGROUND_IMAGE = 'ADD_BACKGROUND_IMAGE'
 export const PASTE_ELEMENT = 'PASTE_ELEMENT'
 export const UNDO = 'UNDO'
 export const REDO = 'REDO'
+export const CHANGE_TEXT_SIZE = 'CHANGE_TEXT_SIZE'
 
 interface RenamePresentationAction {
     type: typeof RENAME_PRESENTATION
@@ -138,6 +139,11 @@ interface RedoAction {
     type: typeof REDO,
 }
 
+interface ChangeTextSizeAction {
+    type: typeof CHANGE_TEXT_SIZE,
+    payload: number
+}
+
 export type PresentationActionType =
     RenamePresentationAction |
     ChangeSlideAction |
@@ -161,4 +167,5 @@ export type PresentationActionType =
     AddBackgroundImageAction |
     PasteElementAction |
     UndoAction |
-    RedoAction
+    RedoAction |
+    ChangeTextSizeAction

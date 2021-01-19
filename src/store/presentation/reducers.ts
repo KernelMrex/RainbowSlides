@@ -11,6 +11,7 @@ import {
     removeColor,
     upItem,
     pasteElement,
+    changeTextSize,
 } from '../../core/objects/objects'
 import {changePresentationName} from '../../core/presentation/presentation'
 import {deleteAllObjectsFromSelection, selectObject, selectSlide} from '../../core/selection/selection'
@@ -227,11 +228,11 @@ const initialPresentation: Presentation = {
 export const initialState: AppState<Presentation> = {
     presentation: {
         name: 'my first presentation',
-        //slides: [slide1, slide2, slide3, slide4],
-        slides: [],
+        slides: [slide1, slide2, slide3, slide4],
+        //slides: [],
         selection: {
-            //slide: slide1.id,
-            slide: null,
+            slide: slide1.id,
+            //slide: null,
             objects: [],
         }
     },
@@ -422,7 +423,13 @@ export function presentationReducer(state: AppState<Presentation> = initialState
                         redo: newFuture
                     }
                 }
-
+        case 'CHANGE_TEXT_SIZE':
+            return {
+                presentation: changeTextSize(state.presentation, {size: action.payload}), history: {
+                    ...state.history,
+                    undo: [...state.history.undo, state.presentation],
+                }
+            }
         default:
             return state
     }
